@@ -1,8 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A simple logger configured via environment variables which writes to stdout or stderr, for use with the logging facade exposed by the `log` crate."><meta name="keywords" content="rust, rustlang, rust-lang, env_logger"><title>env_logger - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="../crates.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" href="https://www.rust-lang.org/static/images/favicon.ico"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../env_logger/index.html"><div class="logo-container"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../env_logger/index.html"><div class="logo-container">
-                    <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></div></a><h2 class="location"><a href="#">Crate env_logger</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 0.8.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul></div><section><div class="block"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li></ul></div></section></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../env_logger/index.html">
-                        <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">env_logger</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/env_logger/lib.rs.html#11-1237">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A simple logger configured via environment variables which writes
-to stdout or stderr, for use with the logging facade exposed by the
-<a href="https://docs.rs/log/"><code>log</code> crate</a>.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A simple logger that can be configured via environment variables, for use with the logging facade exposed by the `log` crate."><meta name="keywords" content="rust, rustlang, rust-lang, env_logger"><title>env_logger - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="../crates.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" href="https://www.rust-lang.org/static/images/favicon.ico"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../env_logger/index.html"><div class="logo-container"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../env_logger/index.html"><div class="logo-container">
+                    <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></div></a><h2 class="location"><a href="#">Crate env_logger</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 0.8.4</li><li><a id="all-types" href="all.html">All Items</a></li></ul></div><section><div class="block"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li></ul></div></section></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../env_logger/index.html">
+                        <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">env_logger</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/env_logger/lib.rs.html#11-1299">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A simple logger that can be configured via environment variables, for use
+with the logging facade exposed by the <a href="https://docs.rs/log/"><code>log</code> crate</a>.</p>
+<p>Despite having “env” in its name, <strong><code>env_logger</code></strong> can also be configured by
+other means besides environment variables. See <a href="https://github.com/env-logger-rs/env_logger/tree/master/examples">the examples</a>
+in the source repository for more approaches.</p>
+<p>By default, <code>env_logger</code> writes logs to <code>stderr</code>, but can be configured to
+instead write them to <code>stdout</code>.</p>
 <h3 id="example"><a href="#example">Example</a></h3>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">log</span>::{<span class="ident">debug</span>, <span class="ident">error</span>, <span class="ident">log_enabled</span>, <span class="ident">info</span>, <span class="ident">Level</span>};
 
@@ -43,30 +47,55 @@ in their name, although <code>cargo</code> continues to accept them.</p>
 <p>See the documentation for the <a href="https://docs.rs/log/"><code>log</code> crate</a> for more
 information about its API.</p>
 <h3 id="enabling-logging"><a href="#enabling-logging">Enabling logging</a></h3>
-<p>Log levels are controlled on a per-module basis, and by default all logging
-is disabled except for <code>error!</code>. Logging is controlled via the <code>RUST_LOG</code>
-environment variable. The value of this environment variable is a
-comma-separated list of logging directives. A logging directive is of the
-form:</p>
+<p>Log levels are controlled on a per-module basis, and <strong>by default all
+logging is disabled except for the <code>error</code> level</strong>.</p>
+<p>Logging is controlled via the <strong><code>RUST_LOG</code></strong> environment variable. The
+value of this environment variable is a comma-separated list of <em>logging
+directives</em>. A logging directive is of the form:</p>
 <div class="example-wrap"><pre class="language-text"><code>path::to::module=level</code></pre></div>
 <p>The path to the module is rooted in the name of the crate it was compiled
 for, so if your program is contained in a file <code>hello.rs</code>, for example, to
 turn on logging for this file you would use a value of <code>RUST_LOG=hello</code>.
 Furthermore, this path is a prefix-search, so all modules nested in the
 specified module will also have logging enabled.</p>
-<p>The actual <code>level</code> is optional to specify. If omitted, all logging will
-be enabled. If specified, it must be one of the strings <code>debug</code>, <code>error</code>,
-<code>info</code>, <code>warn</code>, or <code>trace</code>.</p>
+<p>When providing the crate name or a module path, explicitly specifying the
+log level is optional. If omitted, all logging for the item (and its
+children) will be enabled.</p>
+<p>The names of the log levels that may be specified correspond to the
+variations of the <a href="https://docs.rs/log/latest/log/enum.Level.html"><code>log::Level</code></a> enum from the <code>log</code>
+crate. They are:</p>
+<ul>
+<li><code>error</code></li>
+<li><code>warn</code></li>
+<li><code>info</code></li>
+<li><code>debug</code></li>
+<li><code>trace</code></li>
+</ul>
+<p>There is also a pseudo logging level, <code>off</code>, which may be specified to
+disable all logging for a given module or for the entire application. As
+with the logging levels, the letter case is not significant<sup id="fnref1"><a href="#fn1">1</a></sup>.</p>
+<p>The letter case is not significant for the logging level names; e.g.,
+<code>debug</code>, <code>DEBUG</code>, and <code>dEbuG</code> all represent the same logging level. For
+consistency, our convention is to use the lower case names. Where our docs
+do use other forms, they do so in the context of specific examples, so you
+won’t be surprised if you see similar usage in the wild.</p>
 <p>As the log level for a module is optional, the module to enable logging for
-is also optional. If only a <code>level</code> is provided, then the global log
-level for all modules is set to this value.</p>
+is also optional. <strong>If only a level is provided, then the global log
+level for all modules is set to this value.</strong></p>
 <p>Some examples of valid values of <code>RUST_LOG</code> are:</p>
 <ul>
 <li><code>hello</code> turns on all logging for the ‘hello’ module</li>
+<li><code>trace</code> turns on all logging for the application, regardless of its name</li>
+<li><code>TRACE</code> turns on all logging for the application, regardless of its name (same as previous)</li>
 <li><code>info</code> turns on all info logging</li>
+<li><code>INFO</code> turns on all info logging (same as previous)</li>
 <li><code>hello=debug</code> turns on debug logging for ‘hello’</li>
+<li><code>hello=DEBUG</code> turns on debug logging for ‘hello’ (same as previous)</li>
 <li><code>hello,std::option</code> turns on hello, and std’s option logging</li>
 <li><code>error,hello=warn</code> turn on global error logging and also warn for hello</li>
+<li><code>error,hello=off</code>  turn on global error logging, but turn off logging for hello</li>
+<li><code>off</code> turns off all logging for the application</li>
+<li><code>OFF</code> turns off all logging for the application (same as previous)</li>
 </ul>
 <h3 id="filtering-results"><a href="#filtering-results">Filtering results</a></h3>
 <p>A <code>RUST_LOG</code> directive may include a regex filter. The syntax is to append <code>/</code>
@@ -151,12 +180,13 @@ isn’t set:</p>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">env_logger::Env</span>;
 
 <span class="ident">env_logger::Builder::from_env</span>(<span class="ident">Env::default</span>().<span class="ident">default_filter_or</span>(<span class="string">&quot;warn&quot;</span>)).<span class="ident">init</span>();</code></pre></div>
-</div></details><h2 id="reexports" class="small-section-header"><a href="#reexports">Re-exports</a></h2><div class="item-table"><div class="item-row"><div class="item-left import-item" id="reexport.TimestampPrecision"><code>pub use super::<a class="enum" href="fmt/enum.TimestampPrecision.html" title="enum env_logger::fmt::TimestampPrecision">TimestampPrecision</a>;</code></div><div class="item-right docblock-short"></div></div></div><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="filter/index.html" title="env_logger::filter mod">filter</a></div><div class="item-right docblock-short"><p>Filtering for log records.</p>
+<div class="footnotes"><hr><ol><li id="fn1"><p>Similar to the universe of log level names, the <code>off</code> pseudo
+log level feature is also provided by the underlying <code>log</code> crate.&nbsp;<a href="#fnref1">↩</a></p></li></ol></div></div></details><h2 id="reexports" class="small-section-header"><a href="#reexports">Re-exports</a></h2><div class="item-table"><div class="item-row"><div class="item-left import-item" id="reexport.TimestampPrecision"><code>pub use super::<a class="enum" href="fmt/enum.TimestampPrecision.html" title="enum env_logger::fmt::TimestampPrecision">TimestampPrecision</a>;</code></div><div class="item-right docblock-short"></div></div></div><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="filter/index.html" title="env_logger::filter mod">filter</a></div><div class="item-right docblock-short"><p>Filtering for log records.</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="fmt/index.html" title="env_logger::fmt mod">fmt</a></div><div class="item-right docblock-short"><p>Formatting for log records.</p>
 </div></div></div><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Builder.html" title="env_logger::Builder struct">Builder</a></div><div class="item-right docblock-short"><p><code>Builder</code> acts as builder for initializing a <code>Logger</code>.</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Env.html" title="env_logger::Env struct">Env</a></div><div class="item-right docblock-short"><p>Set of environment variables to configure from.</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Logger.html" title="env_logger::Logger struct">Logger</a></div><div class="item-right docblock-short"><p>The env logger.</p>
-</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Target.html" title="env_logger::Target enum">Target</a></div><div class="item-right docblock-short"><p>Log target, either <code>stdout</code> or <code>stderr</code>.</p>
+</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Target.html" title="env_logger::Target enum">Target</a></div><div class="item-right docblock-short"><p>Log target, either <code>stdout</code>, <code>stderr</code> or a custom pipe.</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.WriteStyle.html" title="env_logger::WriteStyle enum">WriteStyle</a></div><div class="item-right docblock-short"><p>Whether or not to print styles to the target.</p>
 </div></div></div><h2 id="constants" class="small-section-header"><a href="#constants">Constants</a></h2><div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="constant" href="constant.DEFAULT_FILTER_ENV.html" title="env_logger::DEFAULT_FILTER_ENV constant">DEFAULT_FILTER_ENV</a></div><div class="item-right docblock-short"><p>The default name for the environment variable to read filters from.</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="constant" href="constant.DEFAULT_WRITE_STYLE_ENV.html" title="env_logger::DEFAULT_WRITE_STYLE_ENV constant">DEFAULT_WRITE_STYLE_ENV</a></div><div class="item-right docblock-short"><p>The default name for the environment variable to read style preferences from.</p>

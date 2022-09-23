@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/rand-0.8.3/src/distributions/uniform.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>uniform.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../rand/index.html"><div class="logo-container"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../rand/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/rand-0.8.5/src/distributions/uniform.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>uniform.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../rand/index.html"><div class="logo-container"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../rand/index.html"><div class="logo-container">
                     <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../rand/index.html">
                         <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk.png" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -1625,6 +1625,39 @@
 <span id="1623">1623</span>
 <span id="1624">1624</span>
 <span id="1625">1625</span>
+<span id="1626">1626</span>
+<span id="1627">1627</span>
+<span id="1628">1628</span>
+<span id="1629">1629</span>
+<span id="1630">1630</span>
+<span id="1631">1631</span>
+<span id="1632">1632</span>
+<span id="1633">1633</span>
+<span id="1634">1634</span>
+<span id="1635">1635</span>
+<span id="1636">1636</span>
+<span id="1637">1637</span>
+<span id="1638">1638</span>
+<span id="1639">1639</span>
+<span id="1640">1640</span>
+<span id="1641">1641</span>
+<span id="1642">1642</span>
+<span id="1643">1643</span>
+<span id="1644">1644</span>
+<span id="1645">1645</span>
+<span id="1646">1646</span>
+<span id="1647">1647</span>
+<span id="1648">1648</span>
+<span id="1649">1649</span>
+<span id="1650">1650</span>
+<span id="1651">1651</span>
+<span id="1652">1652</span>
+<span id="1653">1653</span>
+<span id="1654">1654</span>
+<span id="1655">1655</span>
+<span id="1656">1656</span>
+<span id="1657">1657</span>
+<span id="1658">1658</span>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2018-2020 Developers of the Rand project.</span>
 <span class="comment">// Copyright 2017 The Rust Project Developers.</span>
 <span class="comment">//</span>
@@ -1707,7 +1740,10 @@
 <span class="doccomment">//!         where B1: SampleBorrow&lt;Self::X&gt; + Sized,</span>
 <span class="doccomment">//!               B2: SampleBorrow&lt;Self::X&gt; + Sized</span>
 <span class="doccomment">//!     {</span>
-<span class="doccomment">//!         UniformSampler::new(low, high)</span>
+<span class="doccomment">//!         UniformMyF32(UniformFloat::&lt;f32&gt;::new_inclusive(</span>
+<span class="doccomment">//!             low.borrow().0,</span>
+<span class="doccomment">//!             high.borrow().0,</span>
+<span class="doccomment">//!         ))</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//!     fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; Self::X {</span>
 <span class="doccomment">//!         MyF32(self.0.sample(rng))</span>
@@ -1730,8 +1766,7 @@
 <span class="doccomment">//! [`UniformDuration`]: crate::distributions::uniform::UniformDuration</span>
 <span class="doccomment">//! [`SampleBorrow::borrow`]: crate::distributions::uniform::SampleBorrow::borrow</span>
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span> <span class="kw">use</span> <span class="ident">core::time::Duration</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> <span class="kw">use</span> <span class="ident">std::time::Duration</span>;
+<span class="kw">use</span> <span class="ident">core::time::Duration</span>;
 <span class="kw">use</span> <span class="ident">core::ops</span>::{<span class="ident">Range</span>, <span class="ident">RangeInclusive</span>};
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::distributions::float::IntoFloat</span>;
@@ -1785,7 +1820,7 @@
 <span class="doccomment">/// println!(&quot;{}&quot;, sum);</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// For a single sample, [`Rng::gen_range`] may be prefered:</span>
+<span class="doccomment">/// For a single sample, [`Rng::gen_range`] may be preferred:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// use rand::Rng;</span>
@@ -1797,8 +1832,10 @@
 <span class="doccomment">/// [`new`]: Uniform::new</span>
 <span class="doccomment">/// [`new_inclusive`]: Uniform::new_inclusive</span>
 <span class="doccomment">/// [`Rng::gen_range`]: Rng::gen_range</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>, <span class="ident">serde</span>(<span class="ident">bound</span>(<span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;X::Sampler: Serialize&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>, <span class="ident">serde</span>(<span class="ident">bound</span>(<span class="ident">deserialize</span> <span class="op">=</span> <span class="string">&quot;X::Sampler: Deserialize&lt;&#39;de&gt;&quot;</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Uniform</span><span class="op">&lt;</span><span class="ident">X</span>: <span class="ident">SampleUniform</span><span class="op">&gt;</span>(<span class="ident">X::Sampler</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">X</span>: <span class="ident">SampleUniform</span><span class="op">&gt;</span> <span class="ident">Uniform</span><span class="op">&lt;</span><span class="ident">X</span><span class="op">&gt;</span> {
@@ -2041,7 +2078,7 @@
 <span class="doccomment">/// An alternative to using a modulus is widening multiply: After a widening</span>
 <span class="doccomment">/// multiply by `range`, the result is in the high word. Then comparing the low</span>
 <span class="doccomment">/// word against `zone` makes sure our distribution is uniform.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UniformInt</span><span class="op">&lt;</span><span class="ident">X</span><span class="op">&gt;</span> {
     <span class="ident">low</span>: <span class="ident">X</span>,
@@ -2183,7 +2220,6 @@
 <span class="macro">uniform_int_impl!</span> { <span class="ident">i16</span>, <span class="ident">u16</span>, <span class="ident">u32</span> }
 <span class="macro">uniform_int_impl!</span> { <span class="ident">i32</span>, <span class="ident">u32</span>, <span class="ident">u32</span> }
 <span class="macro">uniform_int_impl!</span> { <span class="ident">i64</span>, <span class="ident">u64</span>, <span class="ident">u64</span> }
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;emscripten&quot;</span>))]</span>
 <span class="macro">uniform_int_impl!</span> { <span class="ident">i128</span>, <span class="ident">u128</span>, <span class="ident">u128</span> }
 <span class="macro">uniform_int_impl!</span> { <span class="ident">isize</span>, <span class="ident">usize</span>, <span class="ident">usize</span> }
 <span class="macro">uniform_int_impl!</span> { <span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u32</span> }
@@ -2191,7 +2227,6 @@
 <span class="macro">uniform_int_impl!</span> { <span class="ident">u32</span>, <span class="ident">u32</span>, <span class="ident">u32</span> }
 <span class="macro">uniform_int_impl!</span> { <span class="ident">u64</span>, <span class="ident">u64</span>, <span class="ident">u64</span> }
 <span class="macro">uniform_int_impl!</span> { <span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">usize</span> }
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;emscripten&quot;</span>))]</span>
 <span class="macro">uniform_int_impl!</span> { <span class="ident">u128</span>, <span class="ident">u128</span>, <span class="ident">u128</span> }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd_support&quot;</span>)]</span>
@@ -2431,7 +2466,7 @@
 <span class="doccomment">/// [`new`]: UniformSampler::new</span>
 <span class="doccomment">/// [`new_inclusive`]: UniformSampler::new_inclusive</span>
 <span class="doccomment">/// [`Standard`]: crate::distributions::Standard</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UniformFloat</span><span class="op">&lt;</span><span class="ident">X</span><span class="op">&gt;</span> {
     <span class="ident">low</span>: <span class="ident">X</span>,
@@ -2454,16 +2489,21 @@
             {
                 <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>();
                 <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>();
-                <span class="macro">assert!</span>(<span class="ident">low</span>.<span class="ident">all_lt</span>(<span class="ident">high</span>), <span class="string">&quot;Uniform::new called with `low &gt;= high`&quot;</span>);
-                <span class="macro">assert!</span>(
-                    <span class="ident">low</span>.<span class="ident">all_finite</span>() <span class="op">&amp;&amp;</span> <span class="ident">high</span>.<span class="ident">all_finite</span>(),
-                    <span class="string">&quot;Uniform::new called with non-finite boundaries&quot;</span>
+                <span class="macro">debug_assert!</span>(
+                    <span class="ident">low</span>.<span class="ident">all_finite</span>(),
+                    <span class="string">&quot;Uniform::new called with `low` non-finite.&quot;</span>
                 );
+                <span class="macro">debug_assert!</span>(
+                    <span class="ident">high</span>.<span class="ident">all_finite</span>(),
+                    <span class="string">&quot;Uniform::new called with `high` non-finite.&quot;</span>
+                );
+                <span class="macro">assert!</span>(<span class="ident">low</span>.<span class="ident">all_lt</span>(<span class="ident">high</span>), <span class="string">&quot;Uniform::new called with `low &gt;= high`&quot;</span>);
                 <span class="kw">let</span> <span class="ident">max_rand</span> <span class="op">=</span> <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span><span class="op">&gt;</span><span class="ident">::splat</span>(
                     (<span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">u_scalar::MAX</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bits_to_discard</span>).<span class="ident">into_float_with_exponent</span>(<span class="number">0</span>) <span class="op">-</span> <span class="number">1.0</span>,
                 );
 
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">scale</span> <span class="op">=</span> <span class="ident">high</span> <span class="op">-</span> <span class="ident">low</span>;
+                <span class="macro">assert!</span>(<span class="ident">scale</span>.<span class="ident">all_finite</span>(), <span class="string">&quot;Uniform::new: range overflow&quot;</span>);
 
                 <span class="kw">loop</span> {
                     <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> (<span class="ident">scale</span> <span class="op">*</span> <span class="ident">max_rand</span> <span class="op">+</span> <span class="ident">low</span>).<span class="ident">ge_mask</span>(<span class="ident">high</span>);
@@ -2485,19 +2525,24 @@
             {
                 <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>();
                 <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>();
+                <span class="macro">debug_assert!</span>(
+                    <span class="ident">low</span>.<span class="ident">all_finite</span>(),
+                    <span class="string">&quot;Uniform::new_inclusive called with `low` non-finite.&quot;</span>
+                );
+                <span class="macro">debug_assert!</span>(
+                    <span class="ident">high</span>.<span class="ident">all_finite</span>(),
+                    <span class="string">&quot;Uniform::new_inclusive called with `high` non-finite.&quot;</span>
+                );
                 <span class="macro">assert!</span>(
                     <span class="ident">low</span>.<span class="ident">all_le</span>(<span class="ident">high</span>),
                     <span class="string">&quot;Uniform::new_inclusive called with `low &gt; high`&quot;</span>
-                );
-                <span class="macro">assert!</span>(
-                    <span class="ident">low</span>.<span class="ident">all_finite</span>() <span class="op">&amp;&amp;</span> <span class="ident">high</span>.<span class="ident">all_finite</span>(),
-                    <span class="string">&quot;Uniform::new_inclusive called with non-finite boundaries&quot;</span>
                 );
                 <span class="kw">let</span> <span class="ident">max_rand</span> <span class="op">=</span> <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span><span class="op">&gt;</span><span class="ident">::splat</span>(
                     (<span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">u_scalar::MAX</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bits_to_discard</span>).<span class="ident">into_float_with_exponent</span>(<span class="number">0</span>) <span class="op">-</span> <span class="number">1.0</span>,
                 );
 
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">scale</span> <span class="op">=</span> (<span class="ident">high</span> <span class="op">-</span> <span class="ident">low</span>) <span class="op">/</span> <span class="ident">max_rand</span>;
+                <span class="macro">assert!</span>(<span class="ident">scale</span>.<span class="ident">all_finite</span>(), <span class="string">&quot;Uniform::new_inclusive: range overflow&quot;</span>);
 
                 <span class="kw">loop</span> {
                     <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> (<span class="ident">scale</span> <span class="op">*</span> <span class="ident">max_rand</span> <span class="op">+</span> <span class="ident">low</span>).<span class="ident">gt_mask</span>(<span class="ident">high</span>);
@@ -2536,11 +2581,20 @@
             {
                 <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>();
                 <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>();
+                <span class="macro">debug_assert!</span>(
+                    <span class="ident">low</span>.<span class="ident">all_finite</span>(),
+                    <span class="string">&quot;UniformSampler::sample_single called with `low` non-finite.&quot;</span>
+                );
+                <span class="macro">debug_assert!</span>(
+                    <span class="ident">high</span>.<span class="ident">all_finite</span>(),
+                    <span class="string">&quot;UniformSampler::sample_single called with `high` non-finite.&quot;</span>
+                );
                 <span class="macro">assert!</span>(
                     <span class="ident">low</span>.<span class="ident">all_lt</span>(<span class="ident">high</span>),
                     <span class="string">&quot;UniformSampler::sample_single: low &gt;= high&quot;</span>
                 );
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">scale</span> <span class="op">=</span> <span class="ident">high</span> <span class="op">-</span> <span class="ident">low</span>;
+                <span class="macro">assert!</span>(<span class="ident">scale</span>.<span class="ident">all_finite</span>(), <span class="string">&quot;UniformSampler::sample_single: range overflow&quot;</span>);
 
                 <span class="kw">loop</span> {
                     <span class="comment">// Generate a value in the range [1, 2)</span>
@@ -2761,7 +2815,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde1&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">test_serialization_uniform_duration</span>() {
-        <span class="kw">let</span> <span class="ident">distr</span> <span class="op">=</span> <span class="ident">UniformDuration::new</span>(<span class="ident">std::time::Duration::from_secs</span>(<span class="number">10</span>), <span class="ident">std::time::Duration::from_secs</span>(<span class="number">60</span>));
+        <span class="kw">let</span> <span class="ident">distr</span> <span class="op">=</span> <span class="ident">UniformDuration::new</span>(<span class="ident">Duration::from_secs</span>(<span class="number">10</span>), <span class="ident">Duration::from_secs</span>(<span class="number">60</span>));
         <span class="kw">let</span> <span class="ident">de_distr</span>: <span class="ident">UniformDuration</span> <span class="op">=</span> <span class="ident">bincode::deserialize</span>(<span class="kw-2">&amp;</span><span class="ident">bincode::serialize</span>(<span class="kw-2">&amp;</span><span class="ident">distr</span>).<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq!</span>(
             <span class="ident">distr</span>.<span class="ident">offset</span>, <span class="ident">de_distr</span>.<span class="ident">offset</span>
@@ -2832,7 +2886,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">miri</span>, <span class="ident">ignore</span>)]</span> <span class="comment">// Miri is too slow</span>
     <span class="kw">fn</span> <span class="ident">test_integers</span>() {
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;emscripten&quot;</span>))]</span> <span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">i128</span>, <span class="ident">u128</span>};
+        <span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">i128</span>, <span class="ident">u128</span>};
         <span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">i16</span>, <span class="ident">i32</span>, <span class="ident">i64</span>, <span class="ident">i8</span>, <span class="ident">isize</span>};
         <span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">u64</span>, <span class="ident">u8</span>, <span class="ident">usize</span>};
 
@@ -2900,9 +2954,7 @@
                 );)<span class="op">*</span>
             }};
         }
-        <span class="macro">t!</span>(<span class="ident">i8</span>, <span class="ident">i16</span>, <span class="ident">i32</span>, <span class="ident">i64</span>, <span class="ident">isize</span>, <span class="ident">u8</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">u64</span>, <span class="ident">usize</span>);
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;emscripten&quot;</span>))]</span>
-        <span class="macro">t!</span>(<span class="ident">i128</span>, <span class="ident">u128</span>);
+        <span class="macro">t!</span>(<span class="ident">i8</span>, <span class="ident">i16</span>, <span class="ident">i32</span>, <span class="ident">i64</span>, <span class="ident">isize</span>, <span class="ident">u8</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">u64</span>, <span class="ident">usize</span>, <span class="ident">i128</span>, <span class="ident">u128</span>);
 
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd_support&quot;</span>)]</span>
         {
@@ -2924,7 +2976,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">core::char::from_u32</span>(<span class="number">0</span>).<span class="ident">unwrap</span>();
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">100</span> {
             <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="string">&#39;A&#39;</span>..<span class="op">=</span><span class="string">&#39;Z&#39;</span>);
-            <span class="macro">assert!</span>(<span class="string">&#39;A&#39;</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">c</span> <span class="op">&amp;&amp;</span> <span class="ident">c</span> <span class="op">&lt;</span><span class="op">=</span> <span class="string">&#39;Z&#39;</span>);
+            <span class="macro">assert!</span>((<span class="string">&#39;A&#39;</span>..<span class="op">=</span><span class="string">&#39;Z&#39;</span>).<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">c</span>));
             <span class="ident">max</span> <span class="op">=</span> <span class="ident">max</span>.<span class="ident">max</span>(<span class="ident">c</span>);
         }
         <span class="macro">assert_eq!</span>(<span class="ident">max</span>, <span class="string">&#39;Z&#39;</span>);
@@ -2955,12 +3007,8 @@
                     (<span class="op">-</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar</span><span class="op">&gt;</span><span class="ident">::from_bits</span>(<span class="number">10</span>), <span class="op">-</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar</span><span class="op">&gt;</span><span class="ident">::from_bits</span>(<span class="number">1</span>)),
                     (<span class="op">-</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar</span><span class="op">&gt;</span><span class="ident">::from_bits</span>(<span class="number">5</span>), <span class="number">0.0</span>),
                     (<span class="op">-</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar</span><span class="op">&gt;</span><span class="ident">::from_bits</span>(<span class="number">7</span>), <span class="op">-</span><span class="number">0.0</span>),
-                    (<span class="number">10.0</span>, <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span>),
-                    (<span class="op">-</span><span class="number">100.0</span>, <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span>),
-                    (<span class="op">-</span><span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span> <span class="op">/</span> <span class="number">5.0</span>, <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span>),
-                    (<span class="op">-</span><span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span>, <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span> <span class="op">/</span> <span class="number">5.0</span>),
-                    (<span class="op">-</span><span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span> <span class="op">*</span> <span class="number">0.8</span>, <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span> <span class="op">*</span> <span class="number">0.7</span>),
-                    (<span class="op">-</span><span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span>, <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span>),
+                    (<span class="number">0.1</span> <span class="op">*</span> <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span>, <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span>),
+                    (<span class="op">-</span><span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span> <span class="op">*</span> <span class="number">0.2</span>, <span class="ident">::core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f_scalar::MAX</span> <span class="op">*</span> <span class="number">0.7</span>),
                 ];
                 <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="ident">low_scalar</span>, <span class="ident">high_scalar</span>) <span class="kw">in</span> <span class="ident">v</span>.<span class="ident">iter</span>() {
                     <span class="kw">for</span> <span class="ident">lane</span> <span class="kw">in</span> <span class="number">0</span>..<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span><span class="op">&gt;</span><span class="ident">::lanes</span>() {
@@ -3040,6 +3088,19 @@
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">should_panic</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_float_overflow</span>() {
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">Uniform::from</span>(<span class="ident">::core::f64::MIN</span>..<span class="ident">::core::f64::MAX</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">should_panic</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_float_overflow_single</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::test::rng</span>(<span class="number">252</span>);
+        <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="ident">::core::f64::MIN</span>..<span class="ident">::core::f64::MAX</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>,
         <span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;wasm32&quot;</span>),
@@ -3104,9 +3165,6 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">miri</span>, <span class="ident">ignore</span>)]</span> <span class="comment">// Miri is too slow</span>
     <span class="kw">fn</span> <span class="ident">test_durations</span>() {
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span> <span class="kw">use</span> <span class="ident">core::time::Duration</span>;
-        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> <span class="kw">use</span> <span class="ident">std::time::Duration</span>;
-
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::test::rng</span>(<span class="number">253</span>);
 
         <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw-2">&amp;</span>[
@@ -3248,6 +3306,14 @@
                 <span class="ident">Duration::new</span>(<span class="number">3</span>, <span class="number">236507617</span>),
             ],
         );
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">uniform_distributions_can_be_compared</span>() {
+        <span class="macro">assert_eq!</span>(<span class="ident">Uniform::new</span>(<span class="number">1.0</span>, <span class="number">2.0</span>), <span class="ident">Uniform::new</span>(<span class="number">1.0</span>, <span class="number">2.0</span>));
+
+        <span class="comment">// To cover UniformInt</span>
+        <span class="macro">assert_eq!</span>(<span class="ident">Uniform::new</span>(<span class="number">1</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="number">2</span> <span class="kw">as</span> <span class="ident">u32</span>), <span class="ident">Uniform::new</span>(<span class="number">1</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="number">2</span> <span class="kw">as</span> <span class="ident">u32</span>));
     }
 }
 </code></pre></div>

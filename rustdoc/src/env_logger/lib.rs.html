@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/env_logger-0.8.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" href="https://www.rust-lang.org/static/images/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../env_logger/index.html"><div class="logo-container"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../env_logger/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/env_logger-0.8.4/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" href="https://www.rust-lang.org/static/images/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../env_logger/index.html"><div class="logo-container"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../env_logger/index.html"><div class="logo-container">
                     <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../env_logger/index.html">
                         <img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -1237,6 +1237,68 @@
 <span id="1235">1235</span>
 <span id="1236">1236</span>
 <span id="1237">1237</span>
+<span id="1238">1238</span>
+<span id="1239">1239</span>
+<span id="1240">1240</span>
+<span id="1241">1241</span>
+<span id="1242">1242</span>
+<span id="1243">1243</span>
+<span id="1244">1244</span>
+<span id="1245">1245</span>
+<span id="1246">1246</span>
+<span id="1247">1247</span>
+<span id="1248">1248</span>
+<span id="1249">1249</span>
+<span id="1250">1250</span>
+<span id="1251">1251</span>
+<span id="1252">1252</span>
+<span id="1253">1253</span>
+<span id="1254">1254</span>
+<span id="1255">1255</span>
+<span id="1256">1256</span>
+<span id="1257">1257</span>
+<span id="1258">1258</span>
+<span id="1259">1259</span>
+<span id="1260">1260</span>
+<span id="1261">1261</span>
+<span id="1262">1262</span>
+<span id="1263">1263</span>
+<span id="1264">1264</span>
+<span id="1265">1265</span>
+<span id="1266">1266</span>
+<span id="1267">1267</span>
+<span id="1268">1268</span>
+<span id="1269">1269</span>
+<span id="1270">1270</span>
+<span id="1271">1271</span>
+<span id="1272">1272</span>
+<span id="1273">1273</span>
+<span id="1274">1274</span>
+<span id="1275">1275</span>
+<span id="1276">1276</span>
+<span id="1277">1277</span>
+<span id="1278">1278</span>
+<span id="1279">1279</span>
+<span id="1280">1280</span>
+<span id="1281">1281</span>
+<span id="1282">1282</span>
+<span id="1283">1283</span>
+<span id="1284">1284</span>
+<span id="1285">1285</span>
+<span id="1286">1286</span>
+<span id="1287">1287</span>
+<span id="1288">1288</span>
+<span id="1289">1289</span>
+<span id="1290">1290</span>
+<span id="1291">1291</span>
+<span id="1292">1292</span>
+<span id="1293">1293</span>
+<span id="1294">1294</span>
+<span id="1295">1295</span>
+<span id="1296">1296</span>
+<span id="1297">1297</span>
+<span id="1298">1298</span>
+<span id="1299">1299</span>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2014-2015 The Rust Project Developers. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution and at</span>
 <span class="comment">// http://rust-lang.org/COPYRIGHT.</span>
@@ -1247,9 +1309,15 @@
 <span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class="doccomment">//! A simple logger configured via environment variables which writes</span>
-<span class="doccomment">//! to stdout or stderr, for use with the logging facade exposed by the</span>
-<span class="doccomment">//! [`log` crate][log-crate-url].</span>
+<span class="doccomment">//! A simple logger that can be configured via environment variables, for use</span>
+<span class="doccomment">//! with the logging facade exposed by the [`log` crate][log-crate-url].</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Despite having &quot;env&quot; in its name, **`env_logger`** can also be configured by</span>
+<span class="doccomment">//! other means besides environment variables. See [the examples][gh-repo-examples]</span>
+<span class="doccomment">//! in the source repository for more approaches.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! By default, `env_logger` writes logs to `stderr`, but can be configured to</span>
+<span class="doccomment">//! instead write them to `stdout`.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Example</span>
 <span class="doccomment">//!</span>
@@ -1322,11 +1390,12 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Enabling logging</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Log levels are controlled on a per-module basis, and by default all logging</span>
-<span class="doccomment">//! is disabled except for `error!`. Logging is controlled via the `RUST_LOG`</span>
-<span class="doccomment">//! environment variable. The value of this environment variable is a</span>
-<span class="doccomment">//! comma-separated list of logging directives. A logging directive is of the</span>
-<span class="doccomment">//! form:</span>
+<span class="doccomment">//! Log levels are controlled on a per-module basis, and **by default all</span>
+<span class="doccomment">//! logging is disabled except for the `error` level**.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Logging is controlled via the **`RUST_LOG`** environment variable. The</span>
+<span class="doccomment">//! value of this environment variable is a comma-separated list of *logging</span>
+<span class="doccomment">//! directives*. A logging directive is of the form:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```text</span>
 <span class="doccomment">//! path::to::module=level</span>
@@ -1338,21 +1407,51 @@
 <span class="doccomment">//! Furthermore, this path is a prefix-search, so all modules nested in the</span>
 <span class="doccomment">//! specified module will also have logging enabled.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The actual `level` is optional to specify. If omitted, all logging will</span>
-<span class="doccomment">//! be enabled. If specified, it must be one of the strings `debug`, `error`,</span>
-<span class="doccomment">//! `info`, `warn`, or `trace`.</span>
+<span class="doccomment">//! When providing the crate name or a module path, explicitly specifying the</span>
+<span class="doccomment">//! log level is optional. If omitted, all logging for the item (and its</span>
+<span class="doccomment">//! children) will be enabled.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The names of the log levels that may be specified correspond to the</span>
+<span class="doccomment">//! variations of the [`log::Level`][level-enum] enum from the `log`</span>
+<span class="doccomment">//! crate. They are:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!    * `error`</span>
+<span class="doccomment">//!    * `warn`</span>
+<span class="doccomment">//!    * `info`</span>
+<span class="doccomment">//!    * `debug`</span>
+<span class="doccomment">//!    * `trace`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! There is also a pseudo logging level, `off`, which may be specified to</span>
+<span class="doccomment">//! disable all logging for a given module or for the entire application. As</span>
+<span class="doccomment">//! with the logging levels, the letter case is not significant[^fn-off].</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [^fn-off]: Similar to the universe of log level names, the `off` pseudo</span>
+<span class="doccomment">//!    log level feature is also provided by the underlying `log` crate.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The letter case is not significant for the logging level names; e.g.,</span>
+<span class="doccomment">//! `debug`, `DEBUG`, and `dEbuG` all represent the same logging level. For</span>
+<span class="doccomment">//! consistency, our convention is to use the lower case names. Where our docs</span>
+<span class="doccomment">//! do use other forms, they do so in the context of specific examples, so you</span>
+<span class="doccomment">//! won&#39;t be surprised if you see similar usage in the wild.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! As the log level for a module is optional, the module to enable logging for</span>
-<span class="doccomment">//! is also optional. If only a `level` is provided, then the global log</span>
-<span class="doccomment">//! level for all modules is set to this value.</span>
+<span class="doccomment">//! is also optional. **If only a level is provided, then the global log</span>
+<span class="doccomment">//! level for all modules is set to this value.**</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Some examples of valid values of `RUST_LOG` are:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! * `hello` turns on all logging for the &#39;hello&#39; module</span>
+<span class="doccomment">//! * `trace` turns on all logging for the application, regardless of its name</span>
+<span class="doccomment">//! * `TRACE` turns on all logging for the application, regardless of its name (same as previous)</span>
 <span class="doccomment">//! * `info` turns on all info logging</span>
+<span class="doccomment">//! * `INFO` turns on all info logging (same as previous)</span>
 <span class="doccomment">//! * `hello=debug` turns on debug logging for &#39;hello&#39;</span>
+<span class="doccomment">//! * `hello=DEBUG` turns on debug logging for &#39;hello&#39; (same as previous)</span>
 <span class="doccomment">//! * `hello,std::option` turns on hello, and std&#39;s option logging</span>
 <span class="doccomment">//! * `error,hello=warn` turn on global error logging and also warn for hello</span>
+<span class="doccomment">//! * `error,hello=off`  turn on global error logging, but turn off logging for hello</span>
+<span class="doccomment">//! * `off` turns off all logging for the application</span>
+<span class="doccomment">//! * `OFF` turns off all logging for the application (same as previous)</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Filtering results</span>
 <span class="doccomment">//!</span>
@@ -1462,6 +1561,8 @@
 <span class="doccomment">//! env_logger::Builder::from_env(Env::default().default_filter_or(&quot;warn&quot;)).init();</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! [gh-repo-examples]: https://github.com/env-logger-rs/env_logger/tree/master/examples</span>
+<span class="doccomment">//! [level-enum]: https://docs.rs/log/latest/log/enum.Level.html</span>
 <span class="doccomment">//! [log-crate-url]: https://docs.rs/log/</span>
 <span class="doccomment">//! [`Builder`]: struct.Builder.html</span>
 <span class="doccomment">//! [`Builder::is_test`]: struct.Builder.html#method.is_test</span>
@@ -1470,15 +1571,13 @@
 
 <span class="attribute">#![<span class="ident">doc</span>(
     <span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
-    <span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/static/images/favicon.ico&quot;</span>,
-    <span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/env_logger/0.8.2&quot;</span>
+    <span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/static/images/favicon.ico&quot;</span>
 )]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">deny</span>(<span class="ident">warnings</span>))]</span>
 <span class="comment">// When compiled for the rustc compiler itself we want to make sure that this is</span>
 <span class="comment">// an unstable crate</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">rustbuild</span>, <span class="ident">feature</span>(<span class="ident">staged_api</span>, <span class="ident">rustc_private</span>))]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">rustbuild</span>, <span class="ident">unstable</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc_private&quot;</span>, <span class="ident">issue</span> <span class="op">=</span> <span class="string">&quot;27812&quot;</span>))]</span>
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_debug_implementations</span>, <span class="ident">missing_docs</span>, <span class="ident">warnings</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_debug_implementations</span>, <span class="ident">missing_docs</span>)]</span>
 
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">borrow::Cow</span>, <span class="ident">cell::RefCell</span>, <span class="ident">env</span>, <span class="ident">io</span>};
 
@@ -1833,6 +1932,12 @@
         <span class="self">self</span>.<span class="ident">format_timestamp</span>(<span class="prelude-val">Some</span>(<span class="ident">fmt::TimestampPrecision::Nanos</span>))
     }
 
+    <span class="doccomment">/// Configures the end of line suffix.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_suffix</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">suffix</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">format</span>.<span class="ident">format_suffix</span> <span class="op">=</span> <span class="ident">suffix</span>;
+        <span class="self">self</span>
+    }
+
     <span class="doccomment">/// Adds a directive to the filter for a specific module.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
@@ -1904,7 +2009,10 @@
 
     <span class="doccomment">/// Sets the target for the log output.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Env logger can log to either stdout or stderr. The default is stderr.</span>
+    <span class="doccomment">/// Env logger can log to either stdout, stderr or a custom pipe. The default is stderr.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The custom pipe can be used to send the log messages to a custom sink (for example a file).</span>
+    <span class="doccomment">/// Do note that direct writes to a file can become a bottleneck due to IO operation times.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
@@ -2472,6 +2580,22 @@
         );
 
         <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;from default&quot;</span>.<span class="ident">to_owned</span>()), <span class="ident">env</span>.<span class="ident">get_write_style</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">builder_parse_env_overrides_existing_filters</span>() {
+        <span class="ident">env::set_var</span>(
+            <span class="string">&quot;builder_parse_default_env_overrides_existing_filters&quot;</span>,
+            <span class="string">&quot;debug&quot;</span>,
+        );
+        <span class="kw">let</span> <span class="ident">env</span> <span class="op">=</span> <span class="ident">Env::new</span>().<span class="ident">filter</span>(<span class="string">&quot;builder_parse_default_env_overrides_existing_filters&quot;</span>);
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">Builder::new</span>();
+        <span class="ident">builder</span>.<span class="ident">filter_level</span>(<span class="ident">LevelFilter::Trace</span>);
+        <span class="comment">// Overrides global level to debug</span>
+        <span class="ident">builder</span>.<span class="ident">parse_env</span>(<span class="ident">env</span>);
+
+        <span class="macro">assert_eq!</span>(<span class="ident">builder</span>.<span class="ident">filter</span>.<span class="ident">build</span>().<span class="ident">filter</span>(), <span class="ident">LevelFilter::Debug</span>);
     }
 }
 </code></pre></div>

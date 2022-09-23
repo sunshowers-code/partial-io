@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.12/src/mpsc/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../futures_channel/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../futures_channel/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../futures_channel/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.24/src/mpsc/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../futures_channel/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../futures_channel/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../futures_channel/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -1306,11 +1306,6 @@
 <span id="1306">1306</span>
 <span id="1307">1307</span>
 <span id="1308">1308</span>
-<span id="1309">1309</span>
-<span id="1310">1310</span>
-<span id="1311">1311</span>
-<span id="1312">1312</span>
-<span id="1313">1313</span>
 </pre><pre class="rust"><code><span class="doccomment">//! A multi-producer, single-consumer queue for sending values across</span>
 <span class="doccomment">//! asynchronous tasks.</span>
 <span class="doccomment">//!</span>
@@ -1392,13 +1387,14 @@
 <span class="comment">// by the queue structure.</span>
 
 <span class="kw">use</span> <span class="ident">futures_core::stream</span>::{<span class="ident">FusedStream</span>, <span class="ident">Stream</span>};
-<span class="kw">use</span> <span class="ident">futures_core::task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>, <span class="ident">Waker</span>};
 <span class="kw">use</span> <span class="ident">futures_core::task::__internal::AtomicWaker</span>;
+<span class="kw">use</span> <span class="ident">futures_core::task</span>::{<span class="ident">Context</span>, <span class="ident">Poll</span>, <span class="ident">Waker</span>};
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
 <span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
-<span class="kw">use</span> <span class="ident">std::sync</span>::{<span class="ident">Arc</span>, <span class="ident">Mutex</span>};
 <span class="kw">use</span> <span class="ident">std::sync::atomic::AtomicUsize</span>;
 <span class="kw">use</span> <span class="ident">std::sync::atomic::Ordering::SeqCst</span>;
+<span class="kw">use</span> <span class="ident">std::sync</span>::{<span class="ident">Arc</span>, <span class="ident">Mutex</span>};
+<span class="kw">use</span> <span class="ident">std::thread</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::mpsc::queue::Queue</span>;
 
@@ -1521,9 +1517,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">TrySendError</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;TrySendError&quot;</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;kind&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">err</span>.<span class="ident">kind</span>)
-            .<span class="ident">finish</span>()
+        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;TrySendError&quot;</span>).<span class="ident">field</span>(<span class="string">&quot;kind&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">err</span>.<span class="ident">kind</span>).<span class="ident">finish</span>()
     }
 }
 
@@ -1563,8 +1557,7 @@
 
 <span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">TryRecvError</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;TryRecvError&quot;</span>)
-            .<span class="ident">finish</span>()
+        <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;TryRecvError&quot;</span>).<span class="ident">finish</span>()
     }
 }
 
@@ -1647,10 +1640,7 @@
 
 <span class="kw">impl</span> <span class="ident">SenderTask</span> {
     <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">task</span>: <span class="prelude-val">None</span>,
-            <span class="ident">is_parked</span>: <span class="bool-val">false</span>,
-        }
+        <span class="self">Self</span> { <span class="ident">task</span>: <span class="prelude-val">None</span>, <span class="ident">is_parked</span>: <span class="bool-val">false</span> }
     }
 
     <span class="kw">fn</span> <span class="ident">notify</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
@@ -1693,9 +1683,7 @@
         <span class="ident">maybe_parked</span>: <span class="bool-val">false</span>,
     };
 
-    <span class="kw">let</span> <span class="ident">rx</span> <span class="op">=</span> <span class="ident">Receiver</span> {
-        <span class="ident">inner</span>: <span class="prelude-val">Some</span>(<span class="ident">inner</span>),
-    };
+    <span class="kw">let</span> <span class="ident">rx</span> <span class="op">=</span> <span class="ident">Receiver</span> { <span class="ident">inner</span>: <span class="prelude-val">Some</span>(<span class="ident">inner</span>) };
 
     (<span class="ident">Sender</span>(<span class="prelude-val">Some</span>(<span class="ident">tx</span>)), <span class="ident">rx</span>)
 }
@@ -1711,7 +1699,6 @@
 <span class="doccomment">/// the channel. Using an `unbounded` channel has the ability of causing the</span>
 <span class="doccomment">/// process to run out of memory. In this case, the process will be aborted.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unbounded</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>() -&gt; (<span class="ident">UnboundedSender</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">UnboundedReceiver</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) {
-
     <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">Arc::new</span>(<span class="ident">UnboundedInner</span> {
         <span class="ident">state</span>: <span class="ident">AtomicUsize::new</span>(<span class="ident">INIT_STATE</span>),
         <span class="ident">message_queue</span>: <span class="ident">Queue::new</span>(),
@@ -1719,13 +1706,9 @@
         <span class="ident">recv_task</span>: <span class="ident">AtomicWaker::new</span>(),
     });
 
-    <span class="kw">let</span> <span class="ident">tx</span> <span class="op">=</span> <span class="ident">UnboundedSenderInner</span> {
-        <span class="ident">inner</span>: <span class="ident">inner</span>.<span class="ident">clone</span>(),
-    };
+    <span class="kw">let</span> <span class="ident">tx</span> <span class="op">=</span> <span class="ident">UnboundedSenderInner</span> { <span class="ident">inner</span>: <span class="ident">inner</span>.<span class="ident">clone</span>() };
 
-    <span class="kw">let</span> <span class="ident">rx</span> <span class="op">=</span> <span class="ident">UnboundedReceiver</span> {
-        <span class="ident">inner</span>: <span class="prelude-val">Some</span>(<span class="ident">inner</span>),
-    };
+    <span class="kw">let</span> <span class="ident">rx</span> <span class="op">=</span> <span class="ident">UnboundedReceiver</span> { <span class="ident">inner</span>: <span class="prelude-val">Some</span>(<span class="ident">inner</span>) };
 
     (<span class="ident">UnboundedSender</span>(<span class="prelude-val">Some</span>(<span class="ident">tx</span>)), <span class="ident">rx</span>)
 }
@@ -1742,12 +1725,9 @@
         <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_open</span> {
             <span class="ident">Poll::Ready</span>(<span class="prelude-val">Ok</span>(()))
         } <span class="kw">else</span> {
-            <span class="ident">Poll::Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">SendError</span> {
-                <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span>,
-            }))
+            <span class="ident">Poll::Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">SendError</span> { <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span> }))
         }
     }
-
 
     <span class="comment">// Push message to the queue and signal to the receiver</span>
     <span class="kw">fn</span> <span class="ident">queue_push_and_signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">msg</span>: <span class="ident">T</span>) {
@@ -1774,16 +1754,17 @@
             <span class="comment">// This probably is never hit? Odds are the process will run out of</span>
             <span class="comment">// memory first. It may be worth to return something else in this</span>
             <span class="comment">// case?</span>
-            <span class="macro">assert!</span>(<span class="ident">state</span>.<span class="ident">num_messages</span> <span class="op">&lt;</span> <span class="ident">MAX_CAPACITY</span>, <span class="string">&quot;buffer space \
-                    exhausted; sending this messages would overflow the state&quot;</span>);
+            <span class="macro">assert!</span>(
+                <span class="ident">state</span>.<span class="ident">num_messages</span> <span class="op">&lt;</span> <span class="ident">MAX_CAPACITY</span>,
+                <span class="string">&quot;buffer space \
+                    exhausted; sending this messages would overflow the state&quot;</span>
+            );
 
             <span class="ident">state</span>.<span class="ident">num_messages</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
 
             <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="ident">encode_state</span>(<span class="kw-2">&amp;</span><span class="ident">state</span>);
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">state</span>.<span class="ident">compare_exchange</span>(<span class="ident">curr</span>, <span class="ident">next</span>, <span class="ident">SeqCst</span>, <span class="ident">SeqCst</span>) {
-                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
-                    <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>.<span class="ident">num_messages</span>)
-                }
+                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>.<span class="ident">num_messages</span>),
                 <span class="prelude-val">Err</span>(<span class="ident">actual</span>) =&gt; <span class="ident">curr</span> <span class="op">=</span> <span class="ident">actual</span>,
             }
         }
@@ -1828,12 +1809,7 @@
     <span class="kw">fn</span> <span class="ident">try_send</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">msg</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">TrySendError</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="comment">// If the sender is currently blocked, reject the message</span>
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">poll_unparked</span>(<span class="prelude-val">None</span>).<span class="ident">is_ready</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span> {
-                <span class="ident">err</span>: <span class="ident">SendError</span> {
-                    <span class="ident">kind</span>: <span class="ident">SendErrorKind::Full</span>,
-                },
-                <span class="ident">val</span>: <span class="ident">msg</span>,
-            });
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span> { <span class="ident">err</span>: <span class="ident">SendError</span> { <span class="ident">kind</span>: <span class="ident">SendErrorKind::Full</span> }, <span class="ident">val</span>: <span class="ident">msg</span> });
         }
 
         <span class="comment">// The channel has capacity to accept the message, so send it</span>
@@ -1842,11 +1818,8 @@
 
     <span class="comment">// Do the send without failing.</span>
     <span class="comment">// Can be called only by bounded sender.</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::debug_assert_with_mut_call</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">do_send_b</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">msg</span>: <span class="ident">T</span>)
-        -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">TrySendError</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
-    {
-        <span class="comment">// Anyone callig do_send *should* make sure there is room first,</span>
+    <span class="kw">fn</span> <span class="ident">do_send_b</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">msg</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">TrySendError</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="comment">// Anyone calling do_send *should* make sure there is room first,</span>
         <span class="comment">// but assert here for tests as a sanity check.</span>
         <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">poll_unparked</span>(<span class="prelude-val">None</span>).<span class="ident">is_ready</span>());
 
@@ -1863,12 +1836,12 @@
                 <span class="comment">// the configured buffer size</span>
                 <span class="ident">num_messages</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">buffer</span>
             }
-            <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span> {
-                <span class="ident">err</span>: <span class="ident">SendError</span> {
-                    <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span>,
-                },
-                <span class="ident">val</span>: <span class="ident">msg</span>,
-            }),
+            <span class="prelude-val">None</span> =&gt; {
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span> {
+                    <span class="ident">err</span>: <span class="ident">SendError</span> { <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span> },
+                    <span class="ident">val</span>: <span class="ident">msg</span>,
+                })
+            }
         };
 
         <span class="comment">// If the channel has reached capacity, then the sender task needs to</span>
@@ -1912,16 +1885,17 @@
             <span class="comment">// This probably is never hit? Odds are the process will run out of</span>
             <span class="comment">// memory first. It may be worth to return something else in this</span>
             <span class="comment">// case?</span>
-            <span class="macro">assert!</span>(<span class="ident">state</span>.<span class="ident">num_messages</span> <span class="op">&lt;</span> <span class="ident">MAX_CAPACITY</span>, <span class="string">&quot;buffer space \
-                    exhausted; sending this messages would overflow the state&quot;</span>);
+            <span class="macro">assert!</span>(
+                <span class="ident">state</span>.<span class="ident">num_messages</span> <span class="op">&lt;</span> <span class="ident">MAX_CAPACITY</span>,
+                <span class="string">&quot;buffer space \
+                    exhausted; sending this messages would overflow the state&quot;</span>
+            );
 
             <span class="ident">state</span>.<span class="ident">num_messages</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
 
             <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="ident">encode_state</span>(<span class="kw-2">&amp;</span><span class="ident">state</span>);
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">state</span>.<span class="ident">compare_exchange</span>(<span class="ident">curr</span>, <span class="ident">next</span>, <span class="ident">SeqCst</span>, <span class="ident">SeqCst</span>) {
-                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
-                    <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>.<span class="ident">num_messages</span>)
-                }
+                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">state</span>.<span class="ident">num_messages</span>),
                 <span class="prelude-val">Err</span>(<span class="ident">actual</span>) =&gt; <span class="ident">curr</span> <span class="op">=</span> <span class="ident">actual</span>,
             }
         }
@@ -1956,15 +1930,10 @@
     <span class="doccomment">///   capacity, in which case the current task is queued to be notified once</span>
     <span class="doccomment">///   capacity is available;</span>
     <span class="doccomment">/// - `Poll::Ready(Err(SendError))` if the receiver has been dropped.</span>
-    <span class="kw">fn</span> <span class="ident">poll_ready</span>(
-        <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
-        <span class="ident">cx</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">SendError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_ready</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">SendError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">decode_state</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">SeqCst</span>));
         <span class="kw">if</span> <span class="op">!</span><span class="ident">state</span>.<span class="ident">is_open</span> {
-            <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">SendError</span> {
-                <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span>,
-            }));
+            <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">SendError</span> { <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span> }));
         }
 
         <span class="self">self</span>.<span class="ident">poll_unparked</span>(<span class="prelude-val">Some</span>(<span class="ident">cx</span>)).<span class="ident">map</span>(<span class="prelude-val">Ok</span>)
@@ -2011,7 +1980,7 @@
 
             <span class="kw">if</span> <span class="op">!</span><span class="ident">task</span>.<span class="ident">is_parked</span> {
                 <span class="self">self</span>.<span class="ident">maybe_parked</span> <span class="op">=</span> <span class="bool-val">false</span>;
-                <span class="kw">return</span> <span class="ident">Poll::Ready</span>(())
+                <span class="kw">return</span> <span class="ident">Poll::Ready</span>(());
             }
 
             <span class="comment">// At this point, an unpark request is pending, so there will be an</span>
@@ -2036,12 +2005,7 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=</span> <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="number">0</span> {
             <span class="ident">inner</span>.<span class="ident">try_send</span>(<span class="ident">msg</span>)
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span> {
-                <span class="ident">err</span>: <span class="ident">SendError</span> {
-                    <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span>,
-                },
-                <span class="ident">val</span>: <span class="ident">msg</span>,
-            })
+            <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span> { <span class="ident">err</span>: <span class="ident">SendError</span> { <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span> }, <span class="ident">val</span>: <span class="ident">msg</span> })
         }
     }
 
@@ -2051,8 +2015,7 @@
     <span class="doccomment">/// [`poll_ready`](Sender::poll_ready) has reported that the channel is</span>
     <span class="doccomment">/// ready to receive a message.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start_send</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">msg</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">SendError</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">try_send</span>(<span class="ident">msg</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">err</span>)
+        <span class="self">self</span>.<span class="ident">try_send</span>(<span class="ident">msg</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">err</span>)
     }
 
     <span class="doccomment">/// Polls the channel to determine if there is guaranteed capacity to send</span>
@@ -2067,13 +2030,8 @@
     <span class="doccomment">///   capacity, in which case the current task is queued to be notified once</span>
     <span class="doccomment">///   capacity is available;</span>
     <span class="doccomment">/// - `Poll::Ready(Err(SendError))` if the receiver has been dropped.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">poll_ready</span>(
-        <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
-        <span class="ident">cx</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">SendError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">SendError</span> {
-            <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span>,
-        })<span class="question-mark">?</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">poll_ready</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">SendError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_mut</span>().<span class="ident">ok_or</span>(<span class="ident">SendError</span> { <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span> })<span class="question-mark">?</span>;
         <span class="ident">inner</span>.<span class="ident">poll_ready</span>(<span class="ident">cx</span>)
     }
 
@@ -2111,7 +2069,10 @@
     }
 
     <span class="doccomment">/// Hashes the receiver into the provided hasher</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_receiver</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hasher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">H</span>: <span class="ident">std::hash::Hasher</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_receiver</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hasher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">H</span>)
+    <span class="kw">where</span>
+        <span class="ident">H</span>: <span class="ident">std::hash::Hasher</span>,
+    {
         <span class="kw">use</span> <span class="ident">std::hash::Hash</span>;
 
         <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">inner</span><span class="op">|</span> <span class="ident">inner</span>.<span class="ident">ptr</span>());
@@ -2121,13 +2082,8 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">UnboundedSender</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Check if the channel is ready to receive a message.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">poll_ready</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="kw">_</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">SendError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">SendError</span> {
-            <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span>,
-        })<span class="question-mark">?</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">poll_ready</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">SendError</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">SendError</span> { <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span> })<span class="question-mark">?</span>;
         <span class="ident">inner</span>.<span class="ident">poll_ready_nb</span>()
     }
 
@@ -2157,12 +2113,7 @@
             }
         }
 
-        <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span> {
-            <span class="ident">err</span>: <span class="ident">SendError</span> {
-                <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span>,
-            },
-            <span class="ident">val</span>: <span class="ident">msg</span>,
-        })
+        <span class="prelude-val">Err</span>(<span class="ident">TrySendError</span> { <span class="ident">err</span>: <span class="ident">SendError</span> { <span class="ident">kind</span>: <span class="ident">SendErrorKind::Disconnected</span> }, <span class="ident">val</span>: <span class="ident">msg</span> })
     }
 
     <span class="doccomment">/// Send a message on the channel.</span>
@@ -2170,8 +2121,7 @@
     <span class="doccomment">/// This method should only be called after `poll_ready` has been used to</span>
     <span class="doccomment">/// verify that the channel is ready to receive a message.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start_send</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">msg</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">SendError</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">do_send_nb</span>(<span class="ident">msg</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">err</span>)
+        <span class="self">self</span>.<span class="ident">do_send_nb</span>(<span class="ident">msg</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">err</span>)
     }
 
     <span class="doccomment">/// Sends a message along this channel.</span>
@@ -2200,7 +2150,10 @@
     }
 
     <span class="doccomment">/// Hashes the receiver into the provided hasher</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_receiver</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hasher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">H</span>: <span class="ident">std::hash::Hasher</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_receiver</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hasher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">H</span>)
+    <span class="kw">where</span>
+        <span class="ident">H</span>: <span class="ident">std::hash::Hasher</span>,
+    {
         <span class="kw">use</span> <span class="ident">std::hash::Hash</span>;
 
         <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">inner</span><span class="op">|</span> <span class="ident">inner</span>.<span class="ident">ptr</span>());
@@ -2240,9 +2193,7 @@
                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
                     <span class="comment">// The ABA problem doesn&#39;t matter here. We only care that the</span>
                     <span class="comment">// number of senders never exceeds the maximum.</span>
-                    <span class="kw">return</span> <span class="self">Self</span> {
-                        <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">clone</span>(),
-                    };
+                    <span class="kw">return</span> <span class="self">Self</span> { <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">clone</span>() };
                 }
                 <span class="prelude-val">Err</span>(<span class="ident">actual</span>) =&gt; <span class="ident">curr</span> <span class="op">=</span> <span class="ident">actual</span>,
             }
@@ -2333,19 +2284,22 @@
     <span class="doccomment">/// only when you&#39;ve otherwise arranged to be notified when the channel is</span>
     <span class="doccomment">/// no longer empty.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// This function will panic if called after `try_next` or `poll_next` has</span>
-    <span class="doccomment">/// returned `None`.</span>
+    <span class="doccomment">/// This function returns:</span>
+    <span class="doccomment">/// * `Ok(Some(t))` when message is fetched</span>
+    <span class="doccomment">/// * `Ok(None)` when channel is closed and no messages left in the queue</span>
+    <span class="doccomment">/// * `Err(e)` when there are no messages available, but channel is not yet closed</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_next</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">TryRecvError</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next_message</span>() {
-            <span class="ident">Poll::Ready</span>(<span class="ident">msg</span>) =&gt; {
-                <span class="prelude-val">Ok</span>(<span class="ident">msg</span>)
-            },
+            <span class="ident">Poll::Ready</span>(<span class="ident">msg</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">msg</span>),
             <span class="ident">Poll::Pending</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">TryRecvError</span> { <span class="ident">_priv</span>: () }),
         }
     }
 
     <span class="kw">fn</span> <span class="ident">next_message</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">expect</span>(<span class="string">&quot;Receiver::next_message called after `None`&quot;</span>);
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>() {
+            <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">inner</span>) =&gt; <span class="ident">inner</span>,
+        };
         <span class="comment">// Pop off a message</span>
         <span class="kw">match</span> <span class="kw">unsafe</span> { <span class="ident">inner</span>.<span class="ident">message_queue</span>.<span class="ident">pop_spin</span>() } {
             <span class="prelude-val">Some</span>(<span class="ident">msg</span>) =&gt; {
@@ -2360,7 +2314,12 @@
             }
             <span class="prelude-val">None</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">decode_state</span>(<span class="ident">inner</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">SeqCst</span>));
-                <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_open</span> <span class="op">|</span><span class="op">|</span> <span class="ident">state</span>.<span class="ident">num_messages</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_closed</span>() {
+                    <span class="comment">// If closed flag is set AND there are no pending messages</span>
+                    <span class="comment">// it means end of stream</span>
+                    <span class="self">self</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>)
+                } <span class="kw">else</span> {
                     <span class="comment">// If queue is open, we need to return Pending</span>
                     <span class="comment">// to be woken up when new messages arrive.</span>
                     <span class="comment">// If queue is closed but num_messages is non-zero,</span>
@@ -2369,11 +2328,6 @@
                     <span class="comment">// so we need to park until sender unparks the task</span>
                     <span class="comment">// after queueing the message.</span>
                     <span class="ident">Poll::Pending</span>
-                } <span class="kw">else</span> {
-                    <span class="comment">// If closed flag is set AND there are no pending messages</span>
-                    <span class="comment">// it means end of stream</span>
-                    <span class="self">self</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>)
                 }
             }
         }
@@ -2410,18 +2364,15 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Stream</span> <span class="kw">for</span> <span class="ident">Receiver</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">poll_next</span>(
-        <span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;mut</span> <span class="self">Self</span><span class="op">&gt;</span>,
-        <span class="ident">cx</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-            <span class="comment">// Try to read a message off of the message queue.</span>
+    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="comment">// Try to read a message off of the message queue.</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next_message</span>() {
             <span class="ident">Poll::Ready</span>(<span class="ident">msg</span>) =&gt; {
                 <span class="kw">if</span> <span class="ident">msg</span>.<span class="ident">is_none</span>() {
                     <span class="self">self</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                 }
                 <span class="ident">Poll::Ready</span>(<span class="ident">msg</span>)
-            },
+            }
             <span class="ident">Poll::Pending</span> =&gt; {
                 <span class="comment">// There are no messages to read, in this case, park.</span>
                 <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">recv_task</span>.<span class="ident">register</span>(<span class="ident">cx</span>.<span class="ident">waker</span>());
@@ -2439,8 +2390,26 @@
         <span class="comment">// Drain the channel of all pending messages</span>
         <span class="self">self</span>.<span class="ident">close</span>();
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">is_some</span>() {
-            <span class="kw">while</span> <span class="kw">let</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(..)) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_message</span>() {
-                <span class="comment">// ...</span>
+            <span class="kw">loop</span> {
+                <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next_message</span>() {
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; {}
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>) =&gt; <span class="kw">break</span>,
+                    <span class="ident">Poll::Pending</span> =&gt; {
+                        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">decode_state</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">SeqCst</span>));
+
+                        <span class="comment">// If the channel is closed, then there is no need to park.</span>
+                        <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_closed</span>() {
+                            <span class="kw">break</span>;
+                        }
+
+                        <span class="comment">// TODO: Spinning isn&#39;t ideal, it might be worth</span>
+                        <span class="comment">// investigating using a condvar or some other strategy</span>
+                        <span class="comment">// here. That said, if this case is hit, then another thread</span>
+                        <span class="comment">// is about to push the value into the queue and this isn&#39;t</span>
+                        <span class="comment">// the only spinlock in the impl right now.</span>
+                        <span class="ident">thread::yield_now</span>();
+                    }
+                }
             }
         }
     }
@@ -2463,19 +2432,22 @@
     <span class="doccomment">/// only when you&#39;ve otherwise arranged to be notified when the channel is</span>
     <span class="doccomment">/// no longer empty.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// This function will panic if called after `try_next` or `poll_next` has</span>
-    <span class="doccomment">/// returned `None`.</span>
+    <span class="doccomment">/// This function returns:</span>
+    <span class="doccomment">/// * `Ok(Some(t))` when message is fetched</span>
+    <span class="doccomment">/// * `Ok(None)` when channel is closed and no messages left in the queue</span>
+    <span class="doccomment">/// * `Err(e)` when there are no messages available, but channel is not yet closed</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_next</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">TryRecvError</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next_message</span>() {
-            <span class="ident">Poll::Ready</span>(<span class="ident">msg</span>) =&gt; {
-                <span class="prelude-val">Ok</span>(<span class="ident">msg</span>)
-            },
+            <span class="ident">Poll::Ready</span>(<span class="ident">msg</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">msg</span>),
             <span class="ident">Poll::Pending</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">TryRecvError</span> { <span class="ident">_priv</span>: () }),
         }
     }
 
     <span class="kw">fn</span> <span class="ident">next_message</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">expect</span>(<span class="string">&quot;Receiver::next_message called after `None`&quot;</span>);
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>() {
+            <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">inner</span>) =&gt; <span class="ident">inner</span>,
+        };
         <span class="comment">// Pop off a message</span>
         <span class="kw">match</span> <span class="kw">unsafe</span> { <span class="ident">inner</span>.<span class="ident">message_queue</span>.<span class="ident">pop_spin</span>() } {
             <span class="prelude-val">Some</span>(<span class="ident">msg</span>) =&gt; {
@@ -2486,7 +2458,12 @@
             }
             <span class="prelude-val">None</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">decode_state</span>(<span class="ident">inner</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">SeqCst</span>));
-                <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_open</span> <span class="op">|</span><span class="op">|</span> <span class="ident">state</span>.<span class="ident">num_messages</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_closed</span>() {
+                    <span class="comment">// If closed flag is set AND there are no pending messages</span>
+                    <span class="comment">// it means end of stream</span>
+                    <span class="self">self</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>)
+                } <span class="kw">else</span> {
                     <span class="comment">// If queue is open, we need to return Pending</span>
                     <span class="comment">// to be woken up when new messages arrive.</span>
                     <span class="comment">// If queue is closed but num_messages is non-zero,</span>
@@ -2495,11 +2472,6 @@
                     <span class="comment">// so we need to park until sender unparks the task</span>
                     <span class="comment">// after queueing the message.</span>
                     <span class="ident">Poll::Pending</span>
-                } <span class="kw">else</span> {
-                    <span class="comment">// If closed flag is set AND there are no pending messages</span>
-                    <span class="comment">// it means end of stream</span>
-                    <span class="self">self</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>)
                 }
             }
         }
@@ -2524,10 +2496,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Stream</span> <span class="kw">for</span> <span class="ident">UnboundedReceiver</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">poll_next</span>(
-        <span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;mut</span> <span class="self">Self</span><span class="op">&gt;</span>,
-        <span class="ident">cx</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="comment">// Try to read a message off of the message queue.</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next_message</span>() {
             <span class="ident">Poll::Ready</span>(<span class="ident">msg</span>) =&gt; {
@@ -2535,7 +2504,7 @@
                     <span class="self">self</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                 }
                 <span class="ident">Poll::Ready</span>(<span class="ident">msg</span>)
-            },
+            }
             <span class="ident">Poll::Pending</span> =&gt; {
                 <span class="comment">// There are no messages to read, in this case, park.</span>
                 <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">recv_task</span>.<span class="ident">register</span>(<span class="ident">cx</span>.<span class="ident">waker</span>());
@@ -2553,8 +2522,26 @@
         <span class="comment">// Drain the channel of all pending messages</span>
         <span class="self">self</span>.<span class="ident">close</span>();
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">is_some</span>() {
-            <span class="kw">while</span> <span class="kw">let</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(..)) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_message</span>() {
-                <span class="comment">// ...</span>
+            <span class="kw">loop</span> {
+                <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next_message</span>() {
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; {}
+                    <span class="ident">Poll::Ready</span>(<span class="prelude-val">None</span>) =&gt; <span class="kw">break</span>,
+                    <span class="ident">Poll::Pending</span> =&gt; {
+                        <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">decode_state</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">SeqCst</span>));
+
+                        <span class="comment">// If the channel is closed, then there is no need to park.</span>
+                        <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_closed</span>() {
+                            <span class="kw">break</span>;
+                        }
+
+                        <span class="comment">// TODO: Spinning isn&#39;t ideal, it might be worth</span>
+                        <span class="comment">// investigating using a condvar or some other strategy</span>
+                        <span class="comment">// here. That said, if this case is hit, then another thread</span>
+                        <span class="comment">// is about to push the value into the queue and this isn&#39;t</span>
+                        <span class="comment">// the only spinlock in the impl right now.</span>
+                        <span class="ident">thread::yield_now</span>();
+                    }
+                }
             }
         }
     }
@@ -2602,6 +2589,12 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Send</span><span class="op">&gt;</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">BoundedInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Send</span><span class="op">&gt;</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">BoundedInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
 
+<span class="kw">impl</span> <span class="ident">State</span> {
+    <span class="kw">fn</span> <span class="ident">is_closed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
+        <span class="op">!</span><span class="self">self</span>.<span class="ident">is_open</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">num_messages</span> <span class="op">==</span> <span class="number">0</span>
+    }
+}
+
 <span class="comment">/*
  *
  * ===== Helpers =====
@@ -2609,10 +2602,7 @@
  */</span>
 
 <span class="kw">fn</span> <span class="ident">decode_state</span>(<span class="ident">num</span>: <span class="ident">usize</span>) -&gt; <span class="ident">State</span> {
-    <span class="ident">State</span> {
-        <span class="ident">is_open</span>: <span class="ident">num</span> <span class="op">&amp;</span> <span class="ident">OPEN_MASK</span> <span class="op">==</span> <span class="ident">OPEN_MASK</span>,
-        <span class="ident">num_messages</span>: <span class="ident">num</span> <span class="op">&amp;</span> <span class="ident">MAX_CAPACITY</span>,
-    }
+    <span class="ident">State</span> { <span class="ident">is_open</span>: <span class="ident">num</span> <span class="op">&amp;</span> <span class="ident">OPEN_MASK</span> <span class="op">==</span> <span class="ident">OPEN_MASK</span>, <span class="ident">num_messages</span>: <span class="ident">num</span> <span class="op">&amp;</span> <span class="ident">MAX_CAPACITY</span> }
 }
 
 <span class="kw">fn</span> <span class="ident">encode_state</span>(<span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="ident">State</span>) -&gt; <span class="ident">usize</span> {

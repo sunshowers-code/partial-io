@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.24/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../proc_macro2/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../proc_macro2/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../proc_macro2/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/proc-macro2-1.0.43/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../proc_macro2/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../proc_macro2/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../proc_macro2/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -1232,7 +1232,99 @@
 <span id="1232">1232</span>
 <span id="1233">1233</span>
 <span id="1234">1234</span>
-</pre><pre class="rust"><code><span class="doccomment">//! A wrapper around the procedural macro API of the compiler&#39;s [`proc_macro`]</span>
+<span id="1235">1235</span>
+<span id="1236">1236</span>
+<span id="1237">1237</span>
+<span id="1238">1238</span>
+<span id="1239">1239</span>
+<span id="1240">1240</span>
+<span id="1241">1241</span>
+<span id="1242">1242</span>
+<span id="1243">1243</span>
+<span id="1244">1244</span>
+<span id="1245">1245</span>
+<span id="1246">1246</span>
+<span id="1247">1247</span>
+<span id="1248">1248</span>
+<span id="1249">1249</span>
+<span id="1250">1250</span>
+<span id="1251">1251</span>
+<span id="1252">1252</span>
+<span id="1253">1253</span>
+<span id="1254">1254</span>
+<span id="1255">1255</span>
+<span id="1256">1256</span>
+<span id="1257">1257</span>
+<span id="1258">1258</span>
+<span id="1259">1259</span>
+<span id="1260">1260</span>
+<span id="1261">1261</span>
+<span id="1262">1262</span>
+<span id="1263">1263</span>
+<span id="1264">1264</span>
+<span id="1265">1265</span>
+<span id="1266">1266</span>
+<span id="1267">1267</span>
+<span id="1268">1268</span>
+<span id="1269">1269</span>
+<span id="1270">1270</span>
+<span id="1271">1271</span>
+<span id="1272">1272</span>
+<span id="1273">1273</span>
+<span id="1274">1274</span>
+<span id="1275">1275</span>
+<span id="1276">1276</span>
+<span id="1277">1277</span>
+<span id="1278">1278</span>
+<span id="1279">1279</span>
+<span id="1280">1280</span>
+<span id="1281">1281</span>
+<span id="1282">1282</span>
+<span id="1283">1283</span>
+<span id="1284">1284</span>
+<span id="1285">1285</span>
+<span id="1286">1286</span>
+<span id="1287">1287</span>
+<span id="1288">1288</span>
+<span id="1289">1289</span>
+<span id="1290">1290</span>
+<span id="1291">1291</span>
+<span id="1292">1292</span>
+<span id="1293">1293</span>
+<span id="1294">1294</span>
+<span id="1295">1295</span>
+<span id="1296">1296</span>
+<span id="1297">1297</span>
+<span id="1298">1298</span>
+<span id="1299">1299</span>
+<span id="1300">1300</span>
+<span id="1301">1301</span>
+<span id="1302">1302</span>
+<span id="1303">1303</span>
+<span id="1304">1304</span>
+<span id="1305">1305</span>
+<span id="1306">1306</span>
+<span id="1307">1307</span>
+<span id="1308">1308</span>
+<span id="1309">1309</span>
+<span id="1310">1310</span>
+<span id="1311">1311</span>
+<span id="1312">1312</span>
+<span id="1313">1313</span>
+<span id="1314">1314</span>
+<span id="1315">1315</span>
+<span id="1316">1316</span>
+<span id="1317">1317</span>
+<span id="1318">1318</span>
+</pre><pre class="rust"><code><span class="doccomment">//! [![github]](https://github.com/dtolnay/proc-macro2)&amp;ensp;[![crates-io]](https://crates.io/crates/proc-macro2)&amp;ensp;[![docs-rs]](crate)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&amp;labelColor=555555&amp;logo=github</span>
+<span class="doccomment">//! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&amp;labelColor=555555&amp;logo=rust</span>
+<span class="doccomment">//! [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&amp;labelColor=555555&amp;logo=docs.rs</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! &lt;br&gt;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! A wrapper around the procedural macro API of the compiler&#39;s [`proc_macro`]</span>
 <span class="doccomment">//! crate. This library serves two purposes:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`proc_macro`]: https://doc.rust-lang.org/proc_macro/</span>
@@ -1312,16 +1404,41 @@
 <span class="doccomment">//! a different thread.</span>
 
 <span class="comment">// Proc-macro2 types in rustdoc of other crates get linked to here.</span>
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/proc-macro2/1.0.24&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/proc-macro2/1.0.43&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">any</span>(<span class="ident">proc_macro_span</span>, <span class="ident">super_unstable</span>), <span class="ident">feature</span>(<span class="ident">proc_macro_span</span>))]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">super_unstable</span>, <span class="ident">feature</span>(<span class="ident">proc_macro_raw_ident</span>, <span class="ident">proc_macro_def_site</span>))]</span>
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy::needless_doctest_main</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">super_unstable</span>, <span class="ident">feature</span>(<span class="ident">proc_macro_def_site</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
+<span class="attribute">#![<span class="ident">allow</span>(
+    <span class="ident">clippy::cast_lossless</span>,
+    <span class="ident">clippy::cast_possible_truncation</span>,
+    <span class="ident">clippy::doc_markdown</span>,
+    <span class="ident">clippy::items_after_statements</span>,
+    <span class="ident">clippy::manual_assert</span>,
+    <span class="ident">clippy::must_use_candidate</span>,
+    <span class="ident">clippy::needless_doctest_main</span>,
+    <span class="ident">clippy::return_self_not_must_use</span>,
+    <span class="ident">clippy::shadow_unrelated</span>,
+    <span class="ident">clippy::trivially_copy_pass_by_ref</span>,
+    <span class="ident">clippy::unnecessary_wraps</span>,
+    <span class="ident">clippy::unused_self</span>,
+    <span class="ident">clippy::used_underscore_binding</span>,
+    <span class="ident">clippy::vec_init_then_push</span>
+)]</span>
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">procmacro2_semver_exempt</span>, <span class="ident">wrap_proc_macro</span>, <span class="ident">not</span>(<span class="ident">super_unstable</span>)))]</span>
+<span class="macro">compile_error!</span> {<span class="string">&quot;\
+    Something is not right. If you&#39;ve tried to turn on \
+    procmacro2_semver_exempt, you need to ensure that it \
+    is turned on for the compilation of the proc-macro2 \
+    build script as well.
+&quot;</span>}
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">use_proc_macro</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">proc_macro</span>;
 
 <span class="kw">mod</span> <span class="ident">marker</span>;
 <span class="kw">mod</span> <span class="ident">parse</span>;
+<span class="kw">mod</span> <span class="ident">rcvec</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">wrap_proc_macro</span>)]</span>
 <span class="kw">mod</span> <span class="ident">detection</span>;
@@ -1338,15 +1455,15 @@
 <span class="kw">mod</span> <span class="ident">imp</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::marker::Marker</span>;
-<span class="kw">use</span> <span class="ident">std::cmp::Ordering</span>;
+<span class="kw">use</span> <span class="ident">core::cmp::Ordering</span>;
+<span class="kw">use</span> <span class="ident">core::fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>, <span class="ident">Display</span>};
+<span class="kw">use</span> <span class="ident">core::hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
+<span class="kw">use</span> <span class="ident">core::iter::FromIterator</span>;
+<span class="kw">use</span> <span class="ident">core::ops::RangeBounds</span>;
+<span class="kw">use</span> <span class="ident">core::str::FromStr</span>;
 <span class="kw">use</span> <span class="ident">std::error::Error</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>, <span class="ident">Display</span>};
-<span class="kw">use</span> <span class="ident">std::hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
-<span class="kw">use</span> <span class="ident">std::iter::FromIterator</span>;
-<span class="kw">use</span> <span class="ident">std::ops::RangeBounds</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)]</span>
 <span class="kw">use</span> <span class="ident">std::path::PathBuf</span>;
-<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
 
 <span class="doccomment">/// An abstract stream of tokens, or more concretely a sequence of token trees.</span>
 <span class="doccomment">///</span>
@@ -1368,14 +1485,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">TokenStream</span> {
-    <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::TokenStream</span>) -&gt; <span class="ident">TokenStream</span> {
+    <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::TokenStream</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">TokenStream</span> {
             <span class="ident">inner</span>,
             <span class="ident">_marker</span>: <span class="ident">Marker</span>,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">_new_stable</span>(<span class="ident">inner</span>: <span class="ident">fallback::TokenStream</span>) -&gt; <span class="ident">TokenStream</span> {
+    <span class="kw">fn</span> <span class="ident">_new_stable</span>(<span class="ident">inner</span>: <span class="ident">fallback::TokenStream</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">TokenStream</span> {
             <span class="ident">inner</span>: <span class="ident">inner</span>.<span class="ident">into</span>(),
             <span class="ident">_marker</span>: <span class="ident">Marker</span>,
@@ -1383,7 +1500,7 @@
     }
 
     <span class="doccomment">/// Returns an empty `TokenStream` containing no token trees.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="ident">TokenStream</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">TokenStream::_new</span>(<span class="ident">imp::TokenStream::new</span>())
     }
 
@@ -1443,14 +1560,14 @@
 
 <span class="kw">impl</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">TokenTree</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenStream</span> {
     <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">TokenTree</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">streams</span>: <span class="ident">I</span>) {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">extend</span>(<span class="ident">streams</span>)
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">extend</span>(<span class="ident">streams</span>);
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenStream</span> {
     <span class="kw">fn</span> <span class="ident">extend</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">TokenStream</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">streams</span>: <span class="ident">I</span>) {
         <span class="self">self</span>.<span class="ident">inner</span>
-            .<span class="ident">extend</span>(<span class="ident">streams</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">stream</span><span class="op">|</span> <span class="ident">stream</span>.<span class="ident">inner</span>))
+            .<span class="ident">extend</span>(<span class="ident">streams</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">stream</span><span class="op">|</span> <span class="ident">stream</span>.<span class="ident">inner</span>));
     }
 }
 
@@ -1483,6 +1600,12 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">LexError</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">span</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Span</span> {
+        <span class="ident">Span::_new</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">span</span>())
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">LexError</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">Debug::fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">f</span>)
@@ -1500,14 +1623,15 @@
 <span class="doccomment">/// The source file of a given `Span`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This type is semver exempt and not exposed by default.</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">procmacro2_semver_exempt</span>, <span class="ident">any</span>(<span class="ident">not</span>(<span class="ident">wrap_proc_macro</span>), <span class="ident">super_unstable</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)))]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SourceFile</span> {
     <span class="ident">inner</span>: <span class="ident">imp::SourceFile</span>,
     <span class="ident">_marker</span>: <span class="ident">Marker</span>,
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">procmacro2_semver_exempt</span>, <span class="ident">any</span>(<span class="ident">not</span>(<span class="ident">wrap_proc_macro</span>), <span class="ident">super_unstable</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">SourceFile</span> {
     <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::SourceFile</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">SourceFile</span> {
@@ -1540,7 +1664,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">procmacro2_semver_exempt</span>, <span class="ident">any</span>(<span class="ident">not</span>(<span class="ident">wrap_proc_macro</span>), <span class="ident">super_unstable</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">SourceFile</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">Debug::fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">f</span>)
@@ -1551,6 +1675,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This type is semver exempt and not exposed by default.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">span_locations</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;span-locations&quot;</span>)))]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">LineColumn</span> {
     <span class="doccomment">/// The 1-indexed line in the source file on which the span starts or ends</span>
@@ -1585,14 +1710,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Span</span> {
-    <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::Span</span>) -&gt; <span class="ident">Span</span> {
+    <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::Span</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Span</span> {
             <span class="ident">inner</span>,
             <span class="ident">_marker</span>: <span class="ident">Marker</span>,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">_new_stable</span>(<span class="ident">inner</span>: <span class="ident">fallback::Span</span>) -&gt; <span class="ident">Span</span> {
+    <span class="kw">fn</span> <span class="ident">_new_stable</span>(<span class="ident">inner</span>: <span class="ident">fallback::Span</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Span</span> {
             <span class="ident">inner</span>: <span class="ident">inner</span>.<span class="ident">into</span>(),
             <span class="ident">_marker</span>: <span class="ident">Marker</span>,
@@ -1604,7 +1729,7 @@
     <span class="doccomment">/// Identifiers created with this span will be resolved as if they were</span>
     <span class="doccomment">/// written directly at the macro call location (call-site hygiene) and</span>
     <span class="doccomment">/// other code at the macro call site will be able to refer to them as well.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">call_site</span>() -&gt; <span class="ident">Span</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">call_site</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">Span::_new</span>(<span class="ident">imp::Span::call_site</span>())
     }
 
@@ -1613,8 +1738,8 @@
     <span class="doccomment">/// of the macro. This is the same hygiene behavior as `macro_rules`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function requires Rust 1.45 or later.</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hygiene</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mixed_site</span>() -&gt; <span class="ident">Span</span> {
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">no_hygiene</span>))]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mixed_site</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">Span::_new</span>(<span class="ident">imp::Span::mixed_site</span>())
     }
 
@@ -1622,7 +1747,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method is semver exempt and not exposed by default.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">def_site</span>() -&gt; <span class="ident">Span</span> {
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)))]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">def_site</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">Span::_new</span>(<span class="ident">imp::Span::def_site</span>())
     }
 
@@ -1663,7 +1789,8 @@
     <span class="doccomment">/// The original source file into which this span points.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method is semver exempt and not exposed by default.</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">procmacro2_semver_exempt</span>, <span class="ident">any</span>(<span class="ident">not</span>(<span class="ident">wrap_proc_macro</span>), <span class="ident">super_unstable</span>)))]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">source_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">SourceFile</span> {
         <span class="ident">SourceFile::_new</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">source_file</span>())
     }
@@ -1671,7 +1798,14 @@
     <span class="doccomment">/// Get the starting line/column in the source file for this span.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method requires the `&quot;span-locations&quot;` feature to be enabled.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// When executing in a procedural macro context, the returned line/column</span>
+    <span class="doccomment">/// are only meaningful if compiled with a nightly toolchain. The stable</span>
+    <span class="doccomment">/// toolchain does not have this information available. When executing</span>
+    <span class="doccomment">/// outside of a procedural macro, such as main.rs or build.rs, the</span>
+    <span class="doccomment">/// line/column are always meaningful regardless of toolchain.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">span_locations</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;span-locations&quot;</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">LineColumn</span> {
         <span class="kw">let</span> <span class="ident">imp::LineColumn</span> { <span class="ident">line</span>, <span class="ident">column</span> } <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">start</span>();
         <span class="ident">LineColumn</span> { <span class="ident">line</span>, <span class="ident">column</span> }
@@ -1680,7 +1814,14 @@
     <span class="doccomment">/// Get the ending line/column in the source file for this span.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method requires the `&quot;span-locations&quot;` feature to be enabled.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// When executing in a procedural macro context, the returned line/column</span>
+    <span class="doccomment">/// are only meaningful if compiled with a nightly toolchain. The stable</span>
+    <span class="doccomment">/// toolchain does not have this information available. When executing</span>
+    <span class="doccomment">/// outside of a procedural macro, such as main.rs or build.rs, the</span>
+    <span class="doccomment">/// line/column are always meaningful regardless of toolchain.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">span_locations</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;span-locations&quot;</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">end</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">LineColumn</span> {
         <span class="kw">let</span> <span class="ident">imp::LineColumn</span> { <span class="ident">line</span>, <span class="ident">column</span> } <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">end</span>();
         <span class="ident">LineColumn</span> { <span class="ident">line</span>, <span class="ident">column</span> }
@@ -1703,6 +1844,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This method is semver exempt and not exposed by default.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Span</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">inner</span>)
     }
@@ -1857,7 +1999,7 @@
     <span class="doccomment">/// This constructor will set the span for this group to</span>
     <span class="doccomment">/// `Span::call_site()`. To change the span you can use the `set_span`</span>
     <span class="doccomment">/// method below.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">delimiter</span>: <span class="ident">Delimiter</span>, <span class="ident">stream</span>: <span class="ident">TokenStream</span>) -&gt; <span class="ident">Group</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">delimiter</span>: <span class="ident">Delimiter</span>, <span class="ident">stream</span>: <span class="ident">TokenStream</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Group</span> {
             <span class="ident">inner</span>: <span class="ident">imp::Group::new</span>(<span class="ident">delimiter</span>, <span class="ident">stream</span>.<span class="ident">inner</span>),
         }
@@ -1914,7 +2056,7 @@
     <span class="doccomment">/// by this group, but rather it will only set the span of the delimiter</span>
     <span class="doccomment">/// tokens at the level of the `Group`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_span</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">span</span>: <span class="ident">Span</span>) {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">set_span</span>(<span class="ident">span</span>.<span class="ident">inner</span>)
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">set_span</span>(<span class="ident">span</span>.<span class="ident">inner</span>);
     }
 }
 
@@ -1933,7 +2075,7 @@
     }
 }
 
-<span class="doccomment">/// An `Punct` is an single punctuation character like `+`, `-` or `#`.</span>
+<span class="doccomment">/// A `Punct` is a single punctuation character like `+`, `-` or `#`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Multicharacter operators like `+=` are represented as two instances of</span>
 <span class="doccomment">/// `Punct` with different forms of `Spacing` returned.</span>
@@ -1944,7 +2086,7 @@
     <span class="ident">span</span>: <span class="ident">Span</span>,
 }
 
-<span class="doccomment">/// Whether an `Punct` is followed immediately by another `Punct` or followed by</span>
+<span class="doccomment">/// Whether a `Punct` is followed immediately by another `Punct` or followed by</span>
 <span class="doccomment">/// another token or whitespace.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Spacing</span> {
@@ -1965,7 +2107,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The returned `Punct` will have the default span of `Span::call_site()`</span>
     <span class="doccomment">/// which can be further configured with the `set_span` method below.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">ch</span>: <span class="ident">char</span>, <span class="ident">spacing</span>: <span class="ident">Spacing</span>) -&gt; <span class="ident">Punct</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">ch</span>: <span class="ident">char</span>, <span class="ident">spacing</span>: <span class="ident">Spacing</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Punct</span> {
             <span class="ident">ch</span>,
             <span class="ident">spacing</span>,
@@ -2087,7 +2229,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Ident</span> {
-    <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::Ident</span>) -&gt; <span class="ident">Ident</span> {
+    <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::Ident</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Ident</span> {
             <span class="ident">inner</span>,
             <span class="ident">_marker</span>: <span class="ident">Marker</span>,
@@ -2125,19 +2267,20 @@
     <span class="doccomment">///   style=&quot;padding-right:0;&quot;&gt;syn::parse_str&lt;/code&gt;&lt;/a&gt;&lt;code</span>
     <span class="doccomment">///   style=&quot;padding-left:0;&quot;&gt;::&amp;lt;Ident&amp;gt;&lt;/code&gt;</span>
     <span class="doccomment">/// rather than `Ident::new`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) -&gt; <span class="ident">Ident</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Ident::_new</span>(<span class="ident">imp::Ident::new</span>(<span class="ident">string</span>, <span class="ident">span</span>.<span class="ident">inner</span>))
     }
 
-    <span class="doccomment">/// Same as `Ident::new`, but creates a raw identifier (`r#ident`).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method is semver exempt and not exposed by default.</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">procmacro2_semver_exempt</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_raw</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) -&gt; <span class="ident">Ident</span> {
+    <span class="doccomment">/// Same as `Ident::new`, but creates a raw identifier (`r#ident`). The</span>
+    <span class="doccomment">/// `string` argument must be a valid identifier permitted by the language</span>
+    <span class="doccomment">/// (including keywords, e.g. `fn`). Keywords which are usable in path</span>
+    <span class="doccomment">/// segments (e.g. `self`, `super`) are not supported, and will cause a</span>
+    <span class="doccomment">/// panic.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_raw</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Ident::_new_raw</span>(<span class="ident">string</span>, <span class="ident">span</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">_new_raw</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) -&gt; <span class="ident">Ident</span> {
+    <span class="kw">fn</span> <span class="ident">_new_raw</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Ident::_new</span>(<span class="ident">imp::Ident::new_raw</span>(<span class="ident">string</span>, <span class="ident">span</span>.<span class="ident">inner</span>))
     }
 
@@ -2184,7 +2327,7 @@
 
 <span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="ident">Ident</span> {
     <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hasher</span>: <span class="kw-2">&amp;mut</span> <span class="ident">H</span>) {
-        <span class="self">self</span>.<span class="ident">to_string</span>().<span class="ident">hash</span>(<span class="ident">hasher</span>)
+        <span class="self">self</span>.<span class="ident">to_string</span>().<span class="ident">hash</span>(<span class="ident">hasher</span>);
     }
 }
 
@@ -2221,7 +2364,7 @@
         <span class="doccomment">/// This function will create an integer like `1u32` where the integer</span>
         <span class="doccomment">/// value specified is the first part of the token and the integral is</span>
         <span class="doccomment">/// also suffixed at the end. Literals created from negative numbers may</span>
-        <span class="doccomment">/// not survive rountrips through `TokenStream` or strings and may be</span>
+        <span class="doccomment">/// not survive roundtrips through `TokenStream` or strings and may be</span>
         <span class="doccomment">/// broken into two tokens (`-` and positive literal).</span>
         <span class="doccomment">///</span>
         <span class="doccomment">/// Literals created through this method have the `Span::call_site()`</span>
@@ -2242,7 +2385,7 @@
         <span class="doccomment">/// specified on this token, meaning that invocations like</span>
         <span class="doccomment">/// `Literal::i8_unsuffixed(1)` are equivalent to</span>
         <span class="doccomment">/// `Literal::u32_unsuffixed(1)`. Literals created from negative numbers</span>
-        <span class="doccomment">/// may not survive rountrips through `TokenStream` or strings and may</span>
+        <span class="doccomment">/// may not survive roundtrips through `TokenStream` or strings and may</span>
         <span class="doccomment">/// be broken into two tokens (`-` and positive literal).</span>
         <span class="doccomment">///</span>
         <span class="doccomment">/// Literals created through this method have the `Span::call_site()`</span>
@@ -2255,14 +2398,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Literal</span> {
-    <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::Literal</span>) -&gt; <span class="ident">Literal</span> {
+    <span class="kw">fn</span> <span class="ident">_new</span>(<span class="ident">inner</span>: <span class="ident">imp::Literal</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Literal</span> {
             <span class="ident">inner</span>,
             <span class="ident">_marker</span>: <span class="ident">Marker</span>,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">_new_stable</span>(<span class="ident">inner</span>: <span class="ident">fallback::Literal</span>) -&gt; <span class="ident">Literal</span> {
+    <span class="kw">fn</span> <span class="ident">_new_stable</span>(<span class="ident">inner</span>: <span class="ident">fallback::Literal</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Literal</span> {
             <span class="ident">inner</span>: <span class="ident">inner</span>.<span class="ident">into</span>(),
             <span class="ident">_marker</span>: <span class="ident">Marker</span>,
@@ -2304,9 +2447,9 @@
     <span class="doccomment">/// This constructor is similar to those like `Literal::i8_unsuffixed` where</span>
     <span class="doccomment">/// the float&#39;s value is emitted directly into the token but no suffix is</span>
     <span class="doccomment">/// used, so it may be inferred to be a `f64` later in the compiler.</span>
-    <span class="doccomment">/// Literals created from negative numbers may not survive rountrips through</span>
-    <span class="doccomment">/// `TokenStream` or strings and may be broken into two tokens (`-` and</span>
-    <span class="doccomment">/// positive literal).</span>
+    <span class="doccomment">/// Literals created from negative numbers may not survive round-trips</span>
+    <span class="doccomment">/// through `TokenStream` or strings and may be broken into two tokens (`-`</span>
+    <span class="doccomment">/// and positive literal).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
@@ -2323,7 +2466,7 @@
     <span class="doccomment">/// specified is the preceding part of the token and `f64` is the suffix of</span>
     <span class="doccomment">/// the token. This token will always be inferred to be an `f64` in the</span>
     <span class="doccomment">/// compiler. Literals created from negative numbers may not survive</span>
-    <span class="doccomment">/// rountrips through `TokenStream` or strings and may be broken into two</span>
+    <span class="doccomment">/// round-trips through `TokenStream` or strings and may be broken into two</span>
     <span class="doccomment">/// tokens (`-` and positive literal).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
@@ -2340,9 +2483,9 @@
     <span class="doccomment">/// This constructor is similar to those like `Literal::i8_unsuffixed` where</span>
     <span class="doccomment">/// the float&#39;s value is emitted directly into the token but no suffix is</span>
     <span class="doccomment">/// used, so it may be inferred to be a `f64` later in the compiler.</span>
-    <span class="doccomment">/// Literals created from negative numbers may not survive rountrips through</span>
-    <span class="doccomment">/// `TokenStream` or strings and may be broken into two tokens (`-` and</span>
-    <span class="doccomment">/// positive literal).</span>
+    <span class="doccomment">/// Literals created from negative numbers may not survive round-trips</span>
+    <span class="doccomment">/// through `TokenStream` or strings and may be broken into two tokens (`-`</span>
+    <span class="doccomment">/// and positive literal).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
@@ -2359,7 +2502,7 @@
     <span class="doccomment">/// specified is the preceding part of the token and `f32` is the suffix of</span>
     <span class="doccomment">/// the token. This token will always be inferred to be an `f32` in the</span>
     <span class="doccomment">/// compiler. Literals created from negative numbers may not survive</span>
-    <span class="doccomment">/// rountrips through `TokenStream` or strings and may be broken into two</span>
+    <span class="doccomment">/// round-trips through `TokenStream` or strings and may be broken into two</span>
     <span class="doccomment">/// tokens (`-` and positive literal).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
@@ -2408,6 +2551,26 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subspan</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RangeBounds</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">range</span>: <span class="ident">R</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Span</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">subspan</span>(<span class="ident">range</span>).<span class="ident">map</span>(<span class="ident">Span::_new</span>)
     }
+
+    <span class="comment">// Intended for the `quote!` macro to use when constructing a proc-macro2</span>
+    <span class="comment">// token out of a macro_rules $:literal token, which is already known to be</span>
+    <span class="comment">// a valid literal. This avoids reparsing/validating the literal&#39;s string</span>
+    <span class="comment">// representation. This is not public API other than for quote.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_str_unchecked</span>(<span class="ident">repr</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
+        <span class="ident">Literal::_new</span>(<span class="ident">imp::Literal::from_str_unchecked</span>(<span class="ident">repr</span>))
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Literal</span> {
+    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">LexError</span>;
+
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">repr</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">LexError</span><span class="op">&gt;</span> {
+        <span class="ident">repr</span>.<span class="ident">parse</span>().<span class="ident">map</span>(<span class="ident">Literal::_new</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">inner</span><span class="op">|</span> <span class="ident">LexError</span> {
+            <span class="ident">inner</span>,
+            <span class="ident">_marker</span>: <span class="ident">Marker</span>,
+        })
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Literal</span> {
@@ -2426,7 +2589,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">token_stream</span> {
     <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::marker::Marker</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">imp</span>, <span class="ident">TokenTree</span>};
-    <span class="kw">use</span> <span class="ident">std::fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
+    <span class="kw">use</span> <span class="ident">core::fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
 
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TokenStream</span>;
 
@@ -2446,11 +2609,16 @@
         <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TokenTree</span><span class="op">&gt;</span> {
             <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">next</span>()
         }
+
+        <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+            <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">size_hint</span>()
+        }
     }
 
     <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">IntoIter</span> {
         <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-            <span class="ident">Debug::fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">f</span>)
+            <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;TokenStream &quot;</span>)<span class="question-mark">?</span>;
+            <span class="ident">f</span>.<span class="ident">debug_list</span>().<span class="ident">entries</span>(<span class="self">self</span>.<span class="ident">clone</span>()).<span class="ident">finish</span>()
         }
     }
 

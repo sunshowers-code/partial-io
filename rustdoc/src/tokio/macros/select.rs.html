@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.1.0/src/macros/select.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>select.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../tokio/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../tokio/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../tokio/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.21.1/src/macros/select.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>select.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../tokio/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../tokio/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../tokio/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -882,7 +882,129 @@
 <span id="882">882</span>
 <span id="883">883</span>
 <span id="884">884</span>
-</pre><pre class="rust"><code><span class="doccomment">/// Wait on multiple concurrent branches, returning when the **first** branch</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
+<span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
+<span id="917">917</span>
+<span id="918">918</span>
+<span id="919">919</span>
+<span id="920">920</span>
+<span id="921">921</span>
+<span id="922">922</span>
+<span id="923">923</span>
+<span id="924">924</span>
+<span id="925">925</span>
+<span id="926">926</span>
+<span id="927">927</span>
+<span id="928">928</span>
+<span id="929">929</span>
+<span id="930">930</span>
+<span id="931">931</span>
+<span id="932">932</span>
+<span id="933">933</span>
+<span id="934">934</span>
+<span id="935">935</span>
+<span id="936">936</span>
+<span id="937">937</span>
+<span id="938">938</span>
+<span id="939">939</span>
+<span id="940">940</span>
+<span id="941">941</span>
+<span id="942">942</span>
+<span id="943">943</span>
+<span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
+<span id="949">949</span>
+<span id="950">950</span>
+<span id="951">951</span>
+<span id="952">952</span>
+<span id="953">953</span>
+<span id="954">954</span>
+<span id="955">955</span>
+<span id="956">956</span>
+<span id="957">957</span>
+<span id="958">958</span>
+<span id="959">959</span>
+<span id="960">960</span>
+<span id="961">961</span>
+<span id="962">962</span>
+<span id="963">963</span>
+<span id="964">964</span>
+<span id="965">965</span>
+<span id="966">966</span>
+<span id="967">967</span>
+<span id="968">968</span>
+<span id="969">969</span>
+<span id="970">970</span>
+<span id="971">971</span>
+<span id="972">972</span>
+<span id="973">973</span>
+<span id="974">974</span>
+<span id="975">975</span>
+<span id="976">976</span>
+<span id="977">977</span>
+<span id="978">978</span>
+<span id="979">979</span>
+<span id="980">980</span>
+<span id="981">981</span>
+<span id="982">982</span>
+<span id="983">983</span>
+<span id="984">984</span>
+<span id="985">985</span>
+<span id="986">986</span>
+<span id="987">987</span>
+<span id="988">988</span>
+<span id="989">989</span>
+<span id="990">990</span>
+<span id="991">991</span>
+<span id="992">992</span>
+<span id="993">993</span>
+<span id="994">994</span>
+<span id="995">995</span>
+<span id="996">996</span>
+<span id="997">997</span>
+<span id="998">998</span>
+<span id="999">999</span>
+<span id="1000">1000</span>
+<span id="1001">1001</span>
+<span id="1002">1002</span>
+<span id="1003">1003</span>
+<span id="1004">1004</span>
+<span id="1005">1005</span>
+<span id="1006">1006</span>
+</pre><pre class="rust"><code><span class="doccomment">/// Waits on multiple concurrent branches, returning when the **first** branch</span>
 <span class="doccomment">/// completes, cancelling the remaining branches.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The `select!` macro must be used inside of async functions, closures, and</span>
@@ -898,7 +1020,7 @@
 <span class="doccomment">/// branch, which evaluates if none of the other branches match their patterns:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```text</span>
-<span class="doccomment">/// else &lt;expression&gt;</span>
+<span class="doccomment">/// else =&gt; &lt;expression&gt;</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The macro aggregates all `&lt;async expression&gt;` expressions and runs them</span>
@@ -907,10 +1029,10 @@
 <span class="doccomment">/// returns the result of evaluating the completed branch&#39;s `&lt;handler&gt;`</span>
 <span class="doccomment">/// expression.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Additionally, each branch may include an optional `if` precondition. This</span>
-<span class="doccomment">/// precondition is evaluated **before** the `&lt;async expression&gt;`. If the</span>
-<span class="doccomment">/// precondition returns `false`, the branch is entirely disabled. This</span>
-<span class="doccomment">/// capability is useful when using `select!` within a loop.</span>
+<span class="doccomment">/// Additionally, each branch may include an optional `if` precondition. If the</span>
+<span class="doccomment">/// precondition returns `false`, then the branch is disabled. The provided</span>
+<span class="doccomment">/// `&lt;async expression&gt;` is still evaluated but the resulting future is never</span>
+<span class="doccomment">/// polled. This capability is useful when using `select!` within a loop.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The complete lifecycle of a `select!` expression is as follows:</span>
 <span class="doccomment">///</span>
@@ -926,12 +1048,10 @@
 <span class="doccomment">///    to the provided `&lt;pattern&gt;`, if the pattern matches, evaluate `&lt;handler&gt;`</span>
 <span class="doccomment">///    and return. If the pattern **does not** match, disable the current branch</span>
 <span class="doccomment">///    and for the remainder of the current call to `select!`. Continue from step 3.</span>
-<span class="doccomment">/// 5. If **all** branches are disabled, evaluate the `else` expression. If none</span>
-<span class="doccomment">///    is provided, panic.</span>
+<span class="doccomment">/// 5. If **all** branches are disabled, evaluate the `else` expression. If no</span>
+<span class="doccomment">///    else branch is provided, panic.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # Notes</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ### Runtime characteristics</span>
+<span class="doccomment">/// # Runtime characteristics</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// By running all async expressions on the current task, the expressions are</span>
 <span class="doccomment">/// able to run **concurrently** but not in **parallel**. This means all</span>
@@ -942,87 +1062,85 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`tokio::spawn`]: crate::spawn</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ### Avoid racy `if` preconditions</span>
+<span class="doccomment">/// # Fairness</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Given that `if` preconditions are used to disable `select!` branches, some</span>
-<span class="doccomment">/// caution must be used to avoid missing values.</span>
+<span class="doccomment">/// By default, `select!` randomly picks a branch to check first. This provides</span>
+<span class="doccomment">/// some level of fairness when calling `select!` in a loop with branches that</span>
+<span class="doccomment">/// are always ready.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// For example, here is **incorrect** usage of `sleep` with `if`. The objective</span>
-<span class="doccomment">/// is to repeatedly run an asynchronous task for up to 50 milliseconds.</span>
-<span class="doccomment">/// However, there is a potential for the `sleep` completion to be missed.</span>
+<span class="doccomment">/// This behavior can be overridden by adding `biased;` to the beginning of the</span>
+<span class="doccomment">/// macro usage. See the examples for details. This will cause `select` to poll</span>
+<span class="doccomment">/// the futures in the order they appear from top to bottom. There are a few</span>
+<span class="doccomment">/// reasons you may want this:</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ```no_run</span>
-<span class="doccomment">/// use tokio::time::{self, Duration};</span>
+<span class="doccomment">/// - The random number generation of `tokio::select!` has a non-zero CPU cost</span>
+<span class="doccomment">/// - Your futures may interact in a way where known polling order is significant</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// async fn some_async_work() {</span>
-<span class="doccomment">///     // do work</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// #[tokio::main]</span>
-<span class="doccomment">/// async fn main() {</span>
-<span class="doccomment">///     let sleep = time::sleep(Duration::from_millis(50));</span>
-<span class="doccomment">///     tokio::pin!(sleep);</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     while !sleep.is_elapsed() {</span>
-<span class="doccomment">///         tokio::select! {</span>
-<span class="doccomment">///             _ = &amp;mut sleep, if !sleep.is_elapsed() =&gt; {</span>
-<span class="doccomment">///                 println!(&quot;operation timed out&quot;);</span>
-<span class="doccomment">///             }</span>
-<span class="doccomment">///             _ = some_async_work() =&gt; {</span>
-<span class="doccomment">///                 println!(&quot;operation completed&quot;);</span>
-<span class="doccomment">///             }</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// In the above example, `sleep.is_elapsed()` may return `true` even if</span>
-<span class="doccomment">/// `sleep.poll()` never returned `Ready`. This opens up a potential race</span>
-<span class="doccomment">/// condition where `sleep` expires between the `while !sleep.is_elapsed()`</span>
-<span class="doccomment">/// check and the call to `select!` resulting in the `some_async_work()` call to</span>
-<span class="doccomment">/// run uninterrupted despite the sleep having elapsed.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// One way to write the above example without the race would be:</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">/// use tokio::time::{self, Duration};</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// async fn some_async_work() {</span>
-<span class="doccomment">/// # time::sleep(Duration::from_millis(10)).await;</span>
-<span class="doccomment">///     // do work</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// #[tokio::main]</span>
-<span class="doccomment">/// async fn main() {</span>
-<span class="doccomment">///     let sleep = time::sleep(Duration::from_millis(50));</span>
-<span class="doccomment">///     tokio::pin!(sleep);</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     loop {</span>
-<span class="doccomment">///         tokio::select! {</span>
-<span class="doccomment">///             _ = &amp;mut sleep =&gt; {</span>
-<span class="doccomment">///                 println!(&quot;operation timed out&quot;);</span>
-<span class="doccomment">///                 break;</span>
-<span class="doccomment">///             }</span>
-<span class="doccomment">///             _ = some_async_work() =&gt; {</span>
-<span class="doccomment">///                 println!(&quot;operation completed&quot;);</span>
-<span class="doccomment">///             }</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ### Fairness</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// `select!` randomly picks a branch to check first. This provides some level</span>
-<span class="doccomment">/// of fairness when calling `select!` in a loop with branches that are always</span>
+<span class="doccomment">/// But there is an important caveat to this mode. It becomes your responsibility</span>
+<span class="doccomment">/// to ensure that the polling order of your futures is fair. If for example you</span>
+<span class="doccomment">/// are selecting between a stream and a shutdown future, and the stream has a</span>
+<span class="doccomment">/// huge volume of messages and zero or nearly zero time between them, you should</span>
+<span class="doccomment">/// place the shutdown future earlier in the `select!` list to ensure that it is</span>
+<span class="doccomment">/// always polled, and will not be ignored due to the stream being constantly</span>
 <span class="doccomment">/// ready.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Panics</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `select!` panics if all branches are disabled **and** there is no provided</span>
-<span class="doccomment">/// `else` branch. A branch is disabled when the provided `if` precondition</span>
-<span class="doccomment">/// returns `false` **or** when the pattern does not match the result of `&lt;async</span>
-<span class="doccomment">/// expression&gt;.</span>
+<span class="doccomment">/// The `select!` macro panics if all branches are disabled **and** there is no</span>
+<span class="doccomment">/// provided `else` branch. A branch is disabled when the provided `if`</span>
+<span class="doccomment">/// precondition returns `false` **or** when the pattern does not match the</span>
+<span class="doccomment">/// result of `&lt;async expression&gt;`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Cancellation safety</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// When using `select!` in a loop to receive messages from multiple sources,</span>
+<span class="doccomment">/// you should make sure that the receive call is cancellation safe to avoid</span>
+<span class="doccomment">/// losing messages. This section goes through various common methods and</span>
+<span class="doccomment">/// describes whether they are cancel safe.  The lists in this section are not</span>
+<span class="doccomment">/// exhaustive.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The following methods are cancellation safe:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///  * [`tokio::sync::mpsc::Receiver::recv`](crate::sync::mpsc::Receiver::recv)</span>
+<span class="doccomment">///  * [`tokio::sync::mpsc::UnboundedReceiver::recv`](crate::sync::mpsc::UnboundedReceiver::recv)</span>
+<span class="doccomment">///  * [`tokio::sync::broadcast::Receiver::recv`](crate::sync::broadcast::Receiver::recv)</span>
+<span class="doccomment">///  * [`tokio::sync::watch::Receiver::changed`](crate::sync::watch::Receiver::changed)</span>
+<span class="doccomment">///  * [`tokio::net::TcpListener::accept`](crate::net::TcpListener::accept)</span>
+<span class="doccomment">///  * [`tokio::net::UnixListener::accept`](crate::net::UnixListener::accept)</span>
+<span class="doccomment">///  * [`tokio::signal::unix::Signal::recv`](crate::signal::unix::Signal::recv)</span>
+<span class="doccomment">///  * [`tokio::io::AsyncReadExt::read`](crate::io::AsyncReadExt::read) on any `AsyncRead`</span>
+<span class="doccomment">///  * [`tokio::io::AsyncReadExt::read_buf`](crate::io::AsyncReadExt::read_buf) on any `AsyncRead`</span>
+<span class="doccomment">///  * [`tokio::io::AsyncWriteExt::write`](crate::io::AsyncWriteExt::write) on any `AsyncWrite`</span>
+<span class="doccomment">///  * [`tokio::io::AsyncWriteExt::write_buf`](crate::io::AsyncWriteExt::write_buf) on any `AsyncWrite`</span>
+<span class="doccomment">///  * [`tokio_stream::StreamExt::next`](https://docs.rs/tokio-stream/0.1/tokio_stream/trait.StreamExt.html#method.next) on any `Stream`</span>
+<span class="doccomment">///  * [`futures::stream::StreamExt::next`](https://docs.rs/futures/0.3/futures/stream/trait.StreamExt.html#method.next) on any `Stream`</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The following methods are not cancellation safe and can lead to loss of data:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///  * [`tokio::io::AsyncReadExt::read_exact`](crate::io::AsyncReadExt::read_exact)</span>
+<span class="doccomment">///  * [`tokio::io::AsyncReadExt::read_to_end`](crate::io::AsyncReadExt::read_to_end)</span>
+<span class="doccomment">///  * [`tokio::io::AsyncReadExt::read_to_string`](crate::io::AsyncReadExt::read_to_string)</span>
+<span class="doccomment">///  * [`tokio::io::AsyncWriteExt::write_all`](crate::io::AsyncWriteExt::write_all)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The following methods are not cancellation safe because they use a queue for</span>
+<span class="doccomment">/// fairness and cancellation makes you lose your place in the queue:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///  * [`tokio::sync::Mutex::lock`](crate::sync::Mutex::lock)</span>
+<span class="doccomment">///  * [`tokio::sync::RwLock::read`](crate::sync::RwLock::read)</span>
+<span class="doccomment">///  * [`tokio::sync::RwLock::write`](crate::sync::RwLock::write)</span>
+<span class="doccomment">///  * [`tokio::sync::Semaphore::acquire`](crate::sync::Semaphore::acquire)</span>
+<span class="doccomment">///  * [`tokio::sync::Notify::notified`](crate::sync::Notify::notified)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// To determine whether your own methods are cancellation safe, look for the</span>
+<span class="doccomment">/// location of uses of `.await`. This is because when an asynchronous method is</span>
+<span class="doccomment">/// cancelled, that always happens at an `.await`. If your function behaves</span>
+<span class="doccomment">/// correctly even if it is restarted while waiting at an `.await`, then it is</span>
+<span class="doccomment">/// cancellation safe.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Be aware that cancelling something that is not cancellation safe is not</span>
+<span class="doccomment">/// necessarily wrong. For example, if you are cancelling a task because the</span>
+<span class="doccomment">/// application is shutting down, then you probably don&#39;t care that partially</span>
+<span class="doccomment">/// read data is lost.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
@@ -1167,6 +1285,116 @@
 <span class="doccomment">///     assert_eq!(res.1, &quot;second&quot;);</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Using the `biased;` mode to control polling order.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// #[tokio::main]</span>
+<span class="doccomment">/// async fn main() {</span>
+<span class="doccomment">///     let mut count = 0u8;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     loop {</span>
+<span class="doccomment">///         tokio::select! {</span>
+<span class="doccomment">///             // If you run this example without `biased;`, the polling order is</span>
+<span class="doccomment">///             // pseudo-random, and the assertions on the value of count will</span>
+<span class="doccomment">///             // (probably) fail.</span>
+<span class="doccomment">///             biased;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///             _ = async {}, if count &lt; 1 =&gt; {</span>
+<span class="doccomment">///                 count += 1;</span>
+<span class="doccomment">///                 assert_eq!(count, 1);</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///             _ = async {}, if count &lt; 2 =&gt; {</span>
+<span class="doccomment">///                 count += 1;</span>
+<span class="doccomment">///                 assert_eq!(count, 2);</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///             _ = async {}, if count &lt; 3 =&gt; {</span>
+<span class="doccomment">///                 count += 1;</span>
+<span class="doccomment">///                 assert_eq!(count, 3);</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///             _ = async {}, if count &lt; 4 =&gt; {</span>
+<span class="doccomment">///                 count += 1;</span>
+<span class="doccomment">///                 assert_eq!(count, 4);</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///             else =&gt; {</span>
+<span class="doccomment">///                 break;</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///         };</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Avoid racy `if` preconditions</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Given that `if` preconditions are used to disable `select!` branches, some</span>
+<span class="doccomment">/// caution must be used to avoid missing values.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For example, here is **incorrect** usage of `sleep` with `if`. The objective</span>
+<span class="doccomment">/// is to repeatedly run an asynchronous task for up to 50 milliseconds.</span>
+<span class="doccomment">/// However, there is a potential for the `sleep` completion to be missed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```no_run,should_panic</span>
+<span class="doccomment">/// use tokio::time::{self, Duration};</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// async fn some_async_work() {</span>
+<span class="doccomment">///     // do work</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #[tokio::main]</span>
+<span class="doccomment">/// async fn main() {</span>
+<span class="doccomment">///     let sleep = time::sleep(Duration::from_millis(50));</span>
+<span class="doccomment">///     tokio::pin!(sleep);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     while !sleep.is_elapsed() {</span>
+<span class="doccomment">///         tokio::select! {</span>
+<span class="doccomment">///             _ = &amp;mut sleep, if !sleep.is_elapsed() =&gt; {</span>
+<span class="doccomment">///                 println!(&quot;operation timed out&quot;);</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///             _ = some_async_work() =&gt; {</span>
+<span class="doccomment">///                 println!(&quot;operation completed&quot;);</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///         }</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     panic!(&quot;This example shows how not to do it!&quot;);</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// In the above example, `sleep.is_elapsed()` may return `true` even if</span>
+<span class="doccomment">/// `sleep.poll()` never returned `Ready`. This opens up a potential race</span>
+<span class="doccomment">/// condition where `sleep` expires between the `while !sleep.is_elapsed()`</span>
+<span class="doccomment">/// check and the call to `select!` resulting in the `some_async_work()` call to</span>
+<span class="doccomment">/// run uninterrupted despite the sleep having elapsed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// One way to write the above example without the race would be:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use tokio::time::{self, Duration};</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// async fn some_async_work() {</span>
+<span class="doccomment">/// # time::sleep(Duration::from_millis(10)).await;</span>
+<span class="doccomment">///     // do work</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #[tokio::main]</span>
+<span class="doccomment">/// async fn main() {</span>
+<span class="doccomment">///     let sleep = time::sleep(Duration::from_millis(50));</span>
+<span class="doccomment">///     tokio::pin!(sleep);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     loop {</span>
+<span class="doccomment">///         tokio::select! {</span>
+<span class="doccomment">///             _ = &amp;mut sleep =&gt; {</span>
+<span class="doccomment">///                 println!(&quot;operation timed out&quot;);</span>
+<span class="doccomment">///                 break;</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///             _ = some_async_work() =&gt; {</span>
+<span class="doccomment">///                 println!(&quot;operation completed&quot;);</span>
+<span class="doccomment">///             }</span>
+<span class="doccomment">///         }</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;macros&quot;</span>)))]</span>
 <span class="macro">macro_rules!</span> <span class="ident">select</span> {
@@ -1184,6 +1412,10 @@
 
     <span class="comment">// All input is normalized, now transform.</span>
     (@ {
+        <span class="comment">// The index of the future to poll first (in bias mode), or the RNG</span>
+        <span class="comment">// expression to use to pick a future to poll first.</span>
+        <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>;
+
         <span class="comment">// One `_` for each branch in the `select!` macro. Passing this to</span>
         <span class="comment">// `count!` converts $skip to an integer.</span>
         ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">count</span>:<span class="ident">tt</span>)<span class="op">*</span> )
@@ -1204,7 +1436,8 @@
         <span class="comment">//</span>
         <span class="comment">// This module is defined within a scope and should not leak out of this</span>
         <span class="comment">// macro.</span>
-        <span class="kw">mod</span> <span class="ident">util</span> {
+        <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+        <span class="kw">mod</span> <span class="ident">__tokio_select_util</span> {
             <span class="comment">// Generate an enum with one variant per select branch</span>
             <span class="macro-nonterminal">$</span><span class="macro">crate::select_priv_declare_output_enum!</span>( ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">count</span>)<span class="op">*</span> ) );
         }
@@ -1217,13 +1450,13 @@
 
         <span class="kw">const</span> <span class="ident">BRANCHES</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro">crate::count!</span>( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">count</span>)<span class="op">*</span> );
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">disabled</span>: <span class="ident">util::Mask</span> <span class="op">=</span> <span class="ident">Default::default</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">disabled</span>: <span class="ident">__tokio_select_util::Mask</span> <span class="op">=</span> <span class="ident">Default::default</span>();
 
         <span class="comment">// First, invoke all the pre-conditions. For any that return true,</span>
         <span class="comment">// set the appropriate bit in `disabled`.</span>
         $(
             <span class="kw">if</span> <span class="op">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> {
-                <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="macro-nonterminal">$</span><span class="macro">crate::count!</span>( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">skip</span>)<span class="op">*</span> );
+                <span class="kw">let</span> <span class="ident">mask</span>: <span class="ident">__tokio_select_util::Mask</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="macro-nonterminal">$</span><span class="macro">crate::count!</span>( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">skip</span>)<span class="op">*</span> );
                 <span class="ident">disabled</span> <span class="op">|</span><span class="op">=</span> <span class="ident">mask</span>;
             }
         )<span class="op">*</span>
@@ -1241,9 +1474,11 @@
                 <span class="comment">// disabled.</span>
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">is_pending</span> <span class="op">=</span> <span class="bool-val">false</span>;
 
-                <span class="comment">// Randomly generate a starting point. This makes `select!` a</span>
-                <span class="comment">// bit more fair and avoids always polling the first future.</span>
-                <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::macros::support::thread_rng_n</span>(<span class="ident">BRANCHES</span>);
+                <span class="comment">// Choose a starting index to begin polling the futures at. In</span>
+                <span class="comment">// practice, this will either be a pseudo-randomly generated</span>
+                <span class="comment">// number by default, or the constant 0 if `biased;` is</span>
+                <span class="comment">// supplied.</span>
+                <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>;
 
                 <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">BRANCHES</span> {
                     <span class="kw">let</span> <span class="ident">branch</span>;
@@ -1275,7 +1510,7 @@
                                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fut</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Pin::new_unchecked</span>(<span class="ident">fut</span>) };
 
                                 <span class="comment">// Try polling it</span>
-                                <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">fut</span>.<span class="ident">poll</span>(<span class="ident">cx</span>) {
+                                <span class="kw">let</span> <span class="ident">out</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">Future::poll</span>(<span class="ident">fut</span>, <span class="ident">cx</span>) {
                                     <span class="ident">Ready</span>(<span class="ident">out</span>) =&gt; <span class="ident">out</span>,
                                     <span class="ident">Pending</span> =&gt; {
                                         <span class="comment">// Track that at least one future is</span>
@@ -1293,12 +1528,12 @@
                                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_variables</span>)]</span>
                                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
                                 <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">out</span> {
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bind</span> =&gt; {}
+                                    <span class="macro-nonterminal">$</span><span class="macro">crate::select_priv_clean_pattern!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bind</span>) =&gt; {}
                                     <span class="kw">_</span> =&gt; <span class="kw">continue</span>,
                                 }
 
                                 <span class="comment">// The select is complete, return the value</span>
-                                <span class="kw">return</span> <span class="ident">Ready</span>(<span class="macro-nonterminal">$</span><span class="macro">crate::select_variant!</span>(<span class="macro-nonterminal">util::Out</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">skip</span>)<span class="kw-2">*</span>))(<span class="ident">out</span>));
+                                <span class="kw">return</span> <span class="ident">Ready</span>(<span class="macro-nonterminal">$</span><span class="macro">crate::select_variant!</span>(<span class="macro-nonterminal">__tokio_select_util::Out</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">skip</span>)<span class="kw-2">*</span>))(<span class="ident">out</span>));
                             }
                         )<span class="op">*</span>
                         <span class="kw">_</span> =&gt; <span class="macro">unreachable!</span>(<span class="string">&quot;reaching this means there probably is an off by one bug&quot;</span>),
@@ -1309,16 +1544,16 @@
                     <span class="ident">Pending</span>
                 } <span class="kw">else</span> {
                     <span class="comment">// All branches have been disabled.</span>
-                    <span class="ident">Ready</span>(<span class="ident">util::Out::Disabled</span>)
+                    <span class="ident">Ready</span>(<span class="ident">__tokio_select_util::Out::Disabled</span>)
                 }
             }).<span class="kw">await</span>
         };
 
         <span class="kw">match</span> <span class="ident">output</span> {
             $(
-                <span class="macro-nonterminal">$</span><span class="macro">crate::select_variant!</span>(<span class="macro-nonterminal">util::Out</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">skip</span>)<span class="kw-2">*</span>) (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bind</span>)) =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>,
+                <span class="macro-nonterminal">$</span><span class="macro">crate::select_variant!</span>(<span class="macro-nonterminal">__tokio_select_util::Out</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">skip</span>)<span class="kw-2">*</span>) (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bind</span>)) =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>,
             )<span class="op">*</span>
-            <span class="ident">util::Out::Disabled</span> =&gt; <span class="macro-nonterminal">$</span><span class="kw">else</span>,
+            <span class="ident">__tokio_select_util::Out::Disabled</span> =&gt; <span class="macro-nonterminal">$</span><span class="kw">else</span>,
             <span class="kw">_</span> =&gt; <span class="macro">unreachable!</span>(<span class="string">&quot;failed to match bind&quot;</span>),
         }
     }};
@@ -1328,42 +1563,48 @@
     <span class="comment">// These rules match a single `select!` branch and normalize it for</span>
     <span class="comment">// processing by the first rule.</span>
 
-    (@ { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } ) =&gt; {
+    (@ { <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } ) =&gt; {
         <span class="comment">// No `else` branch</span>
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="kw-2">*</span>; <span class="macro">panic!</span>(<span class="string">&quot;all branches are disabled and there is no else branch&quot;</span>) })
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="kw-2">*</span>; <span class="macro">panic!</span>(<span class="string">&quot;all branches are disabled and there is no else branch&quot;</span>) })
     };
-    (@ { $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="kw">else</span> =&gt; <span class="macro-nonterminal">$</span><span class="kw">else</span>:<span class="macro-nonterminal">expr</span> $(,)<span class="question-mark">?</span>) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="kw-2">*</span>; <span class="macro-nonterminal">$</span><span class="kw">else</span> })
+    (@ { <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="kw">else</span> =&gt; <span class="macro-nonterminal">$</span><span class="kw">else</span>:<span class="macro-nonterminal">expr</span> $(,)<span class="question-mark">?</span>) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="kw-2">*</span>; <span class="macro-nonterminal">$</span><span class="kw">else</span> })
     };
-    (@ { ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">block</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
+    (@ { <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">block</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
     };
-    (@ { ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">block</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="bool-val">true</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
+    (@ { <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">block</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="bool-val">true</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
     };
-    (@ { ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">block</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
+    (@ { <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">block</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
     };
-    (@ { ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">block</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="bool-val">true</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
+    (@ { <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">block</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="bool-val">true</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
     };
-    (@ { ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">expr</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, })
+    (@ { <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">expr</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, })
     };
-    (@ { ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">expr</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="bool-val">true</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, })
+    (@ { <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">expr</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="bool-val">true</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, })
     };
-    (@ { ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
+    (@ { <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
     };
-    (@ { ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="bool-val">true</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
+    (@ { <span class="ident">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>:<span class="ident">expr</span>; ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>:<span class="ident">tt</span>)<span class="op">*</span> ) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">expr</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">start</span>; ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="op">*</span> <span class="kw">_</span>) $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">s</span>)<span class="kw-2">*</span>) <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>, <span class="kw">if</span> <span class="bool-val">true</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">h</span>, } $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>)<span class="kw-2">*</span>)
     };
 
     <span class="comment">// ===== Entry point =====</span>
 
+    (<span class="ident">biased</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span><span class="number">0</span>; () } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="kw-2">*</span>)
+    };
+
     ( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>:<span class="ident">pat</span> <span class="op">=</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span> ) =&gt; {
-        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ () } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="kw-2">*</span>)
+        <span class="comment">// Randomly generate a starting point. This makes `select!` a bit more</span>
+        <span class="comment">// fair and avoids always polling the first future.</span>
+        <span class="macro-nonterminal">$</span><span class="macro">crate::select!</span>(@{ <span class="macro-nonterminal">start</span><span class="op">=</span>{ <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::macros::support::thread_rng_n</span>(<span class="ident">BRANCHES</span>) }; () } <span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span> <span class="op">=</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="kw-2">*</span>)
     };
     () =&gt; {
         <span class="macro">compile_error!</span>(<span class="string">&quot;select! requires at least one branch.&quot;</span>)
@@ -1567,6 +1808,9 @@
     };
     (<span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span>) =&gt; {
         <span class="number">63</span>
+    };
+    (<span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span> <span class="kw">_</span>) =&gt; {
+        <span class="number">64</span>
     };
 }
 

@@ -1,47 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A macro that creates a projection type covering all the fields of struct."><meta name="keywords" content="rust, rustlang, rust-lang, pin_project"><title>pin_project in pin_project_lite - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc macro"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../pin_project_lite/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../pin_project_lite/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><div class="sidebar-elems"><h2 class="location"><a href="index.html">In pin_project_lite</a></h2></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../pin_project_lite/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Macro <a href="index.html">pin_project_lite</a>::<wbr><a class="macro" href="#">pin_project</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/pin_project_lite/lib.rs.html#307-399">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><div class="example-wrap"><pre class="rust macro"><code><span class="macro">macro_rules!</span> <span class="ident">pin_project</span> {
-    (
-        $(<span class="attribute">#[<span class="ident">doc</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]</span>)<span class="op">*</span>
-        <span class="attribute">#[<span class="ident">project</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_mut_ident</span>:<span class="ident">ident</span>]</span>
-        <span class="attribute">#[<span class="ident">project_ref</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_ref_ident</span>:<span class="ident">ident</span>]</span>
-        <span class="attribute">#[<span class="ident">project_replace</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_replace_ident</span>:<span class="ident">ident</span>]</span>
-        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="op">*</span>
-    ) =&gt; { ... };
-    (
-        $(<span class="attribute">#[<span class="ident">doc</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]</span>)<span class="op">*</span>
-        <span class="attribute">#[<span class="ident">project</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_mut_ident</span>:<span class="ident">ident</span>]</span>
-        <span class="attribute">#[<span class="ident">project_ref</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_ref_ident</span>:<span class="ident">ident</span>]</span>
-        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="op">*</span>
-    ) =&gt; { ... };
-    (
-        $(<span class="attribute">#[<span class="ident">doc</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]</span>)<span class="op">*</span>
-        <span class="attribute">#[<span class="ident">project</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_mut_ident</span>:<span class="ident">ident</span>]</span>
-        <span class="attribute">#[<span class="ident">project_replace</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_replace_ident</span>:<span class="ident">ident</span>]</span>
-        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="op">*</span>
-    ) =&gt; { ... };
-    (
-        $(<span class="attribute">#[<span class="ident">doc</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]</span>)<span class="op">*</span>
-        <span class="attribute">#[<span class="ident">project_ref</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_ref_ident</span>:<span class="ident">ident</span>]</span>
-        <span class="attribute">#[<span class="ident">project_replace</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_replace_ident</span>:<span class="ident">ident</span>]</span>
-        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="op">*</span>
-    ) =&gt; { ... };
-    (
-        $(<span class="attribute">#[<span class="ident">doc</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]</span>)<span class="op">*</span>
-        <span class="attribute">#[<span class="ident">project</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_mut_ident</span>:<span class="ident">ident</span>]</span>
-        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="op">*</span>
-    ) =&gt; { ... };
-    (
-        $(<span class="attribute">#[<span class="ident">doc</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]</span>)<span class="op">*</span>
-        <span class="attribute">#[<span class="ident">project_ref</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_ref_ident</span>:<span class="ident">ident</span>]</span>
-        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="op">*</span>
-    ) =&gt; { ... };
-    (
-        $(<span class="attribute">#[<span class="ident">doc</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>]</span>)<span class="op">*</span>
-        <span class="attribute">#[<span class="ident">project_replace</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">proj_replace_ident</span>:<span class="ident">ident</span>]</span>
-        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="op">*</span>
-    ) =&gt; { ... };
-    (
-        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="op">*</span>
-    ) =&gt; { ... };
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A macro that creates a projection type covering all the fields of struct."><meta name="keywords" content="rust, rustlang, rust-lang, pin_project"><title>pin_project in pin_project_lite - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc macro"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../pin_project_lite/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../pin_project_lite/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div></a><div class="sidebar-elems"><h2 class="location"><a href="index.html">In pin_project_lite</a></h2></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../pin_project_lite/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Macro <a href="index.html">pin_project_lite</a>::<wbr><a class="macro" href="#">pin_project</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/pin_project_lite/lib.rs.html#291-298">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><div class="example-wrap"><pre class="rust macro"><code><span class="macro">macro_rules!</span> <span class="ident">pin_project</span> {
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tt</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; { ... };
 }</code></pre></div>
 </div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A macro that creates a projection type covering all the fields of struct.</p>
 <p>This macro creates a projection type according to the following rules:</p>
@@ -79,18 +37,6 @@ method which allows the contents of <code>Pin&lt;&amp;mut Self&gt;</code> to be 
 out all unpinned fields in <code>Self</code>.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">fn</span> <span class="ident">project_replace</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">replacement</span>: <span class="self">Self</span>) -&gt; <span class="ident">MyProjReplace</span>;</code></pre></div>
-<p>The <code>#[project]</code> (and <code>#[project_ref]</code>) attribute must precede the other
-attributes except for <code>#[doc]</code>. For example, the following code will not be compiled:</p>
-
-<div class='information'><div class='tooltip compile_fail'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered compile_fail"><code><span class="macro">pin_project!</span> {
-    <span class="doccomment">/// documents (`#[doc]`) can be placed before `#[project]`.</span>
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span> <span class="comment">// &lt;--- ERROR</span>
-    <span class="attribute">#[<span class="ident">project</span> <span class="op">=</span> <span class="ident">EnumProj</span>]</span>
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span> <span class="comment">// &lt;--- Ok</span>
-    <span class="kw">enum</span> <span class="ident">Enum</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Variant</span> { <span class="attribute">#[<span class="ident">pin</span>]</span> <span class="ident">field</span>: <span class="ident">T</span> },
-    }
-}</code></pre></div>
 <p>Also, note that the projection types returned by <code>project</code> and <code>project_ref</code> have
 an additional lifetime at the beginning of generics.</p>
 <div class="example-wrap"><pre class="language-text"><code>let this: EnumProj&lt;&#39;_, T&gt; = self.project();
@@ -104,8 +50,9 @@ to <code>pub(crate)</code>.</p>
 Both are completely safe unless you write other unsafe code.</p>
 <p>See <a href="https://github.com/taiki-e/pin-project">pin-project</a> crate for more details.</p>
 <h2 id="examples"><a href="#examples">Examples</a></h2>
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">pin_project_lite::pin_project</span>;
-<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+
+<span class="kw">use</span> <span class="ident">pin_project_lite::pin_project</span>;
 
 <span class="macro">pin_project!</span> {
     <span class="kw">struct</span> <span class="ident">Struct</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> {
@@ -125,8 +72,9 @@ Both are completely safe unless you write other unsafe code.</p>
 <p>To use <code>pin_project!</code> on enums, you need to name the projection type
 returned from the method.</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">pin_project_lite::pin_project</span>;
-<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+
+<span class="kw">use</span> <span class="ident">pin_project_lite::pin_project</span>;
 
 <span class="macro">pin_project!</span> {
     <span class="attribute">#[<span class="ident">project</span> <span class="op">=</span> <span class="ident">EnumProj</span>]</span>
@@ -153,8 +101,9 @@ returned from the method.</p>
 original <a href="https://doc.rust-lang.org/1.64.0/core/pin/struct.Pin.html"><code>Pin</code></a> type, it needs to use <a href="https://doc.rust-lang.org/1.64.0/core/pin/struct.Pin.html#method.as_mut"><code>.as_mut()</code></a> to avoid
 consuming the <a href="https://doc.rust-lang.org/1.64.0/core/pin/struct.Pin.html"><code>Pin</code></a>.</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">pin_project_lite::pin_project</span>;
-<span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">std::pin::Pin</span>;
+
+<span class="kw">use</span> <span class="ident">pin_project_lite::pin_project</span>;
 
 <span class="macro">pin_project!</span> {
     <span class="kw">struct</span> <span class="ident">Struct</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
@@ -174,8 +123,9 @@ consuming the <a href="https://doc.rust-lang.org/1.64.0/core/pin/struct.Pin.html
 <p>If you want to ensure that <a href="https://doc.rust-lang.org/1.64.0/core/marker/trait.Unpin.html" title="Unpin"><code>Unpin</code></a> is not implemented, use <code>#[pin]</code>
 attribute for a <a href="https://doc.rust-lang.org/1.64.0/core/marker/struct.PhantomPinned.html"><code>PhantomPinned</code></a> field.</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">pin_project_lite::pin_project</span>;
-<span class="kw">use</span> <span class="ident">std::marker::PhantomPinned</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">std::marker::PhantomPinned</span>;
+
+<span class="kw">use</span> <span class="ident">pin_project_lite::pin_project</span>;
 
 <span class="macro">pin_project!</span> {
     <span class="kw">struct</span> <span class="ident">Struct</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
