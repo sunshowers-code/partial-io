@@ -1,6 +1,9 @@
 on: [push, pull_request]
 
 name: CI
+env:
+  RUSTFLAGS: -D warnings
+  CARGO_TERM_COLOR: always
 
 jobs:
   lint:
@@ -38,20 +41,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        features: ['', 'futures03', 'tokio1', 'quickcheck1', 'futures03 quickcheck1', 'tokio1 quickcheck1']
+        rust-version: [1.56, stable]
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: ${{ matrix.rust-version }}
+      - uses: Swatinem/rust-cache@f8f67b7515e98e4ac991ccb5c11240861e0f712b
+      - uses: taiki-e/install-action@cargo-hack
+      - uses: taiki-e/install-action@nextest
       - name: Build
         uses: actions-rs/cargo@v1
         with:
           # Build all targets to ensure examples are built as well.
-          command: build
-          args: --all-targets --features "${{ matrix.features }}"
+          command: hack
+          args: --feature-powerset build --all-targets
       - name: Test
         uses: actions-rs/cargo@v1
         with:
-          command: test
-          args: --features "${{ matrix.features }}"
+          command: hack
+          args: --feature-powerset nextest run --all-targets
+      - name: Run doctests
+        uses: actions-rs/cargo@v1
+        with:
+          command: hack
+          args: --feature-powerset test --doc

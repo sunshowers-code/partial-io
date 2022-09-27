@@ -1,7 +1,7 @@
 // Copyright (c) The partial-io Contributors
 // SPDX-License-Identifier: MIT
 
-#![deny(warnings)]
+#![cfg_attr(doc_cfg, feature(doc_auto_cfg))]
 
 //! Helpers for testing I/O behavior with partial, interrupted and blocking reads and writes.
 //!
@@ -83,6 +83,8 @@ mod async_read;
 mod async_write;
 #[cfg(feature = "futures03")]
 mod futures_util;
+#[cfg(feature = "proptest1")]
+pub mod proptest_types;
 #[cfg(feature = "quickcheck1")]
 pub mod quickcheck_types;
 mod read;
