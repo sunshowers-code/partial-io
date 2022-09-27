@@ -9,7 +9,7 @@ set -e
 pushd ..
 
 if test ! -d partial-io-gh-pages ; then
-  git clone -b gh-pages git@github.com:facebookincubator/rust-partial-io.git partial-io-gh-pages
+  git clone -b gh-pages git@github.com:sunshowers-code/partial-io.git partial-io-gh-pages
 fi
 cd partial-io-gh-pages
 

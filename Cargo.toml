@@ -5,7 +5,7 @@ edition = "2018"
 authors = ["Rain <rain1@fb.com>"]
 description = "Helpers to test partial, interrupted and would-block I/O operations."
 documentation = "https://docs.rs/partial-io"
-repository = "https://github.com/facebookincubator/rust-partial-io"
+repository = "https://github.com/sunshowers-code/partial-io"
 readme = "README.md"
 keywords = ["partial", "interrupted", "wouldblock", "tokio", "quickcheck"]
 categories = ["development-tools::testing", "asynchronous"]
@@ -22,14 +22,21 @@ exclude = [
 futures = { version = "0.3", optional = true }
 pin-project = { version = "1.0.4", optional = true }
 quickcheck = { version = "1.0.3", optional = true }
-rand = { version = "0.8.5", features = ["getrandom", "small_rng"], optional = true }
+rand = { version = "0.8.5", features = [
+  "getrandom",
+  "small_rng",
+], optional = true }
 tokio = { version = "1.21.1", optional = true }
 
 [dev-dependencies]
 itertools = "0.10.5"
 lazy_static = "1.4.0"
 quickcheck = "1.0.3"
-tokio = { version = "1.21.1", features = ["io-util", "macros", "rt-multi-thread"] }
+tokio = { version = "1.21.1", features = [
+  "io-util",
+  "macros",
+  "rt-multi-thread",
+] }
 
 [[example]]
 name = "buggy_write"
@@ -39,9 +46,6 @@ required-features = ["quickcheck1"]
 futures03 = ["futures", "pin-project"]
 tokio1 = ["futures03", "tokio"]
 quickcheck1 = ["quickcheck", "rand"]
-
-[badges]
-travis-ci = { repository = "facebookincubator/rust-partial-io" }
 
 [package.metadata.docs.rs]
 all-features = true
