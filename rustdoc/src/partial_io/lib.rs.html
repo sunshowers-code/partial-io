@@ -145,10 +145,12 @@
 <span id="145">145</span>
 <span id="146">146</span>
 <span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
 </pre><pre class="rust"><code><span class="comment">// Copyright (c) The partial-io Contributors</span>
 <span class="comment">// SPDX-License-Identifier: MIT</span>
 
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">warnings</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">feature</span>(<span class="ident">doc_auto_cfg</span>))]</span>
 
 <span class="doccomment">//! Helpers for testing I/O behavior with partial, interrupted and blocking reads and writes.</span>
 <span class="doccomment">//!</span>
@@ -230,6 +232,8 @@
 <span class="kw">mod</span> <span class="ident">async_write</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;futures03&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">futures_util</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;proptest1&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">proptest_types</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;quickcheck1&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">quickcheck_types</span>;
 <span class="kw">mod</span> <span class="ident">read</span>;
