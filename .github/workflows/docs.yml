@@ -26,6 +26,7 @@ jobs:
       - name: Organize
         run: |
           mkdir target/gh-pages
+          touch target/gh-pages/.nojekyll
           mv target/doc target/gh-pages/rustdoc
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
