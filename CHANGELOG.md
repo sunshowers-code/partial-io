@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.1] - 2022-09-27
+
+### Changed
+
+- Updated repository location.
+
 ## [0.5.0] - 2021-01-27
 
 ### Changed
@@ -13,5 +19,8 @@
 
 For information about earlier versions, please review the [commit history](https://github.com/sunshowers-code/partial-io/commits/main).
 
+[0.5.1]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.1
+
+<!-- older releases are on the facebookincubator repo -->
 [0.5.0]: https://github.com/facebookincubator/rust-partial-io/releases/tag/0.5.0
 [0.4.0]: https://github.com/facebookincubator/rust-partial-io/releases/tag/0.4.0
