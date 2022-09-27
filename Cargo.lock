@@ -272,7 +272,7 @@ version = "0.5.1"
 dependencies = [
  "futures",
  "itertools",
- "lazy_static",
+ "once_cell",
  "pin-project",
  "proptest",
  "quickcheck",

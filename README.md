@@ -79,6 +79,13 @@ For a real-world example, see the [tests in `zstd-rs`].
 [2]: https://github.com/gyscos/zstd-rs/commit/02dc9d9a3419618fc729542b45c96c32b0f178bb
 [tests in `zstd-rs`]: https://github.com/gyscos/zstd-rs/blob/master/src/stream/mod.rs
 
+## Minimum supported Rust version
+
+The minimum supported Rust version (MSRV) is **1.56**.
+
+While a crate is pre-release status (0.x.x) it may have its MSRV bumped in a patch release. Once a crate has reached
+1.x, any MSRV bump will be accompanied with a new minor version.
+
 ## Contributing
 
 See the [CONTRIBUTING](CONTRIBUTING.md) file for how to help out.

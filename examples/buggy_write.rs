@@ -84,16 +84,14 @@ fn main() {
 
 mod check {
     use super::*;
-    use lazy_static::lazy_static;
+    use once_cell::sync::Lazy;
     use partial_io::{PartialOp, PartialWrite};
 
-    lazy_static! {
-        // These strings have been chosen to be around the default size for
-        // quickcheck (100). With significantly smaller or larger inputs, the
-        // results might not be as good.
-        pub(crate) static ref HELLO_STR: Vec<u8> = "Hello".repeat(50).into_bytes();
-        pub(crate) static ref WORLD_STR: Vec<u8> = "World".repeat(40).into_bytes();
-    }
+    // These strings have been chosen to be around the default size for
+    // quickcheck (100). With significantly smaller or larger inputs, the
+    // results might not be as good.
+    pub(crate) static HELLO_STR: Lazy<Vec<u8>> = Lazy::new(|| "Hello".repeat(50).into_bytes());
+    pub(crate) static WORLD_STR: Lazy<Vec<u8>> = Lazy::new(|| "World".repeat(40).into_bytes());
 
     pub fn check_write_is_buggy() {
         let partial = vec![
@@ -103,7 +101,7 @@ mod check {
         let (hello_res, world_res, flush_res, inner) = buggy_write_internal(partial);
         assert_eq!(hello_res.unwrap_err().kind(), io::ErrorKind::Interrupted);
         assert_eq!(world_res.unwrap(), 5 * 40);
-        assert_eq!(flush_res.unwrap(), ());
+        flush_res.unwrap();
 
         // Note that inner has both "Hello" and "World" in it, even though according
         // to what the API returned it should only have had "World" in it.
