@@ -147,6 +147,8 @@
 <span id="147">147</span>
 <span id="148">148</span>
 <span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
 </pre><pre class="rust"><code><span class="comment">// Copyright (c) The partial-io Contributors</span>
 <span class="comment">// SPDX-License-Identifier: MIT</span>
 
@@ -163,9 +165,9 @@
 <span class="doccomment">//!   `PartialAsyncWrite` to wrap existing `AsyncRead` and `AsyncWrite`</span>
 <span class="doccomment">//!   implementations. These implementations are task-aware, so they will know</span>
 <span class="doccomment">//!   how to pause and unpause tasks if they return a `WouldBlock` error.</span>
-<span class="doccomment">//! * With the optional `quickcheck1` feature, generation of random sequences of</span>
-<span class="doccomment">//!   operations which can be provided to one of the wrappers. See the</span>
-<span class="doccomment">//!   `quickcheck_types` documentation for more.</span>
+<span class="doccomment">//! * With the optional `proptest1` ([proptest]) and `quickcheck1` ([quickcheck]) features,</span>
+<span class="doccomment">//!   generation of random sequences of operations for property-based testing. See the</span>
+<span class="doccomment">//!   `proptest_types` and `quickcheck_types` documentation for more.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Motivation</span>
 <span class="doccomment">//!</span>
@@ -222,6 +224,8 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! For a real-world example, see the [tests in `zstd-rs`].</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! [proptest]: https://altsysrq.github.io/proptest-book/intro.html</span>
+<span class="doccomment">//! [quickcheck]: https://docs.rs/quickcheck</span>
 <span class="doccomment">//! [1]: https://github.com/gyscos/zstd-rs/commit/3123e418595f6badd5b06db2a14c4ff4555e7705</span>
 <span class="doccomment">//! [2]: https://github.com/gyscos/zstd-rs/commit/02dc9d9a3419618fc729542b45c96c32b0f178bb</span>
 <span class="doccomment">//! [tests in `zstd-rs`]: https://github.com/gyscos/zstd-rs/blob/master/src/stream/mod.rs</span>
