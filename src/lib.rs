@@ -14,9 +14,9 @@
 //!   `PartialAsyncWrite` to wrap existing `AsyncRead` and `AsyncWrite`
 //!   implementations. These implementations are task-aware, so they will know
 //!   how to pause and unpause tasks if they return a `WouldBlock` error.
-//! * With the optional `quickcheck1` feature, generation of random sequences of
-//!   operations which can be provided to one of the wrappers. See the
-//!   `quickcheck_types` documentation for more.
+//! * With the optional `proptest1` ([proptest]) and `quickcheck1` ([quickcheck]) features,
+//!   generation of random sequences of operations for property-based testing. See the
+//!   `proptest_types` and `quickcheck_types` documentation for more.
 //!
 //! # Motivation
 //!
@@ -73,6 +73,8 @@
 //!
 //! For a real-world example, see the [tests in `zstd-rs`].
 //!
+//! [proptest]: https://altsysrq.github.io/proptest-book/intro.html
+//! [quickcheck]: https://docs.rs/quickcheck
 //! [1]: https://github.com/gyscos/zstd-rs/commit/3123e418595f6badd5b06db2a14c4ff4555e7705
 //! [2]: https://github.com/gyscos/zstd-rs/commit/02dc9d9a3419618fc729542b45c96c32b0f178bb
 //! [tests in `zstd-rs`]: https://github.com/gyscos/zstd-rs/blob/master/src/stream/mod.rs
