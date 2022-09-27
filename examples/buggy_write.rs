@@ -4,7 +4,6 @@
 //! An example of a buggy buffered writer that does not handle
 //! `io::ErrorKind::Interrupted` properly.
 
-#![deny(warnings)]
 #![allow(dead_code)]
 
 use std::io::{self, Write};
@@ -80,48 +79,23 @@ impl<W: Write> Write for BuggyWrite<W> {
 }
 
 fn main() {
-    test::buggy_write();
-    // To run this test and see it fail, uncomment the next line. To fix the
-    // bug, see `examples/buggy_write.rs`.
-    //test::quickcheck_buggy_write();
+    check::check_write_is_buggy();
 }
 
-mod test {
-    //! Tests to demonstrate how to use partial-io to catch bugs in `buggy_write`.
-
-    // * 'cargo test' doesn't support running tests inside examples.
-    // * We'd like to make it possible to run this example to test it out.
-    // * There's no way to programmatically collect and run tests in Rust.
-    //
-    // As a compromise, have tests marked 'pub' and private wrappers marked
-    // 'test'.
-
-    use std::io::{self, Write};
-
-    use lazy_static::lazy_static;
-    use quickcheck::{quickcheck, TestResult};
-
-    use partial_io::{
-        quickcheck_types::{GenInterrupted, PartialWithErrors},
-        PartialOp, PartialWrite,
-    };
-
+mod check {
     use super::*;
+    use lazy_static::lazy_static;
+    use partial_io::{PartialOp, PartialWrite};
 
     lazy_static! {
         // These strings have been chosen to be around the default size for
         // quickcheck (100). With significantly smaller or larger inputs, the
         // results might not be as good.
-        static ref HELLO_STR: Vec<u8> = "Hello".repeat(50).into_bytes();
-        static ref WORLD_STR: Vec<u8> = "World".repeat(40).into_bytes();
+        pub(crate) static ref HELLO_STR: Vec<u8> = "Hello".repeat(50).into_bytes();
+        pub(crate) static ref WORLD_STR: Vec<u8> = "World".repeat(40).into_bytes();
     }
 
-    #[test]
-    fn test_buggy_write() {
-        buggy_write();
-    }
-
-    pub fn buggy_write() {
+    pub fn check_write_is_buggy() {
         let partial = vec![
             PartialOp::Err(io::ErrorKind::Interrupted),
             PartialOp::Unlimited,
@@ -139,41 +113,7 @@ mod test {
         assert_eq!(inner, expected);
     }
 
-    /// Test that quickcheck catches buggy writes.
-    ///
-    /// To run this test and see it fail, remove the #[ignore] annotation. To
-    /// fix the bug, see `examples/buggy_write.rs`.
-    #[test]
-    #[ignore]
-    fn test_quickcheck_buggy_write() {
-        quickcheck_buggy_write();
-    }
-
-    pub fn quickcheck_buggy_write() {
-        quickcheck(quickcheck_buggy_write2 as fn(PartialWithErrors<GenInterrupted>) -> TestResult);
-    }
-
-    fn quickcheck_buggy_write2(partial: PartialWithErrors<GenInterrupted>) -> TestResult {
-        let (hello_res, world_res, flush_res, inner) = buggy_write_internal(partial);
-        // If flush_res failed then we can't really do anything since we don't know
-        // how much was written internally. Otherwise hello_res and world_res should
-        // work.
-        if flush_res.is_err() {
-            return TestResult::discard();
-        }
-
-        let mut expected = Vec::new();
-        if hello_res.is_ok() {
-            expected.extend_from_slice(&HELLO_STR);
-        }
-        if world_res.is_ok() {
-            expected.extend_from_slice(&WORLD_STR);
-        }
-        assert_eq!(inner, expected);
-        TestResult::passed()
-    }
-
-    fn buggy_write_internal<I>(
+    pub(crate) fn buggy_write_internal<I>(
         partial_iter: I,
     ) -> (
         io::Result<usize>,
@@ -200,5 +140,79 @@ mod test {
         let inner = buggy_write.into_inner().into_inner();
 
         (hello_res, world_res, flush_res, inner)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    //! Tests to demonstrate how to use partial-io to catch bugs in `buggy_write`.
+    use super::*;
+    use partial_io::{
+        proptest_types::{interrupted_strategy, partial_op_strategy},
+        quickcheck_types::{GenInterrupted, PartialWithErrors},
+    };
+    use proptest::{collection::vec, prelude::*};
+    use quickcheck::{quickcheck, TestResult};
+
+    /// Test that BuggyWrite is actually buggy.
+    #[test]
+    fn test_check_write_is_buggy() {
+        check::check_write_is_buggy();
+    }
+
+    /// Test that quickcheck catches buggy writes.
+    ///
+    /// To run this test and see it fail, run this example with `--ignored`. To fix the bug, see the
+    /// section of this file marked "// BUG:".
+    #[test]
+    #[ignore]
+    fn test_quickcheck_buggy_write() {
+        quickcheck(quickcheck_buggy_write2 as fn(PartialWithErrors<GenInterrupted>) -> TestResult);
+    }
+
+    fn quickcheck_buggy_write2(partial: PartialWithErrors<GenInterrupted>) -> TestResult {
+        let (hello_res, world_res, flush_res, inner) = check::buggy_write_internal(partial);
+        // If flush_res failed then we can't really do anything since we don't know
+        // how much was written internally. Otherwise hello_res and world_res should
+        // work.
+        if flush_res.is_err() {
+            return TestResult::discard();
+        }
+
+        let mut expected = Vec::new();
+        if hello_res.is_ok() {
+            expected.extend_from_slice(&check::HELLO_STR);
+        }
+        if world_res.is_ok() {
+            expected.extend_from_slice(&check::WORLD_STR);
+        }
+        assert_eq!(inner, expected);
+        TestResult::passed()
+    }
+
+    proptest! {
+        /// Test that proptest catches buggy writes.
+        ///
+        /// To run this test and see it fail, run this example with `--ignored`. To
+        /// fix the bug, see the section of this file marked "// BUG:".
+        #[test]
+        #[ignore]
+        fn test_proptest_buggy_write(ops in vec(partial_op_strategy(interrupted_strategy(), 128), 0..128)) {
+            let (hello_res, world_res, flush_res, inner) = check::buggy_write_internal(ops);
+
+            // If flush_res failed then we can't really do anything since we don't know
+            // how much was written internally. Otherwise hello_res and world_res should
+            // work.
+            prop_assume!(flush_res.is_ok(), "if flush failed, we don't know what was written");
+
+            let mut expected = Vec::new();
+            if hello_res.is_ok() {
+                expected.extend_from_slice(&check::HELLO_STR);
+            }
+            if world_res.is_ok() {
+                expected.extend_from_slice(&check::WORLD_STR);
+            }
+            prop_assert_eq!(inner, expected, "actual value matches expected");
+        }
     }
 }
