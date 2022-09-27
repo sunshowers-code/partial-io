@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.3] - 2022-09-27
+
+### Updated
+
+- Documentation updates.
+
 ## [0.5.2] - 2022-09-27
 
 ### Added
@@ -25,6 +31,7 @@
 
 For information about earlier versions, please review the [commit history](https://github.com/sunshowers-code/partial-io/commits/main).
 
+[0.5.2]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.3
 [0.5.2]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.2
 [0.5.1]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.1
 
