@@ -99,7 +99,7 @@ for seeding, and that it is cryptographically secure when appropriate.
 As of <code>rand</code> 0.7 / <code>rand_core</code> 0.5, implementations overriding this
 method should ensure the implementation satisfies reproducibility
 (in prior versions this was not required).</p>
-</div></details><details class="rustdoc-toggle" open><summary><div id="method.from_entropy" class="method has-srclink"><div class="rightside"><a class="srclink" href="../src/rand_core/lib.rs.html#412-418">source</a></div><h4 class="code-header">fn <a href="#method.from_entropy" class="fnname">from_entropy</a>() -&gt; Self</h4></div></summary><div class="docblock"><p>Creates a new instance of the RNG seeded via <a href="https://docs.rs/getrandom"><code>getrandom</code></a>.</p>
+</div></details><details class="rustdoc-toggle" open><summary><div id="method.from_entropy" class="method has-srclink"><div class="rightside"><a class="srclink" href="../src/rand_core/lib.rs.html#412-418">source</a></div><h4 class="code-header">fn <a href="#method.from_entropy" class="fnname">from_entropy</a>() -&gt; Self</h4></div></summary><span class="item-info"><div class="stab portability">Available on <strong>crate feature <code>getrandom</code></strong> only.</div></span><div class="docblock"><p>Creates a new instance of the RNG seeded via <a href="https://docs.rs/getrandom"><code>getrandom</code></a>.</p>
 <p>This method is the recommended way to construct non-deterministic PRNGs
 since it is convenient and secure.</p>
 <p>In case the overhead of using <a href="https://docs.rs/getrandom"><code>getrandom</code></a> to seed <em>many</em> PRNGs is an
