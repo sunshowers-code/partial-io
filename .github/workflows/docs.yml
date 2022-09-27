@@ -15,6 +15,10 @@ jobs:
         with:
           toolchain: stable
       - name: Build
+        env:
+          # So that feature(doc_cfg) can be used.
+          RUSTC_BOOTSTRAP: 1
+          RUSTDOCFLAGS: --cfg doc_cfg
         uses: actions-rs/cargo@v1
         with:
           command: doc
