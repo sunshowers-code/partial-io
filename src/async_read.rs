@@ -475,22 +475,27 @@ pub(crate) mod tokio_impl {
                     new_filled
                 });
 
-                if new_filled < limit {
-                    assert_eq!(
-                        buf.filled().len(),
-                        new_filled,
-                        "halve-filled, new filled < limit -> filled is updated"
-                    );
-                } else if new_filled == limit {
-                    assert_eq!(limit, 0, "halve-filled, new filled == limit -> limit = 0");
-                    assert_eq!(
-                        buf.filled().len(),
-                        filled,
-                        "halve-filled, new filled == limit -> filled stays the same"
-                    );
-                } else {
-                    panic!("new_filled {} must be <= limit {}", new_filled, limit);
+                match new_filled.cmp(&limit) {
+                    std::cmp::Ordering::Less => {
+                        assert_eq!(
+                            buf.filled().len(),
+                            new_filled,
+                            "halve-filled, new filled < limit -> filled is updated"
+                        );
+                    }
+                    std::cmp::Ordering::Equal => {
+                        assert_eq!(limit, 0, "halve-filled, new filled == limit -> limit = 0");
+                        assert_eq!(
+                            buf.filled().len(),
+                            filled,
+                            "halve-filled, new filled == limit -> filled stays the same"
+                        );
+                    }
+                    std::cmp::Ordering::Greater => {
+                        panic!("new_filled {} must be <= limit {}", new_filled, limit);
+                    }
                 }
+
                 assert_eq!(
                     buf.initialized().len(),
                     initialized,
