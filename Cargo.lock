@@ -268,7 +268,7 @@ checksum = "e82dad04139b71a90c080c8463fe0dc7902db5192d939bd0950f074d014339e1"
 
 [[package]]
 name = "partial-io"
-version = "0.5.3"
+version = "0.5.4"
 dependencies = [
  "futures",
  "itertools",

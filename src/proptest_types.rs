@@ -47,7 +47,8 @@ pub fn partial_op_strategy(
     error_strategy: impl Strategy<Value = Option<io::ErrorKind>>,
     limit_bytes: usize,
 ) -> impl Strategy<Value = PartialOp> {
-    (error_strategy, 0..=limit_bytes).prop_map(|(error_kind, limit)| match error_kind {
+    // Don't generate 0 because for writers it can mean that writes are no longer accepted.
+    (error_strategy, 1..=limit_bytes).prop_map(|(error_kind, limit)| match error_kind {
         Some(kind) => PartialOp::Err(kind),
         None => PartialOp::Limited(limit),
     })

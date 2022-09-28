@@ -1,6 +1,6 @@
 [package]
 name = "partial-io"
-version = "0.5.3"
+version = "0.5.4"
 edition = "2021"
 authors = ["Rain <rain@sunshowers.io>"]
 description = "Helpers to test partial, interrupted and would-block I/O operations, with support for property-based testing through proptest and quickcheck."

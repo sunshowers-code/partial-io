@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.4] - 2022-09-27
+
+### Fixed
+
+- For proptest, generate `PartialOp::Limited` byte counts starting at 1 rather than 0. This is because
+  0 can mean no more data is available in the stream.
+
 ## [0.5.3] - 2022-09-27
 
 ### Updated
@@ -31,7 +38,8 @@
 
 For information about earlier versions, please review the [commit history](https://github.com/sunshowers-code/partial-io/commits/main).
 
-[0.5.2]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.3
+[0.5.4]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.4
+[0.5.3]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.3
 [0.5.2]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.2
 [0.5.1]: https://github.com/sunshowers-code/partial-io/releases/tag/0.5.1
 
