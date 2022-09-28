@@ -74,6 +74,7 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
+<span id="77">77</span>
 </pre><pre class="rust"><code><span class="comment">// Copyright (c) The partial-io Contributors</span>
 <span class="comment">// SPDX-License-Identifier: MIT</span>
 
@@ -123,7 +124,8 @@
     <span class="ident">error_strategy</span>: <span class="kw">impl</span> <span class="ident">Strategy</span><span class="op">&lt;</span><span class="ident">Value</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">io::ErrorKind</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">limit_bytes</span>: <span class="ident">usize</span>,
 ) -&gt; <span class="kw">impl</span> <span class="ident">Strategy</span><span class="op">&lt;</span><span class="ident">Value</span> <span class="op">=</span> <span class="ident">PartialOp</span><span class="op">&gt;</span> {
-    (<span class="ident">error_strategy</span>, <span class="number">0</span>..<span class="op">=</span><span class="ident">limit_bytes</span>).<span class="ident">prop_map</span>(<span class="op">|</span>(<span class="ident">error_kind</span>, <span class="ident">limit</span>)<span class="op">|</span> <span class="kw">match</span> <span class="ident">error_kind</span> {
+    <span class="comment">// Don&#39;t generate 0 because for writers it can mean that writes are no longer accepted.</span>
+    (<span class="ident">error_strategy</span>, <span class="number">1</span>..<span class="op">=</span><span class="ident">limit_bytes</span>).<span class="ident">prop_map</span>(<span class="op">|</span>(<span class="ident">error_kind</span>, <span class="ident">limit</span>)<span class="op">|</span> <span class="kw">match</span> <span class="ident">error_kind</span> {
         <span class="prelude-val">Some</span>(<span class="ident">kind</span>) =&gt; <span class="ident">PartialOp::Err</span>(<span class="ident">kind</span>),
         <span class="prelude-val">None</span> =&gt; <span class="ident">PartialOp::Limited</span>(<span class="ident">limit</span>),
     })
