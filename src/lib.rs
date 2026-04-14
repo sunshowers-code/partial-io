@@ -1,7 +1,7 @@
 // Copyright (c) The partial-io Contributors
 // SPDX-License-Identifier: MIT
 
-#![cfg_attr(doc_cfg, feature(doc_auto_cfg))]
+#![cfg_attr(doc_cfg, feature(doc_cfg))]
 
 //! Helpers for testing I/O behavior with partial, interrupted and blocking reads and writes.
 //!
