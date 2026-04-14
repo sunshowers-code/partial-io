@@ -16,21 +16,14 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
           components: rustfmt, clippy
       - name: Lint (clippy)
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --all-features --all-targets
+        run: cargo clippy --all-features --all-targets
       - name: Lint (rustfmt)
-        uses: actions-rs/cargo@v1
-        with:
-          command: xfmt
-          args: --check
+        run: cargo xfmt --check
       - name: Install cargo readme
         uses: baptiste0928/cargo-install@v1
         with:
@@ -48,26 +41,17 @@ jobs:
       matrix:
         rust-version: [1.56, stable]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust-version }}
-      - uses: Swatinem/rust-cache@f8f67b7515e98e4ac991ccb5c11240861e0f712b
+      - uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@cargo-hack
       - uses: taiki-e/install-action@nextest
+      # Build all targets to ensure examples are built as well.
       - name: Build
-        uses: actions-rs/cargo@v1
-        with:
-          # Build all targets to ensure examples are built as well.
-          command: hack
-          args: --feature-powerset build --all-targets
+        run: cargo hack --feature-powerset build --all-targets
       - name: Test
-        uses: actions-rs/cargo@v1
-        with:
-          command: hack
-          args: --feature-powerset nextest run --all-targets
+        run: cargo hack --feature-powerset nextest run --all-targets
       - name: Run doctests
-        uses: actions-rs/cargo@v1
-        with:
-          command: hack
-          args: --feature-powerset test --doc
+        run: cargo hack --feature-powerset test --doc

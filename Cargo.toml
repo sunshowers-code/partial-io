@@ -50,6 +50,12 @@ tokio1 = ["futures03", "tokio"]
 quickcheck1 = ["quickcheck", "rand"]
 proptest1 = ["proptest"]
 
+[lints.clippy]
+test_attr_in_doctest = "allow"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(doc_cfg)'] }
+
 [package.metadata.docs.rs]
 all-features = true
 rustdoc-args = ["--cfg", "doc_cfg"]
