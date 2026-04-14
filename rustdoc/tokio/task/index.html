@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Asynchronous green-threads."><meta name="keywords" content="rust, rustlang, rust-lang, task"><title>tokio::task - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../tokio/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../tokio/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">Module task</a></h2><div class="sidebar-elems"></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../tokio/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Module <a href="../index.html">tokio</a>::<wbr><a class="mod" href="#">task</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../../src/tokio/task/mod.rs.html#1-333">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Asynchronous green-threads.</p>
-<h3 id="what-are-tasks"><a href="#what-are-tasks">What are Tasks?</a></h3>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Asynchronous green-threads."><title>tokio::task - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-77263533.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.1 (e408947bf 2026-03-25)" data-channel="1.94.1" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-7bab91a1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module task</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../tokio/index.html">tokio</a><span class="version">1.21.2</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module task</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#what-are-tasks" title="What are Tasks?">What are Tasks?</a></li><li><a href="#working-with-tasks" title="Working with Tasks">Working with Tasks</a><ul><li><a href="#spawning" title="Spawning">Spawning</a></li><li><a href="#blocking-and-yielding" title="Blocking and Yielding">Blocking and Yielding</a></li><li><a href="#cooperative-scheduling" title="Cooperative scheduling">Cooperative scheduling</a></li></ul></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="../index.html">In crate tokio</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">tokio</a></div><h1>Module <span>task</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/tokio/task/mod.rs.html#1-333">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Asynchronous green-threads.</p>
+<h3 id="what-are-tasks"><a class="doc-anchor" href="#what-are-tasks">§</a>What are Tasks?</h3>
 <p>A <em>task</em> is a light weight, non-blocking unit of execution. A task is similar
 to an OS thread, but rather than being managed by the OS scheduler, they are
 managed by the <a href="crate::runtime">Tokio runtime</a>. Another name for this general pattern is
@@ -37,50 +37,50 @@ thread from executing as well. Instead, this module provides APIs for
 running blocking operations in an asynchronous context.</p>
 </li>
 </ul>
-<h3 id="working-with-tasks"><a href="#working-with-tasks">Working with Tasks</a></h3>
+<h3 id="working-with-tasks"><a class="doc-anchor" href="#working-with-tasks">§</a>Working with Tasks</h3>
 <p>This module provides the following APIs for working with tasks:</p>
-<h4 id="spawning"><a href="#spawning">Spawning</a></h4>
+<h4 id="spawning"><a class="doc-anchor" href="#spawning">§</a>Spawning</h4>
 <p>Perhaps the most important function in this module is <a href="crate::task::spawn()"><code>task::spawn</code></a>. This
 function can be thought of as an async equivalent to the standard library’s
-<a href="https://doc.rust-lang.org/1.64.0/std/thread/fn.spawn.html"><code>thread::spawn</code></a>. It takes an <code>async</code> block or other
-<a href="https://doc.rust-lang.org/1.64.0/core/future/future/trait.Future.html">future</a>, and creates a new task to run that work concurrently:</p>
+<a href="https://doc.rust-lang.org/1.94.1/std/thread/functions/fn.spawn.html" title="fn std::thread::functions::spawn"><code>thread::spawn</code></a>. It takes an <code>async</code> block or other
+<a href="https://doc.rust-lang.org/1.94.1/core/future/future/trait.Future.html" title="trait core::future::future::Future">future</a>, and creates a new task to run that work concurrently:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">tokio::task</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::task;
 
-<span class="ident">task::spawn</span>(<span class="kw">async</span> {
-    <span class="comment">// perform some work here...</span>
-});</code></pre></div>
-<p>Like <a href="https://doc.rust-lang.org/1.64.0/std/thread/fn.spawn.html"><code>std::thread::spawn</code></a>, <code>task::spawn</code> returns a <a href="crate::task::JoinHandle"><code>JoinHandle</code></a> struct.
+task::spawn(<span class="kw">async </span>{
+    <span class="comment">// perform some work here...
+</span>});</code></pre></div>
+<p>Like <a href="https://doc.rust-lang.org/1.94.1/std/thread/functions/fn.spawn.html" title="fn std::thread::functions::spawn"><code>std::thread::spawn</code></a>, <code>task::spawn</code> returns a <a href="crate::task::JoinHandle"><code>JoinHandle</code></a> struct.
 A <code>JoinHandle</code> is itself a future which may be used to await the output of
 the spawned task. For example:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">tokio::task</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::task;
 
-<span class="kw">let</span> <span class="ident">join</span> <span class="op">=</span> <span class="ident">task::spawn</span>(<span class="kw">async</span> {
-    <span class="comment">// ...</span>
-    <span class="string">&quot;hello world!&quot;</span>
-});
+<span class="kw">let </span>join = task::spawn(<span class="kw">async </span>{
+    <span class="comment">// ...
+    </span><span class="string">"hello world!"
+</span>});
 
-<span class="comment">// ...</span>
+<span class="comment">// ...
 
-<span class="comment">// Await the result of the spawned task.</span>
-<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">join</span>.<span class="kw">await</span><span class="question-mark">?</span>;
-<span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="string">&quot;hello world!&quot;</span>);</code></pre></div>
-<p>Again, like <code>std::thread</code>’s <a href="https://doc.rust-lang.org/1.64.0/std/thread/struct.JoinHandle.html"><code>JoinHandle</code> type</a>, if the spawned
+// Await the result of the spawned task.
+</span><span class="kw">let </span>result = join.<span class="kw">await</span><span class="question-mark">?</span>;
+<span class="macro">assert_eq!</span>(result, <span class="string">"hello world!"</span>);</code></pre></div>
+<p>Again, like <code>std::thread</code>’s <a href="https://doc.rust-lang.org/1.94.1/std/thread/join_handle/struct.JoinHandle.html" title="struct std::thread::join_handle::JoinHandle"><code>JoinHandle</code> type</a>, if the spawned
 task panics, awaiting its <code>JoinHandle</code> will return a <a href="crate::task::JoinError"><code>JoinError</code></a>. For
 example:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">tokio::task</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::task;
 
-<span class="kw">let</span> <span class="ident">join</span> <span class="op">=</span> <span class="ident">task::spawn</span>(<span class="kw">async</span> {
-    <span class="macro">panic!</span>(<span class="string">&quot;something bad happened!&quot;</span>)
+<span class="kw">let </span>join = task::spawn(<span class="kw">async </span>{
+    <span class="macro">panic!</span>(<span class="string">"something bad happened!"</span>)
 });
 
-<span class="comment">// The returned result indicates that the task failed.</span>
-<span class="macro">assert!</span>(<span class="ident">join</span>.<span class="kw">await</span>.<span class="ident">is_err</span>());</code></pre></div>
+<span class="comment">// The returned result indicates that the task failed.
+</span><span class="macro">assert!</span>(join.<span class="kw">await</span>.is_err());</code></pre></div>
 <p><code>spawn</code>, <code>JoinHandle</code>, and <code>JoinError</code> are present when the “rt”
 feature flag is enabled.</p>
-<h4 id="blocking-and-yielding"><a href="#blocking-and-yielding">Blocking and Yielding</a></h4>
+<h4 id="blocking-and-yielding"><a class="doc-anchor" href="#blocking-and-yielding">§</a>Blocking and Yielding</h4>
 <p>As we discussed above, code running in asynchronous tasks should not perform
 operations that can block. A blocking operation performed in a task running
 on a thread that is also running other tasks would block the entire thread,
@@ -91,29 +91,28 @@ asynchronous context: <a href="crate::task::spawn_blocking"><code>task::spawn_bl
 method is still inside the asynchronous context, so you should also avoid
 blocking operations there. This includes destructors of objects destroyed in
 async code.</p>
-<h5 id="spawn_blocking"><a href="#spawn_blocking">spawn_blocking</a></h5>
+<h5 id="spawn_blocking"><a class="doc-anchor" href="#spawn_blocking">§</a>spawn_blocking</h5>
 <p>The <code>task::spawn_blocking</code> function is similar to the <code>task::spawn</code> function
 discussed in the previous section, but rather than spawning an
 <em>non-blocking</em> future on the Tokio runtime, it instead spawns a
 <em>blocking</em> function on a dedicated thread pool for blocking tasks. For
 example:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">tokio::task</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::task;
 
-<span class="ident">task::spawn_blocking</span>(<span class="op">|</span><span class="op">|</span> {
-    <span class="comment">// do some compute-heavy work or call synchronous code</span>
-});</code></pre></div>
+task::spawn_blocking(|| {
+    <span class="comment">// do some compute-heavy work or call synchronous code
+</span>});</code></pre></div>
 <p>Just like <code>task::spawn</code>, <code>task::spawn_blocking</code> returns a <code>JoinHandle</code>
 which we can use to await the result of the blocking operation:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">join</span> <span class="op">=</span> <span class="ident">task::spawn_blocking</span>(<span class="op">|</span><span class="op">|</span> {
-    <span class="comment">// do some compute-heavy work or call synchronous code</span>
-    <span class="string">&quot;blocking completed&quot;</span>
-});
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>join = task::spawn_blocking(|| {
+    <span class="comment">// do some compute-heavy work or call synchronous code
+    </span><span class="string">"blocking completed"
+</span>});
 
-<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">join</span>.<span class="kw">await</span><span class="question-mark">?</span>;
-<span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="string">&quot;blocking completed&quot;</span>);</code></pre></div>
-<h5 id="block_in_place"><a href="#block_in_place">block_in_place</a></h5>
+<span class="kw">let </span>result = join.<span class="kw">await</span><span class="question-mark">?</span>;
+<span class="macro">assert_eq!</span>(result, <span class="string">"blocking completed"</span>);</code></pre></div><h5 id="block_in_place"><a class="doc-anchor" href="#block_in_place">§</a>block_in_place</h5>
 <p>When using the <a href="../runtime/index.html#threaded-scheduler">multi-threaded runtime</a>, the <a href="crate::task::block_in_place"><code>task::block_in_place</code></a>
 function is also available. Like <code>task::spawn_blocking</code>, this function
 allows running a blocking operation from an asynchronous context. Unlike
@@ -123,36 +122,34 @@ that thread to another worker thread. This can improve performance by avoiding
 context switches.</p>
 <p>For example:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">tokio::task</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::task;
 
-<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">task::block_in_place</span>(<span class="op">|</span><span class="op">|</span> {
-    <span class="comment">// do some compute-heavy work or call synchronous code</span>
-    <span class="string">&quot;blocking completed&quot;</span>
-});
+<span class="kw">let </span>result = task::block_in_place(|| {
+    <span class="comment">// do some compute-heavy work or call synchronous code
+    </span><span class="string">"blocking completed"
+</span>});
 
-<span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="string">&quot;blocking completed&quot;</span>);</code></pre></div>
-<h5 id="yield_now"><a href="#yield_now">yield_now</a></h5>
+<span class="macro">assert_eq!</span>(result, <span class="string">"blocking completed"</span>);</code></pre></div><h5 id="yield_now"><a class="doc-anchor" href="#yield_now">§</a>yield_now</h5>
 <p>In addition, this module provides a <a href="crate::task::yield_now()"><code>task::yield_now</code></a> async function
-that is analogous to the standard library’s <a href="https://doc.rust-lang.org/1.64.0/std/thread/fn.yield_now.html"><code>thread::yield_now</code></a>. Calling
+that is analogous to the standard library’s <a href="https://doc.rust-lang.org/1.94.1/std/thread/functions/fn.yield_now.html" title="fn std::thread::functions::yield_now"><code>thread::yield_now</code></a>. Calling
 and <code>await</code>ing this function will cause the current task to yield to the
 Tokio runtime’s scheduler, allowing other tasks to be
 scheduled. Eventually, the yielding task will be polled again, allowing it
 to execute. For example:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">tokio::task</span>;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::task;
 
-<span class="kw">async</span> {
-    <span class="ident">task::spawn</span>(<span class="kw">async</span> {
-        <span class="comment">// ...</span>
-        <span class="macro">println!</span>(<span class="string">&quot;spawned task done!&quot;</span>)
+<span class="kw">async </span>{
+    task::spawn(<span class="kw">async </span>{
+        <span class="comment">// ...
+        </span><span class="macro">println!</span>(<span class="string">"spawned task done!"</span>)
     });
 
-    <span class="comment">// Yield, allowing the newly-spawned task to execute first.</span>
-    <span class="ident">task::yield_now</span>().<span class="kw">await</span>;
-    <span class="macro">println!</span>(<span class="string">&quot;main task done!&quot;</span>);
-}</code></pre></div>
-<h4 id="cooperative-scheduling"><a href="#cooperative-scheduling">Cooperative scheduling</a></h4>
-<p>A single call to <a href="https://doc.rust-lang.org/1.64.0/core/future/future/trait.Future.html#tymethod.poll"><code>poll</code></a> on a top-level task may potentially do a lot of
+    <span class="comment">// Yield, allowing the newly-spawned task to execute first.
+    </span>task::yield_now().<span class="kw">await</span>;
+    <span class="macro">println!</span>(<span class="string">"main task done!"</span>);
+}</code></pre></div><h4 id="cooperative-scheduling"><a class="doc-anchor" href="#cooperative-scheduling">§</a>Cooperative scheduling</h4>
+<p>A single call to <a href="https://doc.rust-lang.org/1.94.1/core/future/future/trait.Future.html#tymethod.poll" title="method core::future::future::Future::poll"><code>poll</code></a> on a top-level task may potentially do a lot of
 work before it returns <code>Poll::Pending</code>. If a task runs for a long period of
 time without yielding back to the executor, it can starve other tasks
 waiting on that executor to execute them, or drive underlying resources.
@@ -161,31 +158,30 @@ long-running task. Instead, this module provides an opt-in mechanism for
 futures to collaborate with the executor to avoid starvation.</p>
 <p>Consider a future like this one:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">async</span> <span class="kw">fn</span> <span class="ident">drop_all</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Stream</span> <span class="op">+</span> <span class="ident">Unpin</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">input</span>: <span class="ident">I</span>) {
-    <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span> <span class="ident">input</span>.<span class="ident">next</span>().<span class="kw">await</span> {}
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">async fn </span>drop_all&lt;I: Stream + Unpin&gt;(<span class="kw-2">mut </span>input: I) {
+    <span class="kw">while let </span><span class="prelude-val">Some</span>(<span class="kw">_</span>) = input.next().<span class="kw">await </span>{}
 }</code></pre></div>
 <p>It may look harmless, but consider what happens under heavy load if the
 input stream is <em>always</em> ready. If we spawn <code>drop_all</code>, the task will never
 yield, and will starve other tasks and resources on the same executor.</p>
 <p>To account for this, Tokio has explicit yield points in a number of library
 functions, which force tasks to return to the executor periodically.</p>
-<h5 id="unconstrained"><a href="#unconstrained">unconstrained</a></h5>
+<h5 id="unconstrained"><a class="doc-anchor" href="#unconstrained">§</a>unconstrained</h5>
 <p>If necessary, <a href="crate::task::unconstrained()"><code>task::unconstrained</code></a> lets you opt a future out of of Tokio’s cooperative
 scheduling. When a future is wrapped with <code>unconstrained</code>, it will never be forced to yield to
 Tokio. For example:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">tokio</span>::{<span class="ident">task</span>, <span class="ident">sync::mpsc</span>};
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::{task, sync::mpsc};
 
-<span class="kw">let</span> <span class="ident">fut</span> <span class="op">=</span> <span class="kw">async</span> {
-    <span class="kw">let</span> (<span class="ident">tx</span>, <span class="kw-2">mut</span> <span class="ident">rx</span>) <span class="op">=</span> <span class="ident">mpsc::unbounded_channel</span>();
+<span class="kw">let </span>fut = <span class="kw">async </span>{
+    <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = mpsc::unbounded_channel();
 
-    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">1000</span> {
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">tx</span>.<span class="ident">send</span>(());
-        <span class="comment">// This will always be ready. If coop was in effect, this code would be forced to yield</span>
-        <span class="comment">// periodically. However, if left unconstrained, then this code will never yield.</span>
-        <span class="ident">rx</span>.<span class="ident">recv</span>().<span class="kw">await</span>;
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">1000 </span>{
+        <span class="kw">let _ </span>= tx.send(());
+        <span class="comment">// This will always be ready. If coop was in effect, this code would be forced to yield
+        // periodically. However, if left unconstrained, then this code will never yield.
+        </span>rx.recv().<span class="kw">await</span>;
     }
 };
 
-<span class="ident">task::unconstrained</span>(<span class="ident">fut</span>).<span class="kw">await</span>;</code></pre></div>
-</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="tokio" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+task::unconstrained(fut).<span class="kw">await</span>;</code></pre></div></div></details></section></div></main></body></html>

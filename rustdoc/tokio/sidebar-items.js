@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"macro":[["pin","Pins a value on the stack."]],"mod":[["io","Traits, helpers, and type definitions for asynchronous I/O functionality."],["net","TCP/UDP/Unix bindings for `tokio`."],["stream","Due to the `Stream` trait’s inclusion in `std` landing later than Tokio’s 1.0 release, most of the Tokio stream utilities have been moved into the `tokio-stream` crate."],["task","Asynchronous green-threads."]]};
+window.SIDEBAR_ITEMS = {"macro":["pin"],"mod":["io","net","stream","task"]};

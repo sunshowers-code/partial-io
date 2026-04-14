@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["XorShiftRng","An Xorshift random number generator."]]};
+window.SIDEBAR_ITEMS = {"struct":["XorShiftRng"]};

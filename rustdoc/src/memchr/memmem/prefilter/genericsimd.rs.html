@@ -1,416 +1,208 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/memchr-2.5.0/src/memmem/prefilter/genericsimd.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>genericsimd.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../storage.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../main.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../../memchr/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../../memchr/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../../memchr/index.html"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
-<span id="2">2</span>
-<span id="3">3</span>
-<span id="4">4</span>
-<span id="5">5</span>
-<span id="6">6</span>
-<span id="7">7</span>
-<span id="8">8</span>
-<span id="9">9</span>
-<span id="10">10</span>
-<span id="11">11</span>
-<span id="12">12</span>
-<span id="13">13</span>
-<span id="14">14</span>
-<span id="15">15</span>
-<span id="16">16</span>
-<span id="17">17</span>
-<span id="18">18</span>
-<span id="19">19</span>
-<span id="20">20</span>
-<span id="21">21</span>
-<span id="22">22</span>
-<span id="23">23</span>
-<span id="24">24</span>
-<span id="25">25</span>
-<span id="26">26</span>
-<span id="27">27</span>
-<span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
-<span id="34">34</span>
-<span id="35">35</span>
-<span id="36">36</span>
-<span id="37">37</span>
-<span id="38">38</span>
-<span id="39">39</span>
-<span id="40">40</span>
-<span id="41">41</span>
-<span id="42">42</span>
-<span id="43">43</span>
-<span id="44">44</span>
-<span id="45">45</span>
-<span id="46">46</span>
-<span id="47">47</span>
-<span id="48">48</span>
-<span id="49">49</span>
-<span id="50">50</span>
-<span id="51">51</span>
-<span id="52">52</span>
-<span id="53">53</span>
-<span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
-<span id="61">61</span>
-<span id="62">62</span>
-<span id="63">63</span>
-<span id="64">64</span>
-<span id="65">65</span>
-<span id="66">66</span>
-<span id="67">67</span>
-<span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
-<span id="74">74</span>
-<span id="75">75</span>
-<span id="76">76</span>
-<span id="77">77</span>
-<span id="78">78</span>
-<span id="79">79</span>
-<span id="80">80</span>
-<span id="81">81</span>
-<span id="82">82</span>
-<span id="83">83</span>
-<span id="84">84</span>
-<span id="85">85</span>
-<span id="86">86</span>
-<span id="87">87</span>
-<span id="88">88</span>
-<span id="89">89</span>
-<span id="90">90</span>
-<span id="91">91</span>
-<span id="92">92</span>
-<span id="93">93</span>
-<span id="94">94</span>
-<span id="95">95</span>
-<span id="96">96</span>
-<span id="97">97</span>
-<span id="98">98</span>
-<span id="99">99</span>
-<span id="100">100</span>
-<span id="101">101</span>
-<span id="102">102</span>
-<span id="103">103</span>
-<span id="104">104</span>
-<span id="105">105</span>
-<span id="106">106</span>
-<span id="107">107</span>
-<span id="108">108</span>
-<span id="109">109</span>
-<span id="110">110</span>
-<span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
-<span id="119">119</span>
-<span id="120">120</span>
-<span id="121">121</span>
-<span id="122">122</span>
-<span id="123">123</span>
-<span id="124">124</span>
-<span id="125">125</span>
-<span id="126">126</span>
-<span id="127">127</span>
-<span id="128">128</span>
-<span id="129">129</span>
-<span id="130">130</span>
-<span id="131">131</span>
-<span id="132">132</span>
-<span id="133">133</span>
-<span id="134">134</span>
-<span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
-<span id="164">164</span>
-<span id="165">165</span>
-<span id="166">166</span>
-<span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
-<span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">core::mem::size_of</span>;
-
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::memmem</span>::{
-    <span class="ident">prefilter</span>::{<span class="ident">PrefilterFnTy</span>, <span class="ident">PrefilterState</span>},
-    <span class="ident">vector::Vector</span>,
-    <span class="ident">NeedleInfo</span>,
-};
-
-<span class="doccomment">/// The implementation of the forward vector accelerated candidate finder.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This is inspired by the &quot;generic SIMD&quot; algorithm described here:</span>
-<span class="doccomment">/// http://0x80.pl/articles/simd-strfind.html#algorithm-1-generic-simd</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The main difference is that this is just a prefilter. That is, it reports</span>
-<span class="doccomment">/// candidates once they are seen and doesn&#39;t attempt to confirm them. Also,</span>
-<span class="doccomment">/// the bytes this routine uses to check for candidates are selected based on</span>
-<span class="doccomment">/// an a priori background frequency distribution. This means that on most</span>
-<span class="doccomment">/// haystacks, this will on average spend more time in vectorized code than you</span>
-<span class="doccomment">/// would if you just selected the first and last bytes of the needle.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Note that a non-prefilter variant of this algorithm can be found in the</span>
-<span class="doccomment">/// parent module, but it only works on smaller needles.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// `prestate`, `ninfo`, `haystack` and `needle` are the four prefilter</span>
-<span class="doccomment">/// function parameters. `fallback` is a prefilter that is used if the haystack</span>
-<span class="doccomment">/// is too small to be handled with the given vector size.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This routine is not safe because it is intended for callers to specialize</span>
-<span class="doccomment">/// this with a particular vector (e.g., __m256i) and then call it with the</span>
-<span class="doccomment">/// relevant target feature (e.g., avx2) enabled.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Panics</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// If `needle.len() &lt;= 1`, then this panics.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Safety</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Since this is meant to be used with vector functions, callers need to</span>
-<span class="doccomment">/// specialize this inside of a function with a `target_feature` attribute.</span>
-<span class="doccomment">/// Therefore, callers must ensure that whatever target feature is being used</span>
-<span class="doccomment">/// supports the vector functions that this function is specialized for. (For</span>
-<span class="doccomment">/// the specific vector functions used, see the Vector trait implementations.)</span>
-<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">find</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Vector</span><span class="op">&gt;</span>(
-    <span class="ident">prestate</span>: <span class="kw-2">&amp;mut</span> <span class="ident">PrefilterState</span>,
-    <span class="ident">ninfo</span>: <span class="kw-2">&amp;</span><span class="ident">NeedleInfo</span>,
-    <span class="ident">haystack</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">needle</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">fallback</span>: <span class="ident">PrefilterFnTy</span>,
-) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-    <span class="macro">assert!</span>(<span class="ident">needle</span>.<span class="ident">len</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="number">2</span>, <span class="string">&quot;needle must be at least 2 bytes&quot;</span>);
-    <span class="kw">let</span> (<span class="ident">rare1i</span>, <span class="ident">rare2i</span>) <span class="op">=</span> <span class="ident">ninfo</span>.<span class="ident">rarebytes</span>.<span class="ident">as_rare_ordered_usize</span>();
-    <span class="kw">let</span> <span class="ident">min_haystack_len</span> <span class="op">=</span> <span class="ident">rare2i</span> <span class="op">+</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>();
-    <span class="kw">if</span> <span class="ident">haystack</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">min_haystack_len</span> {
-        <span class="kw">return</span> <span class="ident">fallback</span>(<span class="ident">prestate</span>, <span class="ident">ninfo</span>, <span class="ident">haystack</span>, <span class="ident">needle</span>);
-    }
-
-    <span class="kw">let</span> <span class="ident">start_ptr</span> <span class="op">=</span> <span class="ident">haystack</span>.<span class="ident">as_ptr</span>();
-    <span class="kw">let</span> <span class="ident">end_ptr</span> <span class="op">=</span> <span class="ident">start_ptr</span>.<span class="ident">add</span>(<span class="ident">haystack</span>.<span class="ident">len</span>());
-    <span class="kw">let</span> <span class="ident">max_ptr</span> <span class="op">=</span> <span class="ident">end_ptr</span>.<span class="ident">sub</span>(<span class="ident">min_haystack_len</span>);
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">start_ptr</span>;
-
-    <span class="kw">let</span> <span class="ident">rare1chunk</span> <span class="op">=</span> <span class="ident">V::splat</span>(<span class="ident">needle</span>[<span class="ident">rare1i</span>]);
-    <span class="kw">let</span> <span class="ident">rare2chunk</span> <span class="op">=</span> <span class="ident">V::splat</span>(<span class="ident">needle</span>[<span class="ident">rare2i</span>]);
-
-    <span class="comment">// N.B. I did experiment with unrolling the loop to deal with size(V)</span>
-    <span class="comment">// bytes at a time and 2*size(V) bytes at a time. The double unroll</span>
-    <span class="comment">// was marginally faster while the quadruple unroll was unambiguously</span>
-    <span class="comment">// slower. In the end, I decided the complexity from unrolling wasn&#39;t</span>
-    <span class="comment">// worth it. I used the memmem/krate/prebuilt/huge-en/ benchmarks to</span>
-    <span class="comment">// compare.</span>
-    <span class="kw">while</span> <span class="ident">ptr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">max_ptr</span> {
-        <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">find_in_chunk2</span>(<span class="ident">ptr</span>, <span class="ident">rare1i</span>, <span class="ident">rare2i</span>, <span class="ident">rare1chunk</span>, <span class="ident">rare2chunk</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">chunki</span>) <span class="op">=</span> <span class="ident">m</span> {
-            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">matched</span>(<span class="ident">prestate</span>, <span class="ident">start_ptr</span>, <span class="ident">ptr</span>, <span class="ident">chunki</span>));
-        }
-        <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>());
-    }
-    <span class="kw">if</span> <span class="ident">ptr</span> <span class="op">&lt;</span> <span class="ident">end_ptr</span> {
-        <span class="comment">// This routine immediately quits if a candidate match is found.</span>
-        <span class="comment">// That means that if we&#39;re here, no candidate matches have been</span>
-        <span class="comment">// found at or before &#39;ptr&#39;. Thus, we don&#39;t need to mask anything</span>
-        <span class="comment">// out even though we might technically search part of the haystack</span>
-        <span class="comment">// that we&#39;ve already searched (because we know it can&#39;t match).</span>
-        <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">max_ptr</span>;
-        <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">find_in_chunk2</span>(<span class="ident">ptr</span>, <span class="ident">rare1i</span>, <span class="ident">rare2i</span>, <span class="ident">rare1chunk</span>, <span class="ident">rare2chunk</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">chunki</span>) <span class="op">=</span> <span class="ident">m</span> {
-            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">matched</span>(<span class="ident">prestate</span>, <span class="ident">start_ptr</span>, <span class="ident">ptr</span>, <span class="ident">chunki</span>));
-        }
-    }
-    <span class="ident">prestate</span>.<span class="ident">update</span>(<span class="ident">haystack</span>.<span class="ident">len</span>());
-    <span class="prelude-val">None</span>
-}
-
-<span class="comment">// Below are two different techniques for checking whether a candidate</span>
-<span class="comment">// match exists in a given chunk or not. find_in_chunk2 checks two bytes</span>
-<span class="comment">// where as find_in_chunk3 checks three bytes. The idea behind checking</span>
-<span class="comment">// three bytes is that while we do a bit more work per iteration, we</span>
-<span class="comment">// decrease the chances of a false positive match being reported and thus</span>
-<span class="comment">// make the search faster overall. This actually works out for the</span>
-<span class="comment">// memmem/krate/prebuilt/huge-en/never-all-common-bytes benchmark, where</span>
-<span class="comment">// using find_in_chunk3 is about 25% faster than find_in_chunk2. However,</span>
-<span class="comment">// it turns out that find_in_chunk2 is faster for all other benchmarks, so</span>
-<span class="comment">// perhaps the extra check isn&#39;t worth it in practice.</span>
-<span class="comment">//</span>
-<span class="comment">// For now, we go with find_in_chunk2, but we leave find_in_chunk3 around</span>
-<span class="comment">// to make it easy to switch to and benchmark when possible.</span>
-
-<span class="doccomment">/// Search for an occurrence of two rare bytes from the needle in the current</span>
-<span class="doccomment">/// chunk pointed to by ptr.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// rare1chunk and rare2chunk correspond to vectors with the rare1 and rare2</span>
-<span class="doccomment">/// bytes repeated in each 8-bit lane, respectively.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Safety</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// It must be safe to do an unaligned read of size(V) bytes starting at both</span>
-<span class="doccomment">/// (ptr + rare1i) and (ptr + rare2i).</span>
-<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">find_in_chunk2</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Vector</span><span class="op">&gt;</span>(
-    <span class="ident">ptr</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>,
-    <span class="ident">rare1i</span>: <span class="ident">usize</span>,
-    <span class="ident">rare2i</span>: <span class="ident">usize</span>,
-    <span class="ident">rare1chunk</span>: <span class="ident">V</span>,
-    <span class="ident">rare2chunk</span>: <span class="ident">V</span>,
-) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">chunk0</span> <span class="op">=</span> <span class="ident">V::load_unaligned</span>(<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">rare1i</span>));
-    <span class="kw">let</span> <span class="ident">chunk1</span> <span class="op">=</span> <span class="ident">V::load_unaligned</span>(<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">rare2i</span>));
-
-    <span class="kw">let</span> <span class="ident">eq0</span> <span class="op">=</span> <span class="ident">chunk0</span>.<span class="ident">cmpeq</span>(<span class="ident">rare1chunk</span>);
-    <span class="kw">let</span> <span class="ident">eq1</span> <span class="op">=</span> <span class="ident">chunk1</span>.<span class="ident">cmpeq</span>(<span class="ident">rare2chunk</span>);
-
-    <span class="kw">let</span> <span class="ident">match_offsets</span> <span class="op">=</span> <span class="ident">eq0</span>.<span class="ident">and</span>(<span class="ident">eq1</span>).<span class="ident">movemask</span>();
-    <span class="kw">if</span> <span class="ident">match_offsets</span> <span class="op">==</span> <span class="number">0</span> {
-        <span class="kw">return</span> <span class="prelude-val">None</span>;
-    }
-    <span class="prelude-val">Some</span>(<span class="ident">match_offsets</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>)
-}
-
-<span class="doccomment">/// Search for an occurrence of two rare bytes and the first byte (even if one</span>
-<span class="doccomment">/// of the rare bytes is equivalent to the first byte) from the needle in the</span>
-<span class="doccomment">/// current chunk pointed to by ptr.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// firstchunk, rare1chunk and rare2chunk correspond to vectors with the first,</span>
-<span class="doccomment">/// rare1 and rare2 bytes repeated in each 8-bit lane, respectively.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Safety</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// It must be safe to do an unaligned read of size(V) bytes starting at ptr,</span>
-<span class="doccomment">/// (ptr + rare1i) and (ptr + rare2i).</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">find_in_chunk3</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Vector</span><span class="op">&gt;</span>(
-    <span class="ident">ptr</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>,
-    <span class="ident">rare1i</span>: <span class="ident">usize</span>,
-    <span class="ident">rare2i</span>: <span class="ident">usize</span>,
-    <span class="ident">firstchunk</span>: <span class="ident">V</span>,
-    <span class="ident">rare1chunk</span>: <span class="ident">V</span>,
-    <span class="ident">rare2chunk</span>: <span class="ident">V</span>,
-) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">chunk0</span> <span class="op">=</span> <span class="ident">V::load_unaligned</span>(<span class="ident">ptr</span>);
-    <span class="kw">let</span> <span class="ident">chunk1</span> <span class="op">=</span> <span class="ident">V::load_unaligned</span>(<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">rare1i</span>));
-    <span class="kw">let</span> <span class="ident">chunk2</span> <span class="op">=</span> <span class="ident">V::load_unaligned</span>(<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">rare2i</span>));
-
-    <span class="kw">let</span> <span class="ident">eq0</span> <span class="op">=</span> <span class="ident">chunk0</span>.<span class="ident">cmpeq</span>(<span class="ident">firstchunk</span>);
-    <span class="kw">let</span> <span class="ident">eq1</span> <span class="op">=</span> <span class="ident">chunk1</span>.<span class="ident">cmpeq</span>(<span class="ident">rare1chunk</span>);
-    <span class="kw">let</span> <span class="ident">eq2</span> <span class="op">=</span> <span class="ident">chunk2</span>.<span class="ident">cmpeq</span>(<span class="ident">rare2chunk</span>);
-
-    <span class="kw">let</span> <span class="ident">match_offsets</span> <span class="op">=</span> <span class="ident">eq0</span>.<span class="ident">and</span>(<span class="ident">eq1</span>).<span class="ident">and</span>(<span class="ident">eq2</span>).<span class="ident">movemask</span>();
-    <span class="kw">if</span> <span class="ident">match_offsets</span> <span class="op">==</span> <span class="number">0</span> {
-        <span class="kw">return</span> <span class="prelude-val">None</span>;
-    }
-    <span class="prelude-val">Some</span>(<span class="ident">match_offsets</span>.<span class="ident">trailing_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>)
-}
-
-<span class="doccomment">/// Accepts a chunk-relative offset and returns a haystack relative offset</span>
-<span class="doccomment">/// after updating the prefilter state.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Why do we use this unlineable function when a search completes? Well,</span>
-<span class="doccomment">/// I don&#39;t know. Really. Obviously this function was not here initially.</span>
-<span class="doccomment">/// When doing profiling, the codegen for the inner loop here looked bad and</span>
-<span class="doccomment">/// I didn&#39;t know why. There were a couple extra &#39;add&#39; instructions and an</span>
-<span class="doccomment">/// extra &#39;lea&#39; instruction that I couldn&#39;t explain. I hypothesized that the</span>
-<span class="doccomment">/// optimizer was having trouble untangling the hot code in the loop from the</span>
-<span class="doccomment">/// code that deals with a candidate match. By putting the latter into an</span>
-<span class="doccomment">/// unlineable function, it kind of forces the issue and it had the intended</span>
-<span class="doccomment">/// effect: codegen improved measurably. It&#39;s good for a ~10% improvement</span>
-<span class="doccomment">/// across the board on the memmem/krate/prebuilt/huge-en/ benchmarks.</span>
-<span class="attribute">#[<span class="ident">cold</span>]</span>
-<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">never</span>)]</span>
-<span class="kw">fn</span> <span class="ident">matched</span>(
-    <span class="ident">prestate</span>: <span class="kw-2">&amp;mut</span> <span class="ident">PrefilterState</span>,
-    <span class="ident">start_ptr</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>,
-    <span class="ident">ptr</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>,
-    <span class="ident">chunki</span>: <span class="ident">usize</span>,
-) -&gt; <span class="ident">usize</span> {
-    <span class="kw">let</span> <span class="ident">found</span> <span class="op">=</span> <span class="ident">diff</span>(<span class="ident">ptr</span>, <span class="ident">start_ptr</span>) <span class="op">+</span> <span class="ident">chunki</span>;
-    <span class="ident">prestate</span>.<span class="ident">update</span>(<span class="ident">found</span>);
-    <span class="ident">found</span>
-}
-
-<span class="doccomment">/// Subtract `b` from `a` and return the difference. `a` must be greater than</span>
-<span class="doccomment">/// or equal to `b`.</span>
-<span class="kw">fn</span> <span class="ident">diff</span>(<span class="ident">a</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">b</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>) -&gt; <span class="ident">usize</span> {
-    <span class="macro">debug_assert!</span>(<span class="ident">a</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">b</span>);
-    (<span class="ident">a</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">-</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>)
-}
-</code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="memchr" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0 (a55dd71d5 2022-09-19)" ></div></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memchr-2.5.0/src/memmem/prefilter/genericsimd.rs`."><title>genericsimd.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-77263533.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="memchr" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.1 (e408947bf 2026-03-25)" data-channel="1.94.1" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-c38705f0.js" ><script src="../../../../static.files/storage-e2aeef58.js"></script><script defer src="../../../../static.files/src-script-813739b1.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-7bab91a1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">memchr/memmem/prefilter/</div>genericsimd.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>core::mem::size_of;
+<a href=#2 id=2 data-nosnippet>2</a>
+<a href=#3 id=3 data-nosnippet>3</a><span class="kw">use </span><span class="kw">crate</span>::memmem::{
+<a href=#4 id=4 data-nosnippet>4</a>    prefilter::{PrefilterFnTy, PrefilterState},
+<a href=#5 id=5 data-nosnippet>5</a>    vector::Vector,
+<a href=#6 id=6 data-nosnippet>6</a>    NeedleInfo,
+<a href=#7 id=7 data-nosnippet>7</a>};
+<a href=#8 id=8 data-nosnippet>8</a>
+<a href=#9 id=9 data-nosnippet>9</a><span class="doccomment">/// The implementation of the forward vector accelerated candidate finder.
+<a href=#10 id=10 data-nosnippet>10</a>///
+<a href=#11 id=11 data-nosnippet>11</a>/// This is inspired by the "generic SIMD" algorithm described here:
+<a href=#12 id=12 data-nosnippet>12</a>/// http://0x80.pl/articles/simd-strfind.html#algorithm-1-generic-simd
+<a href=#13 id=13 data-nosnippet>13</a>///
+<a href=#14 id=14 data-nosnippet>14</a>/// The main difference is that this is just a prefilter. That is, it reports
+<a href=#15 id=15 data-nosnippet>15</a>/// candidates once they are seen and doesn't attempt to confirm them. Also,
+<a href=#16 id=16 data-nosnippet>16</a>/// the bytes this routine uses to check for candidates are selected based on
+<a href=#17 id=17 data-nosnippet>17</a>/// an a priori background frequency distribution. This means that on most
+<a href=#18 id=18 data-nosnippet>18</a>/// haystacks, this will on average spend more time in vectorized code than you
+<a href=#19 id=19 data-nosnippet>19</a>/// would if you just selected the first and last bytes of the needle.
+<a href=#20 id=20 data-nosnippet>20</a>///
+<a href=#21 id=21 data-nosnippet>21</a>/// Note that a non-prefilter variant of this algorithm can be found in the
+<a href=#22 id=22 data-nosnippet>22</a>/// parent module, but it only works on smaller needles.
+<a href=#23 id=23 data-nosnippet>23</a>///
+<a href=#24 id=24 data-nosnippet>24</a>/// `prestate`, `ninfo`, `haystack` and `needle` are the four prefilter
+<a href=#25 id=25 data-nosnippet>25</a>/// function parameters. `fallback` is a prefilter that is used if the haystack
+<a href=#26 id=26 data-nosnippet>26</a>/// is too small to be handled with the given vector size.
+<a href=#27 id=27 data-nosnippet>27</a>///
+<a href=#28 id=28 data-nosnippet>28</a>/// This routine is not safe because it is intended for callers to specialize
+<a href=#29 id=29 data-nosnippet>29</a>/// this with a particular vector (e.g., __m256i) and then call it with the
+<a href=#30 id=30 data-nosnippet>30</a>/// relevant target feature (e.g., avx2) enabled.
+<a href=#31 id=31 data-nosnippet>31</a>///
+<a href=#32 id=32 data-nosnippet>32</a>/// # Panics
+<a href=#33 id=33 data-nosnippet>33</a>///
+<a href=#34 id=34 data-nosnippet>34</a>/// If `needle.len() &lt;= 1`, then this panics.
+<a href=#35 id=35 data-nosnippet>35</a>///
+<a href=#36 id=36 data-nosnippet>36</a>/// # Safety
+<a href=#37 id=37 data-nosnippet>37</a>///
+<a href=#38 id=38 data-nosnippet>38</a>/// Since this is meant to be used with vector functions, callers need to
+<a href=#39 id=39 data-nosnippet>39</a>/// specialize this inside of a function with a `target_feature` attribute.
+<a href=#40 id=40 data-nosnippet>40</a>/// Therefore, callers must ensure that whatever target feature is being used
+<a href=#41 id=41 data-nosnippet>41</a>/// supports the vector functions that this function is specialized for. (For
+<a href=#42 id=42 data-nosnippet>42</a>/// the specific vector functions used, see the Vector trait implementations.)
+<a href=#43 id=43 data-nosnippet>43</a></span><span class="attr">#[inline(always)]
+<a href=#44 id=44 data-nosnippet>44</a></span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>find&lt;V: Vector&gt;(
+<a href=#45 id=45 data-nosnippet>45</a>    prestate: <span class="kw-2">&amp;mut </span>PrefilterState,
+<a href=#46 id=46 data-nosnippet>46</a>    ninfo: <span class="kw-2">&amp;</span>NeedleInfo,
+<a href=#47 id=47 data-nosnippet>47</a>    haystack: <span class="kw-2">&amp;</span>[u8],
+<a href=#48 id=48 data-nosnippet>48</a>    needle: <span class="kw-2">&amp;</span>[u8],
+<a href=#49 id=49 data-nosnippet>49</a>    fallback: PrefilterFnTy,
+<a href=#50 id=50 data-nosnippet>50</a>) -&gt; <span class="prelude-ty">Option</span>&lt;usize&gt; {
+<a href=#51 id=51 data-nosnippet>51</a>    <span class="macro">assert!</span>(needle.len() &gt;= <span class="number">2</span>, <span class="string">"needle must be at least 2 bytes"</span>);
+<a href=#52 id=52 data-nosnippet>52</a>    <span class="kw">let </span>(rare1i, rare2i) = ninfo.rarebytes.as_rare_ordered_usize();
+<a href=#53 id=53 data-nosnippet>53</a>    <span class="kw">let </span>min_haystack_len = rare2i + size_of::&lt;V&gt;();
+<a href=#54 id=54 data-nosnippet>54</a>    <span class="kw">if </span>haystack.len() &lt; min_haystack_len {
+<a href=#55 id=55 data-nosnippet>55</a>        <span class="kw">return </span>fallback(prestate, ninfo, haystack, needle);
+<a href=#56 id=56 data-nosnippet>56</a>    }
+<a href=#57 id=57 data-nosnippet>57</a>
+<a href=#58 id=58 data-nosnippet>58</a>    <span class="kw">let </span>start_ptr = haystack.as_ptr();
+<a href=#59 id=59 data-nosnippet>59</a>    <span class="kw">let </span>end_ptr = start_ptr.add(haystack.len());
+<a href=#60 id=60 data-nosnippet>60</a>    <span class="kw">let </span>max_ptr = end_ptr.sub(min_haystack_len);
+<a href=#61 id=61 data-nosnippet>61</a>    <span class="kw">let </span><span class="kw-2">mut </span>ptr = start_ptr;
+<a href=#62 id=62 data-nosnippet>62</a>
+<a href=#63 id=63 data-nosnippet>63</a>    <span class="kw">let </span>rare1chunk = V::splat(needle[rare1i]);
+<a href=#64 id=64 data-nosnippet>64</a>    <span class="kw">let </span>rare2chunk = V::splat(needle[rare2i]);
+<a href=#65 id=65 data-nosnippet>65</a>
+<a href=#66 id=66 data-nosnippet>66</a>    <span class="comment">// N.B. I did experiment with unrolling the loop to deal with size(V)
+<a href=#67 id=67 data-nosnippet>67</a>    // bytes at a time and 2*size(V) bytes at a time. The double unroll
+<a href=#68 id=68 data-nosnippet>68</a>    // was marginally faster while the quadruple unroll was unambiguously
+<a href=#69 id=69 data-nosnippet>69</a>    // slower. In the end, I decided the complexity from unrolling wasn't
+<a href=#70 id=70 data-nosnippet>70</a>    // worth it. I used the memmem/krate/prebuilt/huge-en/ benchmarks to
+<a href=#71 id=71 data-nosnippet>71</a>    // compare.
+<a href=#72 id=72 data-nosnippet>72</a>    </span><span class="kw">while </span>ptr &lt;= max_ptr {
+<a href=#73 id=73 data-nosnippet>73</a>        <span class="kw">let </span>m = find_in_chunk2(ptr, rare1i, rare2i, rare1chunk, rare2chunk);
+<a href=#74 id=74 data-nosnippet>74</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(chunki) = m {
+<a href=#75 id=75 data-nosnippet>75</a>            <span class="kw">return </span><span class="prelude-val">Some</span>(matched(prestate, start_ptr, ptr, chunki));
+<a href=#76 id=76 data-nosnippet>76</a>        }
+<a href=#77 id=77 data-nosnippet>77</a>        ptr = ptr.add(size_of::&lt;V&gt;());
+<a href=#78 id=78 data-nosnippet>78</a>    }
+<a href=#79 id=79 data-nosnippet>79</a>    <span class="kw">if </span>ptr &lt; end_ptr {
+<a href=#80 id=80 data-nosnippet>80</a>        <span class="comment">// This routine immediately quits if a candidate match is found.
+<a href=#81 id=81 data-nosnippet>81</a>        // That means that if we're here, no candidate matches have been
+<a href=#82 id=82 data-nosnippet>82</a>        // found at or before 'ptr'. Thus, we don't need to mask anything
+<a href=#83 id=83 data-nosnippet>83</a>        // out even though we might technically search part of the haystack
+<a href=#84 id=84 data-nosnippet>84</a>        // that we've already searched (because we know it can't match).
+<a href=#85 id=85 data-nosnippet>85</a>        </span>ptr = max_ptr;
+<a href=#86 id=86 data-nosnippet>86</a>        <span class="kw">let </span>m = find_in_chunk2(ptr, rare1i, rare2i, rare1chunk, rare2chunk);
+<a href=#87 id=87 data-nosnippet>87</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(chunki) = m {
+<a href=#88 id=88 data-nosnippet>88</a>            <span class="kw">return </span><span class="prelude-val">Some</span>(matched(prestate, start_ptr, ptr, chunki));
+<a href=#89 id=89 data-nosnippet>89</a>        }
+<a href=#90 id=90 data-nosnippet>90</a>    }
+<a href=#91 id=91 data-nosnippet>91</a>    prestate.update(haystack.len());
+<a href=#92 id=92 data-nosnippet>92</a>    <span class="prelude-val">None
+<a href=#93 id=93 data-nosnippet>93</a></span>}
+<a href=#94 id=94 data-nosnippet>94</a>
+<a href=#95 id=95 data-nosnippet>95</a><span class="comment">// Below are two different techniques for checking whether a candidate
+<a href=#96 id=96 data-nosnippet>96</a>// match exists in a given chunk or not. find_in_chunk2 checks two bytes
+<a href=#97 id=97 data-nosnippet>97</a>// where as find_in_chunk3 checks three bytes. The idea behind checking
+<a href=#98 id=98 data-nosnippet>98</a>// three bytes is that while we do a bit more work per iteration, we
+<a href=#99 id=99 data-nosnippet>99</a>// decrease the chances of a false positive match being reported and thus
+<a href=#100 id=100 data-nosnippet>100</a>// make the search faster overall. This actually works out for the
+<a href=#101 id=101 data-nosnippet>101</a>// memmem/krate/prebuilt/huge-en/never-all-common-bytes benchmark, where
+<a href=#102 id=102 data-nosnippet>102</a>// using find_in_chunk3 is about 25% faster than find_in_chunk2. However,
+<a href=#103 id=103 data-nosnippet>103</a>// it turns out that find_in_chunk2 is faster for all other benchmarks, so
+<a href=#104 id=104 data-nosnippet>104</a>// perhaps the extra check isn't worth it in practice.
+<a href=#105 id=105 data-nosnippet>105</a>//
+<a href=#106 id=106 data-nosnippet>106</a>// For now, we go with find_in_chunk2, but we leave find_in_chunk3 around
+<a href=#107 id=107 data-nosnippet>107</a>// to make it easy to switch to and benchmark when possible.
+<a href=#108 id=108 data-nosnippet>108</a>
+<a href=#109 id=109 data-nosnippet>109</a></span><span class="doccomment">/// Search for an occurrence of two rare bytes from the needle in the current
+<a href=#110 id=110 data-nosnippet>110</a>/// chunk pointed to by ptr.
+<a href=#111 id=111 data-nosnippet>111</a>///
+<a href=#112 id=112 data-nosnippet>112</a>/// rare1chunk and rare2chunk correspond to vectors with the rare1 and rare2
+<a href=#113 id=113 data-nosnippet>113</a>/// bytes repeated in each 8-bit lane, respectively.
+<a href=#114 id=114 data-nosnippet>114</a>///
+<a href=#115 id=115 data-nosnippet>115</a>/// # Safety
+<a href=#116 id=116 data-nosnippet>116</a>///
+<a href=#117 id=117 data-nosnippet>117</a>/// It must be safe to do an unaligned read of size(V) bytes starting at both
+<a href=#118 id=118 data-nosnippet>118</a>/// (ptr + rare1i) and (ptr + rare2i).
+<a href=#119 id=119 data-nosnippet>119</a></span><span class="attr">#[inline(always)]
+<a href=#120 id=120 data-nosnippet>120</a></span><span class="kw">unsafe fn </span>find_in_chunk2&lt;V: Vector&gt;(
+<a href=#121 id=121 data-nosnippet>121</a>    ptr: <span class="kw-2">*const </span>u8,
+<a href=#122 id=122 data-nosnippet>122</a>    rare1i: usize,
+<a href=#123 id=123 data-nosnippet>123</a>    rare2i: usize,
+<a href=#124 id=124 data-nosnippet>124</a>    rare1chunk: V,
+<a href=#125 id=125 data-nosnippet>125</a>    rare2chunk: V,
+<a href=#126 id=126 data-nosnippet>126</a>) -&gt; <span class="prelude-ty">Option</span>&lt;usize&gt; {
+<a href=#127 id=127 data-nosnippet>127</a>    <span class="kw">let </span>chunk0 = V::load_unaligned(ptr.add(rare1i));
+<a href=#128 id=128 data-nosnippet>128</a>    <span class="kw">let </span>chunk1 = V::load_unaligned(ptr.add(rare2i));
+<a href=#129 id=129 data-nosnippet>129</a>
+<a href=#130 id=130 data-nosnippet>130</a>    <span class="kw">let </span>eq0 = chunk0.cmpeq(rare1chunk);
+<a href=#131 id=131 data-nosnippet>131</a>    <span class="kw">let </span>eq1 = chunk1.cmpeq(rare2chunk);
+<a href=#132 id=132 data-nosnippet>132</a>
+<a href=#133 id=133 data-nosnippet>133</a>    <span class="kw">let </span>match_offsets = eq0.and(eq1).movemask();
+<a href=#134 id=134 data-nosnippet>134</a>    <span class="kw">if </span>match_offsets == <span class="number">0 </span>{
+<a href=#135 id=135 data-nosnippet>135</a>        <span class="kw">return </span><span class="prelude-val">None</span>;
+<a href=#136 id=136 data-nosnippet>136</a>    }
+<a href=#137 id=137 data-nosnippet>137</a>    <span class="prelude-val">Some</span>(match_offsets.trailing_zeros() <span class="kw">as </span>usize)
+<a href=#138 id=138 data-nosnippet>138</a>}
+<a href=#139 id=139 data-nosnippet>139</a>
+<a href=#140 id=140 data-nosnippet>140</a><span class="doccomment">/// Search for an occurrence of two rare bytes and the first byte (even if one
+<a href=#141 id=141 data-nosnippet>141</a>/// of the rare bytes is equivalent to the first byte) from the needle in the
+<a href=#142 id=142 data-nosnippet>142</a>/// current chunk pointed to by ptr.
+<a href=#143 id=143 data-nosnippet>143</a>///
+<a href=#144 id=144 data-nosnippet>144</a>/// firstchunk, rare1chunk and rare2chunk correspond to vectors with the first,
+<a href=#145 id=145 data-nosnippet>145</a>/// rare1 and rare2 bytes repeated in each 8-bit lane, respectively.
+<a href=#146 id=146 data-nosnippet>146</a>///
+<a href=#147 id=147 data-nosnippet>147</a>/// # Safety
+<a href=#148 id=148 data-nosnippet>148</a>///
+<a href=#149 id=149 data-nosnippet>149</a>/// It must be safe to do an unaligned read of size(V) bytes starting at ptr,
+<a href=#150 id=150 data-nosnippet>150</a>/// (ptr + rare1i) and (ptr + rare2i).
+<a href=#151 id=151 data-nosnippet>151</a></span><span class="attr">#[allow(dead_code)]
+<a href=#152 id=152 data-nosnippet>152</a>#[inline(always)]
+<a href=#153 id=153 data-nosnippet>153</a></span><span class="kw">unsafe fn </span>find_in_chunk3&lt;V: Vector&gt;(
+<a href=#154 id=154 data-nosnippet>154</a>    ptr: <span class="kw-2">*const </span>u8,
+<a href=#155 id=155 data-nosnippet>155</a>    rare1i: usize,
+<a href=#156 id=156 data-nosnippet>156</a>    rare2i: usize,
+<a href=#157 id=157 data-nosnippet>157</a>    firstchunk: V,
+<a href=#158 id=158 data-nosnippet>158</a>    rare1chunk: V,
+<a href=#159 id=159 data-nosnippet>159</a>    rare2chunk: V,
+<a href=#160 id=160 data-nosnippet>160</a>) -&gt; <span class="prelude-ty">Option</span>&lt;usize&gt; {
+<a href=#161 id=161 data-nosnippet>161</a>    <span class="kw">let </span>chunk0 = V::load_unaligned(ptr);
+<a href=#162 id=162 data-nosnippet>162</a>    <span class="kw">let </span>chunk1 = V::load_unaligned(ptr.add(rare1i));
+<a href=#163 id=163 data-nosnippet>163</a>    <span class="kw">let </span>chunk2 = V::load_unaligned(ptr.add(rare2i));
+<a href=#164 id=164 data-nosnippet>164</a>
+<a href=#165 id=165 data-nosnippet>165</a>    <span class="kw">let </span>eq0 = chunk0.cmpeq(firstchunk);
+<a href=#166 id=166 data-nosnippet>166</a>    <span class="kw">let </span>eq1 = chunk1.cmpeq(rare1chunk);
+<a href=#167 id=167 data-nosnippet>167</a>    <span class="kw">let </span>eq2 = chunk2.cmpeq(rare2chunk);
+<a href=#168 id=168 data-nosnippet>168</a>
+<a href=#169 id=169 data-nosnippet>169</a>    <span class="kw">let </span>match_offsets = eq0.and(eq1).and(eq2).movemask();
+<a href=#170 id=170 data-nosnippet>170</a>    <span class="kw">if </span>match_offsets == <span class="number">0 </span>{
+<a href=#171 id=171 data-nosnippet>171</a>        <span class="kw">return </span><span class="prelude-val">None</span>;
+<a href=#172 id=172 data-nosnippet>172</a>    }
+<a href=#173 id=173 data-nosnippet>173</a>    <span class="prelude-val">Some</span>(match_offsets.trailing_zeros() <span class="kw">as </span>usize)
+<a href=#174 id=174 data-nosnippet>174</a>}
+<a href=#175 id=175 data-nosnippet>175</a>
+<a href=#176 id=176 data-nosnippet>176</a><span class="doccomment">/// Accepts a chunk-relative offset and returns a haystack relative offset
+<a href=#177 id=177 data-nosnippet>177</a>/// after updating the prefilter state.
+<a href=#178 id=178 data-nosnippet>178</a>///
+<a href=#179 id=179 data-nosnippet>179</a>/// Why do we use this unlineable function when a search completes? Well,
+<a href=#180 id=180 data-nosnippet>180</a>/// I don't know. Really. Obviously this function was not here initially.
+<a href=#181 id=181 data-nosnippet>181</a>/// When doing profiling, the codegen for the inner loop here looked bad and
+<a href=#182 id=182 data-nosnippet>182</a>/// I didn't know why. There were a couple extra 'add' instructions and an
+<a href=#183 id=183 data-nosnippet>183</a>/// extra 'lea' instruction that I couldn't explain. I hypothesized that the
+<a href=#184 id=184 data-nosnippet>184</a>/// optimizer was having trouble untangling the hot code in the loop from the
+<a href=#185 id=185 data-nosnippet>185</a>/// code that deals with a candidate match. By putting the latter into an
+<a href=#186 id=186 data-nosnippet>186</a>/// unlineable function, it kind of forces the issue and it had the intended
+<a href=#187 id=187 data-nosnippet>187</a>/// effect: codegen improved measurably. It's good for a ~10% improvement
+<a href=#188 id=188 data-nosnippet>188</a>/// across the board on the memmem/krate/prebuilt/huge-en/ benchmarks.
+<a href=#189 id=189 data-nosnippet>189</a></span><span class="attr">#[cold]
+<a href=#190 id=190 data-nosnippet>190</a>#[inline(never)]
+<a href=#191 id=191 data-nosnippet>191</a></span><span class="kw">fn </span>matched(
+<a href=#192 id=192 data-nosnippet>192</a>    prestate: <span class="kw-2">&amp;mut </span>PrefilterState,
+<a href=#193 id=193 data-nosnippet>193</a>    start_ptr: <span class="kw-2">*const </span>u8,
+<a href=#194 id=194 data-nosnippet>194</a>    ptr: <span class="kw-2">*const </span>u8,
+<a href=#195 id=195 data-nosnippet>195</a>    chunki: usize,
+<a href=#196 id=196 data-nosnippet>196</a>) -&gt; usize {
+<a href=#197 id=197 data-nosnippet>197</a>    <span class="kw">let </span>found = diff(ptr, start_ptr) + chunki;
+<a href=#198 id=198 data-nosnippet>198</a>    prestate.update(found);
+<a href=#199 id=199 data-nosnippet>199</a>    found
+<a href=#200 id=200 data-nosnippet>200</a>}
+<a href=#201 id=201 data-nosnippet>201</a>
+<a href=#202 id=202 data-nosnippet>202</a><span class="doccomment">/// Subtract `b` from `a` and return the difference. `a` must be greater than
+<a href=#203 id=203 data-nosnippet>203</a>/// or equal to `b`.
+<a href=#204 id=204 data-nosnippet>204</a></span><span class="kw">fn </span>diff(a: <span class="kw-2">*const </span>u8, b: <span class="kw-2">*const </span>u8) -&gt; usize {
+<a href=#205 id=205 data-nosnippet>205</a>    <span class="macro">debug_assert!</span>(a &gt;= b);
+<a href=#206 id=206 data-nosnippet>206</a>    (a <span class="kw">as </span>usize) - (b <span class="kw">as </span>usize)
+<a href=#207 id=207 data-nosnippet>207</a>}
+</code></pre></div></section></main></body></html>
